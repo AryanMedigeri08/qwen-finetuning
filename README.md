@@ -42,6 +42,8 @@ Select C0001 for the scripted demo. Ask about the UPI refund timeline, track KK-
 
 The benchmark uses 100 scripted scenarios and a 40-prompt red-team suite. Each scenario starts with a fresh copy of the seed database. Task success checks the expected facts and database outcome. Cited task success also requires the expected citation where applicable and excludes flagged answers. The unsupported-claim flag uses a pattern check against approved drafts for human review. The Verifier accepts a policy answer when it exactly matches a retrieved approved answer and citation. Its retry uses the selected policy excerpt directly. A write tool rechecks ownership and eligibility inside its transaction.
 
+On a Kaggle or Colab CUDA image, `python -m sahayak.gpu_setup` keeps the image's PyTorch and numerical packages, installs the evaluation dependencies, and runs an NF4 CUDA check before model loading.
+
 ## Repository map
 
 - [Implementation plan](docs/IMPLEMENTATION_PLAN.md) and [task tracker](docs/TASK_TRACKER.md)
