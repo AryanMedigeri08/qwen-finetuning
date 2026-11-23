@@ -107,7 +107,7 @@ def chat(customer, store, demo):
         st.write("Ask about an order or a store policy.")
         if customer == "C0001":
             for col, (label, query) in zip(st.columns(3), DEMOS.items()):
-                if col.button(label, use_container_width=True):
+                if col.button(label, width="stretch"):
                     submit(query, customer, store, demo)
     for item in st.session_state.history:
         with st.chat_message(item["role"]):
@@ -117,9 +117,9 @@ def chat(customer, store, demo):
         if "new_address" in args:
             st.text(f'New address: {args["new_address"]}')
         left, right = st.columns(2)
-        if left.button("Confirm action", type="primary", use_container_width=True):
+        if left.button("Confirm action", type="primary", width="stretch"):
             submit("yes", customer, store, demo)
-        if right.button("Keep order unchanged", use_container_width=True):
+        if right.button("Keep order unchanged", width="stretch"):
             submit("no", customer, store, demo)
     if query := st.chat_input("Ask KharidiKart support", max_chars=2000):
         submit(query, customer, store, demo)
@@ -151,15 +151,25 @@ def experiments():
     st.subheader("Scenario evaluation")
     live_rows = read_rows(results / "main_table.csv")
     if live_rows:
-        st.dataframe(live_rows, hide_index=True, use_container_width=True)
+        st.dataframe(live_rows, hide_index=True, width="stretch")
     else:
-        st.info("The C0–C5 comparison appears after a complete matched run.")
+        st.info("Matched T4 scenario results will appear here when available.")
     cpu_rows = read_rows(results / "cpu_scenarios.csv")
     if cpu_rows:
         st.subheader("Exploratory CPU comparison")
-        fields = ("config", "precision", "n", "tsr_pct", "tool_accuracy_pct", "hallucination_flags_pct",
-                  "placeholder_pct", "n_red", "safe_handling_pct")
-        st.dataframe([{key: row.get(key) for key in fields} for row in cpu_rows], hide_index=True, use_container_width=True)
+        fields = {
+            "config": "Config", "n": "Scenarios", "fact_success_pct": "Task success", "tsr_pct": "Cited success",
+            "tool_accuracy_pct": "Tool accuracy", "hallucination_flags_pct": "Unsupported claims",
+            "placeholder_pct": "Placeholders", "safe_handling_pct": "Safe handling",
+        }
+        summary = [{
+            label: (f"{float(row[key]):.1f}%" if key.endswith("_pct") and row.get(key) else row.get(key) or "—")
+            for key, label in fields.items()
+        } for row in cpu_rows]
+        st.caption("llama.cpp · Q4_K_M on CPU")
+        st.dataframe(summary, hide_index=True, width="stretch")
+        if (ROOT / "figures/fig1_cpu.png").is_file():
+            st.image(str(ROOT / "figures/fig1_cpu.png"), caption="Task success and unsupported-claim flags on CPU")
     figures = [
         ("fig1_main.png", "Task success and grounding flags"),
         ("fig3_data_budget.png", "Data budget"),
@@ -170,7 +180,7 @@ def experiments():
         if (ROOT / "figures" / name).is_file():
             st.image(str(ROOT / "figures" / name), caption=label)
     st.subheader("QLoRA language evaluation")
-    st.dataframe(read_rows(results / "training_notebook_e1.csv"), hide_index=True, use_container_width=True)
+    st.dataframe(read_rows(results / "training_notebook_e1.csv"), hide_index=True, width="stretch")
     if (results / "retrieval.json").is_file():
         st.subheader("Policy retrieval")
         retrieval = json.loads((results / "retrieval.json").read_text(encoding="utf-8"))
@@ -184,10 +194,10 @@ def database(customer, store):
     st.title("Your demo records")
     orders, refunds = store.customer_records(customer)
     st.subheader("Orders")
-    st.dataframe(orders, hide_index=True, use_container_width=True)
+    st.dataframe(orders, hide_index=True, width="stretch")
     st.subheader("Refunds")
     if refunds:
-        st.dataframe(refunds, hide_index=True, use_container_width=True)
+        st.dataframe(refunds, hide_index=True, width="stretch")
     else:
         st.info("This demo customer has no refunds.")
 

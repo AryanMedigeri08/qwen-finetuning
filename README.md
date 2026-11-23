@@ -11,7 +11,7 @@ Use Python 3.10 or later. Run the commands from the repository root.
     python -m sahayak.retrieval
     python -m streamlit run app.py
 
-The first model-backed use loads the Qwen base and the adapter. The app accepts the Hugging Face adapter ID or a local directory. If you have the supplied archive, restore it first with:
+The first model-backed use loads the Qwen base and the adapter. The app accepts the Hugging Face adapter ID or a local directory. Run the following command to restore the supplied archive.
 
     python -m sahayak.provenance --adapter path/to/C2_adapter.zip
 
@@ -36,7 +36,7 @@ Select C0001 for the scripted demo. Ask about the UPI refund timeline, track KK-
 | Build the experiment table and figures | Run `python -m sahayak.research --runs results/runs/t4`. |
 | Prepare independent human ratings | Run `python -m sahayak.research --runs results/runs/t4 --human-sheet .runtime/ratings.csv`. Share the prompts, evidence, and rating rubric with two raters. After both have completed the sheet, run `python -m sahayak.research --raters rater1.csv rater2.csv`. |
 
-The benchmark uses 100 scripted scenarios and a 40-prompt red-team suite. Each scenario starts with a fresh copy of the seed database. The metric called unsupported-claim flag uses a pattern check against approved drafts. It is a screening measure for human review. The verifier accepts a policy answer only when it exactly matches a retrieved approved answer and citation. Its retry uses the selected policy excerpt directly. A write tool rechecks ownership and eligibility inside its transaction.
+The benchmark uses 100 scripted scenarios and a 40-prompt red-team suite. Each scenario starts with a fresh copy of the seed database. Task success checks the expected facts and database outcome. Cited task success also requires the expected citation where applicable and excludes flagged answers. The unsupported-claim flag uses a pattern check against approved drafts for human review. The Verifier accepts a policy answer when it exactly matches a retrieved approved answer and citation. Its retry uses the selected policy excerpt directly. A write tool rechecks ownership and eligibility inside its transaction.
 
 ## Repository map
 
@@ -44,7 +44,7 @@ The benchmark uses 100 scripted scenarios and a 40-prompt red-team suite. Each s
 - [Architecture, schema and demo](docs/ARCHITECTURE.md)
 - [Model card](docs/MODEL_CARD.md) and [data audit](reports/data_audit.md)
 - [Training experiment table](results/training_notebook_e1.csv) and [retrieval benchmark](results/retrieval.json)
-- [Research manuscript](reports/manuscript.md) and [demo walkthrough](docs/DEMO.md)
+- [Research manuscript source](reports/manuscript.md) and [demo walkthrough](docs/DEMO.md)
 
 ## Attribution
 

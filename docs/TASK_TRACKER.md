@@ -56,4 +56,4 @@ The task descriptions, owners and weeks follow Section 27 of the brief. Recovere
 | T50 | Optional extension (Section 23), if chosen | All | 7 | Optional | Outside the required submission. |
 | T51 | Reproducibility README: one command per stage (split, train, index, seed, run, app) | S3 | 8 | Review pending | README provides run commands. Independent clean-room reproduction pending. |
 | T52 | Research-paper-style report (IEEE format, 6–8 pages): abstract, method, experiments, RQ answers, limitations | All | 8 | Partial | Manuscript draft records measured findings. Final IEEE paper depends on the matched runs. |
-| T53 | Five-minute demo video, slides, individual contribution logs; viva preparation | All | 8 | Partial | Five-minute walkthrough and slide outline prepared. Recording and individual logs pending. |
+| T53 | Five-minute demo video, slides, individual contribution logs; viva preparation | All | 8 | Partial | Captioned demo, editable slides and walkthrough are available. Individual contribution logs and viva are pending. |

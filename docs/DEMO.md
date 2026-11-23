@@ -2,7 +2,7 @@
 
 Use a fresh SQLite database. Show the runtime label in the sidebar so the audience can identify the model-backed or deterministic mode.
 
-The [editable demo slides](../reports/SahayakLLM-demo.pptx) use the original T4 language results and the local CPU evidence. The [annotated adapter traces](../results/model_trace_examples.json) show a read, the two-step cancellation and a verifier revision.
+The [five-minute captioned video](../reports/SahayakLLM-demo.webm) shows the Streamlit workflow in deterministic mode. The [editable demo slides](../reports/SahayakLLM-demo.pptx) use the original T4 language results and the local CPU evidence. The [adapter traces](../results/model_trace_examples.json) show a read, the two-step cancellation and a verifier revision.
 
 | Time | On screen | Discussion |
 | --- | --- | --- |
