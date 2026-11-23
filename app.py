@@ -10,7 +10,7 @@ from filelock import FileLock
 from sahayak import ROOT, RUNTIME
 from sahayak.db import DEFAULT_DB, Store
 from sahayak.graph import Assistant
-from sahayak.model import Qwen
+from sahayak.model import LocalQwen, Qwen
 from sahayak.retrieval import LexicalSearch, PolicySearch
 from sahayak.tools import Tools
 
@@ -50,6 +50,8 @@ def get_retrieval(demo):
 
 @st.cache_resource
 def get_model():
+    if endpoint := os.environ.get("SAHAYAK_LOCAL_SERVER"):
+        return LocalQwen(endpoint)
     return Qwen(nf4=os.environ.get("SAHAYAK_NF4") == "1")
 
 
@@ -152,6 +154,12 @@ def experiments():
         st.dataframe(live_rows, hide_index=True, use_container_width=True)
     else:
         st.info("The C0–C5 comparison appears after a complete matched run.")
+    cpu_rows = read_rows(results / "cpu_scenarios.csv")
+    if cpu_rows:
+        st.subheader("Exploratory CPU comparison")
+        fields = ("config", "precision", "n", "tsr_pct", "tool_accuracy_pct", "hallucination_flags_pct",
+                  "placeholder_pct", "n_red", "safe_handling_pct")
+        st.dataframe([{key: row.get(key) for key in fields} for row in cpu_rows], hide_index=True, use_container_width=True)
     figures = [
         ("fig1_main.png", "Task success and grounding flags"),
         ("fig3_data_budget.png", "Data budget"),

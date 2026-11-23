@@ -29,7 +29,7 @@ The task descriptions, owners and weeks follow Section 27 of the brief. Recovere
 | T23 | Evaluate fine-tuned model (C2) on test and held-out-intent sets; compare with B0/B1 | S1 | 3 | Recovered | results/training_notebook_e1.csv includes C2 test and held-out runs. |
 | T24 | Measure inference cost: tokens/s, peak GPU memory, p50/p95 latency for base vs fine-tuned | S4 | 3 | Recovered | results/training_notebook_systems.csv records the Tesla T4 probes. |
 | T25 | Data-budget runs: 1k, 2k, 5k, 10k, full training rows | S1 | 4 | Pending compute | Train the four smaller budgets and run each adapter inside C4. |
-| T26 | Upload final adapter (private HF repo or release zip) with model card: data, hyperparameters, limitations | S1 | 4 | Partial | Adapter link and model card available. Fresh-runtime check tracked separately. |
+| T26 | Upload final adapter (private HF repo or release zip) with model card: data, hyperparameters, limitations | S1 | 4 | Verified | Supplied weights match the public Hub release. Fresh CPU NF4 inference succeeded. |
 | T27 | Write 20–25 KharidiKart policy documents (Section 9.1) with concrete numbers | S2 | 2 | Verified | 20 Markdown policies, each over 250 words, under policies/. |
 | T28 | Chunk (300 tokens, 50 overlap), embed with bge-small-en-v1.5, build FAISS index with doc/section metadata | S2 | 3 | Verified | One-command section index with BGE and FAISS. E5 compares token windows separately. |
 | T29 | Create 60 question → gold-section pairs; compute Recall@3 and MRR | S2 | 3 | Verified | 60 labelled questions and measured recall@3 and MRR. |
@@ -50,7 +50,7 @@ The task descriptions, owners and weeks follow Section 27 of the brief. Recovere
 | T44 | Run C0–C5 on test set and scenarios; fill main table (Section 17); plot Figure 1 | S4 | 6 | Pending compute | Run matched C0–C5 scenarios and publish the comparison. |
 | T45 | Human evaluation: 100 C2 and C4 responses, two raters, 1–5 rubric; Cohen's kappa | All | 6 | Pending raters | Rater sheet generation and agreement calculation implemented. |
 | T46 | Error analysis with R1–R7 taxonomy on all failed C4/C5 scenarios | S4 | 6 | Partial | R1–R7 output supported. Full C4/C5 error review pending. |
-| T47 | Red-team suite (40 prompts, Section 21); safe-handling rate for C4 and C5 | S4 | 7 | Partial | 40 safety cases executed for the demo. Full matched C4/C5 run pending. |
+| T47 | Red-team suite (40 prompts, Section 21); safe-handling rate for C4 and C5 | S4 | 7 | CPU evidence | Both C4 and C5 passed all 40 prompts on the Q4_K_M CPU run. Matched T4 run pending. |
 | T48 | Streamlit Chat and Database pages with confirmation buttons and citations | S4 | 7 | Verified | Chat, confirmation and database tested through Streamlit. |
 | T49 | Streamlit Trace viewer and Experiments pages | S4 | 7 | Verified | Trace viewer and Experiments pages verified. Results are read from files. |
 | T50 | Optional extension (Section 23), if chosen | All | 7 | Optional | Outside the required submission. |

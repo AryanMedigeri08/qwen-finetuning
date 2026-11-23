@@ -85,6 +85,24 @@ def test_precheck_trace_keeps_exact_arguments(services):
     assert result["next_context"]["arguments"]["reason"] == "the item arrived broken"
 
 
+def test_refund_timing_question_cannot_start_a_write(services):
+    from sahayak.model import Route
+
+    class Model:
+        def classify(self, query):
+            return Route("get_refund", "REFUND", 0.99)
+
+        def policy_draft(self, query, approved):
+            return approved[0]
+
+    _, tools = services
+    answer = Assistant(tools, Model()).ask("C0001", "How long does a UPI refund take?")
+    assert answer["model_intent"] == "get_refund"
+    assert answer["intent"] == "check_refund_policy"
+    assert "[refund-timelines.md #1]" in answer["answer"]
+    assert not answer["next_context"]
+
+
 @pytest.mark.parametrize(("owner", "reply"), [
     ("C0002", "yes"),
     ("C0001", "yes, cancel KK-10002 instead"),

@@ -6,6 +6,7 @@ __pycache__/
 *.sqlite3*
 *.safetensors
 *.faiss
+*.gguf
 *.pt
 /data/splits/*.jsonl
 /results/runs/

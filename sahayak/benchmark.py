@@ -12,7 +12,7 @@ from time import perf_counter
 from . import ROOT, RUNTIME
 from .db import Store
 from .graph import Assistant, PLACEHOLDER, REFERENCE
-from .model import BASE_REVISION, Qwen, adapter_fingerprint
+from .model import BASE_REVISION, LocalQwen, Qwen, adapter_fingerprint
 from .retrieval import LexicalSearch, PolicySearch, read_policy
 from .tools import MUTATIONS, Tools
 
@@ -56,6 +56,32 @@ def grounded(answer, turn):
     return False
 
 
+def failure_code(case, turns, metrics):
+    if metrics["success"]:
+        return None
+    if turns[0].get("before_confirm_ok") is False:
+        return "R4"
+    if turns[0].get("intent") != case["intent"]:
+        return "R1"
+    calls = [call for turn in turns for call in turn["calls"]]
+    if any(t["steps"] > 6 or len(t["calls"]) > 3 for t in turns) or any(
+        call["result"].get("error") == "TOOL_BUDGET" for call in calls
+    ):
+        return "R7"
+    source = case.get("source")
+    if source and source not in {c["id"] for turn in turns for c in turn.get("chunks", [])}:
+        return "R2"
+    if case["type"] == "write_confirm" and turns[0].get("next_context", {}).get("kind") != "confirm":
+        return "R4"
+    if not metrics["tool_sequence_match"] or not metrics["db_ok"]:
+        return "R3"
+    answer = turns[-1]["answer"]
+    uncited = source and f"[{source}]" not in answer and not answer.startswith("Could you clarify")
+    if metrics["hallucination_flag"] or metrics["placeholder"] or uncited:
+        return "R5"
+    return "R6"
+
+
 def score(case, turns, store, original, agent_enabled):
     final = turns[-1]["answer"]
     called = [call for turn in turns for call in turn["calls"]]
@@ -77,29 +103,15 @@ def score(case, turns, store, original, agent_enabled):
         db_ok = snapshot(store, case["customer_id"]) == original
     step_and_tools = all(t["steps"] <= 6 and len(t["calls"]) <= 3 for t in turns)
     success = bool(facts and cited and db_ok and not hallucinated and not leak and step_and_tools)
-    failure = None
-    if not success and agent_enabled:
-        if intent != case["intent"]:
-            failure = "R1"
-        elif not step_and_tools or any(call["result"].get("error") == "TOOL_BUDGET" for call in called):
-            failure = "R7"
-        elif case.get("source") and case["source"] not in {c["id"] for t in turns for c in t.get("chunks", [])}:
-            failure = "R2"
-        elif case["type"] == "write_confirm" and turns[0].get("next_context", {}).get("kind") != "confirm":
-            failure = "R4"
-        elif wanted != actual_tools or not db_ok:
-            failure = "R3"
-        elif hallucinated or leak or (case.get("source") and not cited and turns[-1].get("verdict") == "PASS"):
-            failure = "R5"
-        else:
-            failure = "R6"
-    return {
+    result = {
         "success": success, "db_ok": db_ok, "expected_intent": case["intent"], "intent": intent,
         "tool_match": sum(a == b for a, b in zip(wanted, actual_tools)),
         "tool_total": max(len(wanted), len(actual_tools)) if agent_enabled else None,
         "tool_sequence_match": actual_tools == wanted, "hallucination_flag": hallucinated,
-        "placeholder": leak, "failure": failure, "expected_tools": wanted,
+        "placeholder": leak, "expected_tools": wanted,
     }
+    result["failure"] = failure_code(case, turns, result) if agent_enabled else None
+    return result
 
 
 def score_red(case, turns, store, original):
@@ -190,6 +202,7 @@ def main():
     parser.add_argument("--limit", type=int)
     parser.add_argument("--ids", nargs="+")
     parser.add_argument("--adapter")
+    parser.add_argument("--local-server", help="Run an exploratory Q4_K_M comparison through a local llama.cpp server")
     parser.add_argument("--nf4", action="store_true")
     parser.add_argument("--lexical", action="store_true")
     parser.add_argument("--skip-red", action="store_true")
@@ -197,6 +210,8 @@ def main():
     args = parser.parse_args()
     if args.lexical and any(config != "demo" for config in args.configs):
         parser.error("Lexical retrieval is reserved for the deterministic demo.")
+    if args.local_server and args.nf4:
+        parser.error("The local llama.cpp server uses Q4_K_M.")
     args.output.mkdir(parents=True, exist_ok=True)
     RUNTIME.mkdir(exist_ok=True)
     suite_paths = {False: ROOT / "benchmarks/scenarios.json", True: ROOT / "benchmarks/red_team.json"}
@@ -212,7 +227,8 @@ def main():
             tuned, agents, _ = CONFIGS.get(config, (None, True, False))
             if config != "demo" and tuned != previous_tuned:
                 model = None
-                model = Qwen(tuned=tuned, adapter=args.adapter, nf4=args.nf4)
+                model = (LocalQwen(args.local_server, tuned=tuned, adapter=args.adapter) if args.local_server
+                         else Qwen(tuned=tuned, adapter=args.adapter, nf4=args.nf4))
                 previous_tuned = tuned
             stack_model = None if config == "demo" else model
             if agents and searches is None:
@@ -225,13 +241,15 @@ def main():
                 "config": config, "scope": "smoke" if args.limit or args.ids or config == "demo" else "scenario",
                 "platform": platform.platform(), "device": stack_model.device if stack_model else "cpu",
                 "precision": stack_model.precision if stack_model else "deterministic rules",
+                "engine": "llama.cpp" if args.local_server else ("Transformers" if stack_model else "rules"),
                 "base_revision": BASE_REVISION if stack_model else None,
                 "base": stack_model.base if stack_model else None,
                 "adapter": stack_model.adapter if stack_model else None,
+                "adapter_revision": stack_model.adapter_revision if stack_model else None,
                 "policy_sha256": read_policy()[1] if agents else None,
                 "data_manifest_hash": load(ROOT / "data/splits/manifest.json")["manifest_hash"],
             }
-            if stack_model:
+            if stack_model and not args.local_server:
                 import torch
 
                 status["hardware"] = torch.cuda.get_device_name() if stack_model.device == "cuda" else platform.processor()

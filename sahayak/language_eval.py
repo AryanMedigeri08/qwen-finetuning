@@ -31,6 +31,7 @@ def evaluate(config, split, output, adapter, batch_size, nf4):
         adapter_id = adapter_fingerprint(adapter_id)
     metadata = {
         "config": config, "split": split, "adapter": adapter_id, "base": qwen.base, "base_revision": BASE_REVISION,
+        "adapter_revision": qwen.adapter_revision,
         "device": qwen.device, "precision": qwen.precision, "data_manifest_hash": manifest["manifest_hash"],
         "prompt_sha256": hashlib.sha256((qwen.system + "\n" + qwen.router).encode()).hexdigest(),
     }

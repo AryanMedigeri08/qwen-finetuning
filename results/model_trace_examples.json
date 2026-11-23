@@ -1,0 +1,594 @@
+{
+  "runtime": "CPU, Transformers NF4, supplied adapter",
+  "tracking_success": {
+    "id": "S026",
+    "type": "read",
+    "turns": [
+      {
+        "intent": "track_order",
+        "answer": "Order KK-10001 is placed. Its recorded delivery date is 2026-11-27.",
+        "trace": [
+          {
+            "node": "router",
+            "ms": 30555.07,
+            "input": "Where is order KK-10001?",
+            "output": {
+              "intent": "track_order",
+              "confidence": 0.9997934536664398,
+              "alternatives": [
+                [
+                  "check_cancellation_fee",
+                  8.286957017844543e-05
+                ],
+                [
+                  "check_invoice",
+                  8.286957017844543e-05
+                ],
+                [
+                  "check_payment_methods",
+                  8.286957017844543e-05
+                ]
+              ],
+              "entities": {
+                "order_id": "KK-10001"
+              }
+            }
+          },
+          {
+            "node": "action",
+            "ms": 42.56,
+            "input": "track_order",
+            "output": {
+              "draft": "Order KK-10001 is placed. Its recorded delivery date is 2026-11-27."
+            },
+            "tools": [
+              {
+                "name": "get_order_status",
+                "args": {
+                  "order_id": "KK-10001"
+                },
+                "result": {
+                  "ok": true,
+                  "data": {
+                    "order_id": "KK-10001",
+                    "status": "placed",
+                    "amount_inr": 4590,
+                    "eta": "2026-11-27",
+                    "placed_at": "2026-11-15"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node": "verifier",
+            "ms": 0.06,
+            "input": "track_order",
+            "output": {
+              "verdict": "PASS",
+              "checks": {
+                "no_placeholders": true,
+                "grounded": true,
+                "tool_budget": true,
+                "step_budget": true
+              }
+            }
+          }
+        ],
+        "chunks": [],
+        "approved": [
+          "Order KK-10001 is placed. Its recorded delivery date is 2026-11-27."
+        ],
+        "next_context": {
+          "kind": "read",
+          "intent": "track_order",
+          "customer": "C0001",
+          "arguments": {
+            "order_id": "KK-10001"
+          },
+          "slot": null
+        },
+        "steps": 3,
+        "calls": [
+          {
+            "name": "get_order_status",
+            "args": {
+              "order_id": "KK-10001"
+            },
+            "result": {
+              "ok": true,
+              "data": {
+                "order_id": "KK-10001",
+                "status": "placed",
+                "amount_inr": 4590,
+                "eta": "2026-11-27",
+                "placed_at": "2026-11-15"
+              }
+            }
+          }
+        ],
+        "verdict": "PASS",
+        "latency_s": 30.64220679999994,
+        "query": "Where is order KK-10001?"
+      }
+    ],
+    "success": true,
+    "db_ok": true,
+    "expected_intent": "track_order",
+    "intent": "track_order",
+    "tool_match": 1,
+    "tool_total": 1,
+    "tool_sequence_match": true,
+    "hallucination_flag": false,
+    "placeholder": false,
+    "failure": null,
+    "expected_tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10001"
+        }
+      ]
+    ]
+  },
+  "cancellation_confirmation": {
+    "id": "S051",
+    "type": "write_confirm",
+    "turns": [
+      {
+        "intent": "cancel_order",
+        "answer": "Please confirm that you want me to cancel order KK-10001.",
+        "trace": [
+          {
+            "node": "router",
+            "ms": 25795.13,
+            "input": "Please cancel order KK-10001",
+            "output": {
+              "intent": "cancel_order",
+              "confidence": 0.9999555965550525,
+              "alternatives": [
+                [
+                  "delete_account",
+                  5.616860562440706e-06
+                ],
+                [
+                  "change_shipping_address",
+                  1.979326270884485e-06
+                ],
+                [
+                  "change_order",
+                  1.979326270884485e-06
+                ]
+              ],
+              "entities": {
+                "order_id": "KK-10001"
+              }
+            }
+          },
+          {
+            "node": "action",
+            "ms": 9.51,
+            "input": "cancel_order",
+            "output": {
+              "draft": "Please confirm that you want me to cancel order KK-10001."
+            },
+            "tools": [
+              {
+                "name": "get_order_status",
+                "args": {
+                  "order_id": "KK-10001"
+                },
+                "result": {
+                  "ok": true,
+                  "data": {
+                    "order_id": "KK-10001",
+                    "status": "placed",
+                    "amount_inr": 4590,
+                    "eta": "2026-11-27",
+                    "placed_at": "2026-11-15"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node": "verifier",
+            "ms": 0.01,
+            "input": "cancel_order",
+            "output": {
+              "verdict": "PASS",
+              "checks": {
+                "no_placeholders": true,
+                "grounded": true,
+                "tool_budget": true,
+                "step_budget": true
+              }
+            }
+          }
+        ],
+        "chunks": [],
+        "approved": [
+          "Please confirm that you want me to cancel order KK-10001."
+        ],
+        "next_context": {
+          "kind": "confirm",
+          "intent": "cancel_order",
+          "customer": "C0001",
+          "arguments": {
+            "order_id": "KK-10001"
+          },
+          "slot": null
+        },
+        "steps": 3,
+        "calls": [
+          {
+            "name": "get_order_status",
+            "args": {
+              "order_id": "KK-10001"
+            },
+            "result": {
+              "ok": true,
+              "data": {
+                "order_id": "KK-10001",
+                "status": "placed",
+                "amount_inr": 4590,
+                "eta": "2026-11-27",
+                "placed_at": "2026-11-15"
+              }
+            }
+          }
+        ],
+        "verdict": "PASS",
+        "latency_s": 25.81823399999996,
+        "query": "Please cancel order KK-10001",
+        "before_confirm_ok": true
+      },
+      {
+        "intent": "cancel_order",
+        "answer": "Order KK-10001 is cancelled. Refund RF-10001 for KK-10001 is ₹4,590. The estimated timeline is 5 working days.",
+        "trace": [
+          {
+            "node": "router",
+            "ms": 0.01,
+            "input": "yes",
+            "output": {
+              "intent": "cancel_order",
+              "confidence": 1.0,
+              "entities": {
+                "order_id": "KK-10001"
+              }
+            }
+          },
+          {
+            "node": "action",
+            "ms": 26.19,
+            "input": "cancel_order",
+            "output": {
+              "draft": "Order KK-10001 is cancelled. Refund RF-10001 for KK-10001 is ₹4,590. The estimated timeline is 5 working days."
+            },
+            "tools": [
+              {
+                "name": "cancel_order",
+                "args": {
+                  "order_id": "KK-10001",
+                  "confirmed": true
+                },
+                "result": {
+                  "ok": true,
+                  "data": {
+                    "refund_id": "RF-10001",
+                    "order_id": "KK-10001",
+                    "amount_inr": 4590,
+                    "status": "cancelled",
+                    "eta_days": 5
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node": "verifier",
+            "ms": 0.03,
+            "input": "cancel_order",
+            "output": {
+              "verdict": "PASS",
+              "checks": {
+                "no_placeholders": true,
+                "grounded": true,
+                "tool_budget": true,
+                "step_budget": true
+              }
+            }
+          }
+        ],
+        "chunks": [],
+        "approved": [
+          "Order KK-10001 is cancelled. Refund RF-10001 for KK-10001 is ₹4,590. The estimated timeline is 5 working days."
+        ],
+        "next_context": {},
+        "steps": 3,
+        "calls": [
+          {
+            "name": "cancel_order",
+            "args": {
+              "order_id": "KK-10001",
+              "confirmed": true
+            },
+            "result": {
+              "ok": true,
+              "data": {
+                "refund_id": "RF-10001",
+                "order_id": "KK-10001",
+                "amount_inr": 4590,
+                "status": "cancelled",
+                "eta_days": 5
+              }
+            }
+          }
+        ],
+        "verdict": "PASS",
+        "latency_s": 0.03102990000002137,
+        "query": "yes"
+      }
+    ],
+    "success": true,
+    "db_ok": true,
+    "expected_intent": "cancel_order",
+    "intent": "cancel_order",
+    "tool_match": 2,
+    "tool_total": 2,
+    "tool_sequence_match": true,
+    "hallucination_flag": false,
+    "placeholder": false,
+    "failure": null,
+    "expected_tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10001"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10001",
+          "confirmed": true
+        }
+      ]
+    ]
+  },
+  "verifier_revision": {
+    "id": "S001",
+    "type": "information",
+    "turns": [
+      {
+        "intent": "check_refund_policy",
+        "answer": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days. [refund-timelines.md #1]",
+        "trace": [
+          {
+            "node": "router",
+            "ms": 29988.1,
+            "input": "How long does a UPI refund take?",
+            "output": {
+              "intent": "check_refund_policy",
+              "confidence": 0.843410388455536,
+              "alternatives": [
+                [
+                  "check_cancellation_fee",
+                  0.37462297081947327
+                ],
+                [
+                  "check_invoice",
+                  0.37462297081947327
+                ],
+                [
+                  "check_payment_methods",
+                  0.37462297081947327
+                ]
+              ],
+              "entities": {},
+              "routing_override": "A general policy timing question cannot initiate a refund."
+            }
+          },
+          {
+            "node": "knowledge",
+            "ms": 137309.74,
+            "input": "check_refund_policy",
+            "output": {
+              "draft": "The duration for a UPI refund depends on various factors such as the payment method used and the specific circumstances surrounding the transaction. Generally, UPI refunds are processed within 3-5 working days after initiation, with an estimated upper limit of 5 working days. However, it's important to note that the exact timeframe may vary depending on the specific bank or financial institution involved.\n\nFor card and net banking refunds, the processing time is usually between 5-7 working days from initiation. This timeframe"
+            },
+            "tools": [
+              {
+                "name": "search_policy",
+                "args": {
+                  "query": "How long does a UPI refund take?",
+                  "k": 3
+                },
+                "result": {
+                  "ok": true,
+                  "data": {
+                    "chunks": [
+                      {
+                        "id": "refund-timelines.md #1",
+                        "title": "Refund timelines",
+                        "heading": "UPI",
+                        "answer": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.",
+                        "text": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.\n\nGeneral policy applies across the fictional KharidiKart store. Check My Orders for details tied to a particular purchase. The demo displays order information only after selecting the account that owns the order.\n\nLook for the original UPI transaction in the payment app or bank statement linked to the order. Allow for weekends and holidays when comparing the elapsed time to working days. If the expected period has passed, open the refund record and have its identifier ready before contacting support. The order status alone gives no information about the payment provider's progress.",
+                        "intents": [
+                          "check_refund_policy"
+                        ]
+                      },
+                      {
+                        "id": "refund-timelines.md #2",
+                        "title": "Refund timelines",
+                        "heading": "Card and net banking",
+                        "answer": "Card and net banking refunds typically take 5–7 working days from initiation.",
+                        "text": "Card and net banking refunds typically take 5–7 working days from initiation.\n\nUse the account portal for a self-service change when the option is available. When contacting support about an existing purchase, keep the order reference handy and describe the outcome you need in a short message.\n\nFor a card payment, check the card statement used for the purchase. Depending on the bank, a posted refund can appear as a credit or as a reversal of the original transaction. With net banking, check the account used for payment. If you no longer have access to that account or card, discuss the next steps using a support ticket tied to the purchase.",
+                        "intents": [
+                          "check_refund_policy"
+                        ]
+                      },
+                      {
+                        "id": "refund-timelines.md #3",
+                        "title": "Refund timelines",
+                        "heading": "Cash on delivery",
+                        "answer": "Cash-on-delivery refunds may take up to 10 working days from initiation. Support can help with the refund destination.",
+                        "text": "Cash-on-delivery refunds may take up to 10 working days from initiation. Support can help with the refund destination.\n\n\nFor a cash-on-delivery refund, wait for the refund record to be created before checking its estimate. Use only support channels reached through your account. Keep the order ID and refund reference and share them when asking the team to investigate a delay.",
+                        "intents": [
+                          "check_refund_policy"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node": "verifier",
+            "ms": 0.3,
+            "input": "check_refund_policy",
+            "output": {
+              "verdict": "REVISE",
+              "checks": {
+                "no_placeholders": true,
+                "grounded": false,
+                "tool_budget": true,
+                "step_budget": true
+              }
+            }
+          },
+          {
+            "node": "knowledge",
+            "ms": 0.04,
+            "input": "check_refund_policy",
+            "output": {
+              "draft": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days. [refund-timelines.md #1]"
+            }
+          },
+          {
+            "node": "verifier",
+            "ms": 0.04,
+            "input": "check_refund_policy",
+            "output": {
+              "verdict": "PASS",
+              "checks": {
+                "no_placeholders": true,
+                "grounded": true,
+                "tool_budget": true,
+                "step_budget": true
+              }
+            }
+          }
+        ],
+        "chunks": [
+          {
+            "id": "refund-timelines.md #1",
+            "title": "Refund timelines",
+            "heading": "UPI",
+            "answer": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.",
+            "text": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.\n\nGeneral policy applies across the fictional KharidiKart store. Check My Orders for details tied to a particular purchase. The demo displays order information only after selecting the account that owns the order.\n\nLook for the original UPI transaction in the payment app or bank statement linked to the order. Allow for weekends and holidays when comparing the elapsed time to working days. If the expected period has passed, open the refund record and have its identifier ready before contacting support. The order status alone gives no information about the payment provider's progress.",
+            "intents": [
+              "check_refund_policy"
+            ]
+          },
+          {
+            "id": "refund-timelines.md #2",
+            "title": "Refund timelines",
+            "heading": "Card and net banking",
+            "answer": "Card and net banking refunds typically take 5–7 working days from initiation.",
+            "text": "Card and net banking refunds typically take 5–7 working days from initiation.\n\nUse the account portal for a self-service change when the option is available. When contacting support about an existing purchase, keep the order reference handy and describe the outcome you need in a short message.\n\nFor a card payment, check the card statement used for the purchase. Depending on the bank, a posted refund can appear as a credit or as a reversal of the original transaction. With net banking, check the account used for payment. If you no longer have access to that account or card, discuss the next steps using a support ticket tied to the purchase.",
+            "intents": [
+              "check_refund_policy"
+            ]
+          },
+          {
+            "id": "refund-timelines.md #3",
+            "title": "Refund timelines",
+            "heading": "Cash on delivery",
+            "answer": "Cash-on-delivery refunds may take up to 10 working days from initiation. Support can help with the refund destination.",
+            "text": "Cash-on-delivery refunds may take up to 10 working days from initiation. Support can help with the refund destination.\n\n\nFor a cash-on-delivery refund, wait for the refund record to be created before checking its estimate. Use only support channels reached through your account. Keep the order ID and refund reference and share them when asking the team to investigate a delay.",
+            "intents": [
+              "check_refund_policy"
+            ]
+          }
+        ],
+        "approved": [
+          "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days. [refund-timelines.md #1]",
+          "Card and net banking refunds typically take 5–7 working days from initiation. [refund-timelines.md #2]",
+          "Cash-on-delivery refunds may take up to 10 working days from initiation. Support can help with the refund destination. [refund-timelines.md #3]"
+        ],
+        "next_context": {},
+        "steps": 5,
+        "calls": [
+          {
+            "name": "search_policy",
+            "args": {
+              "query": "How long does a UPI refund take?",
+              "k": 3
+            },
+            "result": {
+              "ok": true,
+              "data": {
+                "chunks": [
+                  {
+                    "id": "refund-timelines.md #1",
+                    "title": "Refund timelines",
+                    "heading": "UPI",
+                    "answer": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.",
+                    "text": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.\n\nGeneral policy applies across the fictional KharidiKart store. Check My Orders for details tied to a particular purchase. The demo displays order information only after selecting the account that owns the order.\n\nLook for the original UPI transaction in the payment app or bank statement linked to the order. Allow for weekends and holidays when comparing the elapsed time to working days. If the expected period has passed, open the refund record and have its identifier ready before contacting support. The order status alone gives no information about the payment provider's progress.",
+                    "intents": [
+                      "check_refund_policy"
+                    ]
+                  },
+                  {
+                    "id": "refund-timelines.md #2",
+                    "title": "Refund timelines",
+                    "heading": "Card and net banking",
+                    "answer": "Card and net banking refunds typically take 5–7 working days from initiation.",
+                    "text": "Card and net banking refunds typically take 5–7 working days from initiation.\n\nUse the account portal for a self-service change when the option is available. When contacting support about an existing purchase, keep the order reference handy and describe the outcome you need in a short message.\n\nFor a card payment, check the card statement used for the purchase. Depending on the bank, a posted refund can appear as a credit or as a reversal of the original transaction. With net banking, check the account used for payment. If you no longer have access to that account or card, discuss the next steps using a support ticket tied to the purchase.",
+                    "intents": [
+                      "check_refund_policy"
+                    ]
+                  },
+                  {
+                    "id": "refund-timelines.md #3",
+                    "title": "Refund timelines",
+                    "heading": "Cash on delivery",
+                    "answer": "Cash-on-delivery refunds may take up to 10 working days from initiation. Support can help with the refund destination.",
+                    "text": "Cash-on-delivery refunds may take up to 10 working days from initiation. Support can help with the refund destination.\n\n\nFor a cash-on-delivery refund, wait for the refund record to be created before checking its estimate. Use only support channels reached through your account. Keep the order ID and refund reference and share them when asking the team to investigate a delay.",
+                    "intents": [
+                      "check_refund_policy"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "verdict": "PASS",
+        "latency_s": 167.38373519999993,
+        "query": "How long does a UPI refund take?"
+      }
+    ],
+    "success": true,
+    "db_ok": true,
+    "expected_intent": "check_refund_policy",
+    "intent": "check_refund_policy",
+    "tool_match": 1,
+    "tool_total": 1,
+    "tool_sequence_match": true,
+    "hallucination_flag": false,
+    "placeholder": false,
+    "failure": null,
+    "expected_tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long does a UPI refund take?"
+        }
+      ]
+    ]
+  }
+}

@@ -58,8 +58,14 @@ def report(runs, results, figures):
     fig.tight_layout()
     fig.savefig(figures / "fig5_latency.png", dpi=160)
     plt.close(fig)
-    errors = [{"config": cid, "code": code, "count": count} for cid in ("C4", "C5") if cid in raw
-              for code, count in sorted(Counter(row["failure"] for row in raw[cid] if row["failure"]).items())]
+    from .benchmark import failure_code
+
+    suite = {row["id"]: row for row in json.loads((ROOT / "benchmarks/scenarios.json").read_text(encoding="utf-8"))}
+    errors = []
+    for cid in ("C4", "C5"):
+        counts = Counter(failure_code(suite[row["id"]], row["turns"], row)
+                         for row in raw.get(cid, []) if not row["success"])
+        errors.extend({"config": cid, "code": code, "count": count} for code, count in sorted(counts.items()))
     write_csv(results / "error_taxonomy.csv", errors)
     write_csv(results / "e6_safety.csv", [{"config": r["config"], "n": r["n_red"], "safe_pct": r["safe_handling_pct"]}
                                         for r in rows if r.get("n_red") == 40])
@@ -121,6 +127,46 @@ def agreement(paths):
     return scores
 
 
+def budget_report(root, results, figures):
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    full = json.loads((root / "t4/metadata.json").read_text(encoding="utf-8"))
+    full = next(row for row in full if row["config"] == "C4" and row["n"] == 100)
+    n_train = json.loads((ROOT / "data/splits/manifest.json").read_text(encoding="utf-8"))["files"]["train"]["rows"]
+    rows = []
+    for size in (1_000, 2_000, 5_000, 10_000, n_train):
+        run_dir = root / f"budget_{size}"
+        with (run_dir / "language/language.csv").open(encoding="utf-8", newline="") as source:
+            language = next(csv.DictReader(source))
+        outcome = full if size == n_train else json.loads((run_dir / "metadata.json").read_text(encoding="utf-8"))[0]
+        match = ("device", "precision", "adapter", "data_manifest_hash")
+        if any(language[key] != outcome[key] for key in match):
+            raise ValueError(f"Language and workflow results use different settings for size {size}.")
+        if outcome["n"] != 100 or outcome["scenarios_sha256"] != full["scenarios_sha256"]:
+            raise ValueError(f"Size {size} does not use the full scenario suite.")
+        rows.append({"training_rows": size, "intent_macro_f1": float(language["intent_macro_f1"]),
+                     "bertscore_f1": float(language["bertscore_f1"]), "c4_tsr_pct": outcome["tsr_pct"]})
+    threshold = .95 * full["tsr_pct"]
+    minimum = next(row["training_rows"] for row in rows if row["c4_tsr_pct"] >= threshold)
+    write_csv(results / "data_budget.csv", [
+        row | {"target_tsr_pct": threshold, "meets_target": row["c4_tsr_pct"] >= threshold} for row in rows
+    ])
+    figures.mkdir(parents=True, exist_ok=True)
+    fig, axes = plt.subplots(1, 3, figsize=(12, 4))
+    for ax, field, label in zip(axes, ("intent_macro_f1", "bertscore_f1", "c4_tsr_pct"),
+                                ("Intent macro-F1", "BERTScore-F1", "C4 task success (%)")):
+        ax.plot([row["training_rows"] for row in rows], [row[field] for row in rows], "o-")
+        ax.set(xscale="log", xlabel="Training rows", ylabel=label)
+    axes[-1].axhline(threshold, linestyle="--", color="gray")
+    fig.tight_layout()
+    fig.savefig(figures / "fig3_data_budget.png", dpi=160)
+    plt.close(fig)
+    print(f"{minimum} rows ({minimum / n_train:.1%}) reaches the 95% task-success target.")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate the comparison figures and human-evaluation artifacts")
     parser.add_argument("--runs", type=Path)
@@ -128,12 +174,15 @@ if __name__ == "__main__":
     parser.add_argument("--figures", type=Path, default=ROOT / "figures")
     parser.add_argument("--human-sheet", type=Path)
     parser.add_argument("--raters", nargs=2, type=Path)
+    parser.add_argument("--budgets", type=Path)
     args = parser.parse_args()
     if args.raters:
         print(json.dumps(agreement(args.raters), indent=2))
+    elif args.budgets:
+        budget_report(args.budgets, args.results, args.figures)
     elif args.human_sheet:
         human_sheet(args.runs, args.human_sheet)
     elif args.runs:
         report(args.runs, args.results, args.figures)
     else:
-        parser.error("Provide --runs, --human-sheet or --raters.")
+        parser.error("Provide --runs, --human-sheet, --raters or --budgets.")

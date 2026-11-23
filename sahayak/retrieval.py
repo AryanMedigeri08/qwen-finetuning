@@ -1,6 +1,7 @@
 import argparse
 import hashlib
 import json
+import os
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -55,7 +56,8 @@ class PolicySearch:
         from sentence_transformers import SentenceTransformer
 
         self.chunks, digest = read_policy()
-        self.encoder = SentenceTransformer(EMBEDDING_MODEL, revision=EMBEDDING_REVISION, device="cpu")
+        cache = None if os.environ.get("HF_HOME") or os.environ.get("HF_HUB_CACHE") else str(RUNTIME / "hf/hub")
+        self.encoder = SentenceTransformer(EMBEDDING_MODEL, revision=EMBEDDING_REVISION, device="cpu", cache_folder=cache)
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
         metadata = path.with_suffix(".json")

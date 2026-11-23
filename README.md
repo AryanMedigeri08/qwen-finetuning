@@ -17,6 +17,8 @@ The first model-backed use loads the Qwen base and the adapter. The app accepts 
 
 The application uses .runtime/C2_adapter automatically when present. SAHAYAK_ADAPTER and SAHAYAK_BASE override the model paths. Set SAHAYAK_NF4=1 on a CUDA runtime with the GPU dependencies. For a quick demo without model downloads, set SAHAYAK_DEMO=1 before launching Streamlit. This mode uses rules and lexical retrieval and has its own validation results.
 
+For model-backed use on a machine with limited memory, see the [local CPU setup](docs/LOCAL_INFERENCE.md).
+
 Select C0001 for the scripted demo. Ask about the UPI refund timeline, track KK-10001, then ask to cancel it. Review the confirmation, approve it, and open Database to see the refund. The account selector is for the fictional demo. Use a fresh database file through SAHAYAK_DB for another cancellation walkthrough.
 
 ## Reproduce the training and evaluation

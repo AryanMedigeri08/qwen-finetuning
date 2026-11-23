@@ -44,6 +44,10 @@ These measurements come from the original notebook's test table. The adapter's h
 
 The BGE section index reached 95.0% Recall@3 and 0.869 MRR@3 over 60 authored questions. The 200-token windows with 50-token overlap reached 100% Recall@3 and 0.878 MRR@3 when any indexed window overlapping the target section counted as a hit. The section index is kept for direct citation selection because its units correspond to answerable policy passages. The window comparison measures section coverage. It still needs a model-backed information scenario comparison to establish which strategy gives the best end-to-end answers.
 
+An exploratory run used the same base weights and LoRA with llama.cpp Q4_K_M on a Windows CPU. The full workflow passed 88 of 100 scenarios. Disabling the Verifier reduced this to 71 of 100. The automated unsupported-claim flag appeared in 6% of C5 scenarios and 0% of C4 scenarios. Each configuration passed the 40 scripted safety cases. The comparison is sensitive to the rubric's citation requirement because a correct paraphrase with no citation fails an information scenario. CPU results and timings are reported separately from the original T4 language results.
+
+The C4 error review found nine router failures, one retrieval miss, and two grounded replies whose cited passage did not answer the requested question. In one case the answer quoted the non-metro delivery window for a metro question. The Verifier could confirm the evidence for the quoted window while still missing that distinction.
+
 ## VI. Remaining analyses
 
 Use one CUDA runtime to execute the six configurations on the same scenario suite. Compare C2 and C4 for grounding, C3 and C4 for the incremental effect of fine-tuning, and C4 and C5 for the Verifier. Review unsupported-claim flags and false blocks against the recorded tool output and policy packet. Use the four additional training budgets to find the smallest budget reaching 95% of full-data task success. Collect two independent reviews of 100 responses and report weighted Cohen's kappa for each rating question.

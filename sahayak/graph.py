@@ -93,6 +93,7 @@ class State(TypedDict, total=False):
     executed: bool
     request: dict
     routing_override: str
+    model_intent: str
 
 
 def demo_route(query):
@@ -155,7 +156,8 @@ class Assistant:
                 "node": name_recorded, "ms": round((perf_counter() - start) * 1000, 2),
                 "input": state["query"] if name == "router" else state.get("intent", ""),
                 "output": {key: update[key] for key in (
-                    "intent", "confidence", "alternatives", "entities", "draft", "verdict", "checks", "routing_override"
+                    "intent", "confidence", "alternatives", "entities", "draft", "verdict", "checks",
+                    "routing_override", "model_intent",
                 ) if key in update},
             }
             if "calls" in update:
@@ -221,6 +223,7 @@ class Assistant:
                    "confidence": routed.confidence, "alternatives": list(routed.alternatives)}
         if override:
             details["routing_override"] = "A general policy timing question cannot initiate a refund."
+            details["model_intent"] = "get_refund"
         if routed.confidence < 0.5:
             return self.end("Could you clarify what you need help with at KharidiKart?", **details)
         branch = "action" if routed.intent in TOOL_FOR or routed.intent in ESCALATION else "knowledge"
