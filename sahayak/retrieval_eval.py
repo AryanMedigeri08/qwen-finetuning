@@ -42,13 +42,15 @@ def evaluate(output, model):
     sections = PolicySearch()
     output.mkdir(parents=True, exist_ok=True)
     summaries = []
+    model.classify.cache_clear()
+    for query in dict.fromkeys(query.strip() for case in scenarios for query in case["turns"]):
+        model.classify(query)
     with TemporaryDirectory(dir=RUNTIME) as temp:
         seed, target = [Path(temp) / filename for filename in ("seed.sqlite3", "case.sqlite3")]
         Store(seed).seed()
         for size in (None, *WINDOW_SIZES):
             search = sections if size is None else WindowPolicySearch(sections, size)
             for k in (3,) if size is None else (3, 5):
-                model.classify.cache_clear()
                 model.policy_draft.cache_clear()
                 rows = run_setting(scenarios, model, search, k, seed, target)
                 label = f"window_{size}_k{k}" if size else "section_k3"
@@ -73,6 +75,7 @@ def evaluate(output, model):
         "base_revision": model.base_revision,
         "adapter_revision": model.adapter_revision,
         "device": model.device, "precision": model.precision,
+        "routing": "Reuse one model decision per query across settings. Timings use precomputed routes.",
         "best_observed_setting": winner["setting"],
         "rank_rule": "Higher cited task success, then higher factual success, then smaller k and smaller windows.",
     }
