@@ -29,7 +29,7 @@ The task descriptions, owners and weeks follow Section 27 of the brief. Recovere
 | T23 | Evaluate fine-tuned model (C2) on test and held-out-intent sets; compare with B0/B1 | S1 | 3 | Recovered | results/training_notebook_e1.csv includes C2 test and held-out runs. |
 | T24 | Measure inference cost: tokens/s, peak GPU memory, p50/p95 latency for base vs fine-tuned | S4 | 3 | Recovered | results/training_notebook_systems.csv records the Tesla T4 probes. |
 | T25 | Data-budget runs: 1k, 2k, 5k, 10k, full training rows | S1 | 4 | Pending compute | Train the four smaller budgets and run each adapter inside C4. |
-| T26 | Upload final adapter (private HF repo or release zip) with model card: data, hyperparameters, limitations | S1 | 4 | Verified | Supplied weights match the public Hub release. Fresh CPU NF4 inference succeeded. |
+| T26 | Upload final adapter (private HF repo or release zip) with model card: data, hyperparameters, limitations | S1 | 4 | Verified | Supplied weights match the public Hub release. The Kaggle Tesla T4 NF4 smoke run passed three scenario cases and three safety prompts. |
 | T27 | Write 20–25 KharidiKart policy documents (Section 9.1) with concrete numbers | S2 | 2 | Verified | 20 Markdown policies, each over 250 words, under policies/. |
 | T28 | Chunk (300 tokens, 50 overlap), embed with bge-small-en-v1.5, build FAISS index with doc/section metadata | S2 | 3 | Verified | One-command section index with BGE and FAISS. E5 compares token windows separately. |
 | T29 | Create 60 question → gold-section pairs; compute Recall@3 and MRR | S2 | 3 | Verified | 60 labelled questions and measured recall@3 and MRR. |
