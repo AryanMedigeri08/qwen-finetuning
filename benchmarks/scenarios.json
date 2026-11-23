@@ -1,0 +1,2473 @@
+[
+  {
+    "id": "S001",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How long does a UPI refund take?"
+    ],
+    "intent": "check_refund_policy",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long does a UPI refund take?"
+        }
+      ]
+    ],
+    "must_include": [
+      "3–5 working days"
+    ],
+    "source": "refund-timelines.md #1"
+  },
+  {
+    "id": "S002",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How many days does a card refund take?"
+    ],
+    "intent": "check_refund_policy",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How many days does a card refund take?"
+        }
+      ]
+    ],
+    "must_include": [
+      "5–7 working days"
+    ],
+    "source": "refund-timelines.md #2"
+  },
+  {
+    "id": "S003",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How long does a cash on delivery refund take?"
+    ],
+    "intent": "check_refund_policy",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long does a cash on delivery refund take?"
+        }
+      ]
+    ],
+    "must_include": [
+      "10 working days"
+    ],
+    "source": "refund-timelines.md #3"
+  },
+  {
+    "id": "S004",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "What is the cancellation fee before dispatch?"
+    ],
+    "intent": "check_cancellation_fee",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "What is the cancellation fee before dispatch?"
+        }
+      ]
+    ],
+    "must_include": [
+      "no fee"
+    ],
+    "source": "cancellation.md #1"
+  },
+  {
+    "id": "S005",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "What is the cancellation fee once my order has shipped?"
+    ],
+    "intent": "check_cancellation_fee",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "What is the cancellation fee once my order has shipped?"
+        }
+      ]
+    ],
+    "must_include": [
+      "cannot be cancelled"
+    ],
+    "source": "cancellation.md #2"
+  },
+  {
+    "id": "S006",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How much does standard shipping cost?"
+    ],
+    "intent": "delivery_options",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How much does standard shipping cost?"
+        }
+      ]
+    ],
+    "must_include": [
+      "₹49"
+    ],
+    "source": "delivery-options.md #1"
+  },
+  {
+    "id": "S007",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How much does express shipping cost?"
+    ],
+    "intent": "delivery_options",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How much does express shipping cost?"
+        }
+      ]
+    ],
+    "must_include": [
+      "₹99"
+    ],
+    "source": "delivery-options.md #2"
+  },
+  {
+    "id": "S008",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How long is standard metro delivery?"
+    ],
+    "intent": "delivery_period",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long is standard metro delivery?"
+        }
+      ]
+    ],
+    "must_include": [
+      "2–4 working days"
+    ],
+    "source": "delivery-periods.md #1"
+  },
+  {
+    "id": "S009",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How long does delivery take outside metro areas?"
+    ],
+    "intent": "delivery_period",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long does delivery take outside metro areas?"
+        }
+      ]
+    ],
+    "must_include": [
+      "4–7 working days"
+    ],
+    "source": "delivery-periods.md #2"
+  },
+  {
+    "id": "S010",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How long does express delivery take?"
+    ],
+    "intent": "delivery_period",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long does express delivery take?"
+        }
+      ]
+    ],
+    "must_include": [
+      "1–2 working days"
+    ],
+    "source": "delivery-periods.md #3"
+  },
+  {
+    "id": "S011",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "Which payment methods are accepted online?"
+    ],
+    "intent": "check_payment_methods",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "Which payment methods are accepted online?"
+        }
+      ]
+    ],
+    "must_include": [
+      "net banking"
+    ],
+    "source": "payment-methods.md #1"
+  },
+  {
+    "id": "S012",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "What is the cash on delivery maximum?"
+    ],
+    "intent": "check_payment_methods",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "What is the cash on delivery maximum?"
+        }
+      ]
+    ],
+    "must_include": [
+      "₹5,000"
+    ],
+    "source": "payment-methods.md #2"
+  },
+  {
+    "id": "S013",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "Does support need my UPI PIN?"
+    ],
+    "intent": "check_payment_methods",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "Does support need my UPI PIN?"
+        }
+      ]
+    ],
+    "must_include": [
+      "never asks"
+    ],
+    "source": "payment-methods.md #3"
+  },
+  {
+    "id": "S014",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How do I create a new account?"
+    ],
+    "intent": "create_account",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How do I create a new account?"
+        }
+      ]
+    ],
+    "must_include": [
+      "registration page"
+    ],
+    "source": "account-creation.md #1"
+  },
+  {
+    "id": "S015",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "When does my account verification link expire?"
+    ],
+    "intent": "create_account",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "When does my account verification link expire?"
+        }
+      ]
+    ],
+    "must_include": [
+      "30 minutes"
+    ],
+    "source": "account-creation.md #2"
+  },
+  {
+    "id": "S016",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How can I delete my account?"
+    ],
+    "intent": "delete_account",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How can I delete my account?"
+        }
+      ]
+    ],
+    "must_include": [
+      "7 working days"
+    ],
+    "source": "account-deletion.md #1"
+  },
+  {
+    "id": "S017",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How long is my password reset link valid?"
+    ],
+    "intent": "recover_password",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long is my password reset link valid?"
+        }
+      ]
+    ],
+    "must_include": [
+      "15 minutes"
+    ],
+    "source": "password-recovery.md #1"
+  },
+  {
+    "id": "S018",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "My reset password email is missing. When can I resend?"
+    ],
+    "intent": "recover_password",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "My reset password email is missing. When can I resend?"
+        }
+      ]
+    ],
+    "must_include": [
+      "2 minutes"
+    ],
+    "source": "password-recovery.md #2"
+  },
+  {
+    "id": "S019",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How do I unsubscribe from the newsletter?"
+    ],
+    "intent": "newsletter_subscription",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How do I unsubscribe from the newsletter?"
+        }
+      ]
+    ],
+    "must_include": [
+      "2 working days"
+    ],
+    "source": "newsletter.md #2"
+  },
+  {
+    "id": "S020",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "What are your support hours?"
+    ],
+    "intent": "contact_customer_service",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "What are your support hours?"
+        }
+      ]
+    ],
+    "must_include": [
+      "09:00 to 18:00 IST"
+    ],
+    "source": "contact-hours.md #1"
+  },
+  {
+    "id": "S021",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How do I use checkout to place a new order?"
+    ],
+    "intent": "place_order",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How do I use checkout to place a new order?"
+        }
+      ]
+    ],
+    "must_include": [
+      "order reference"
+    ],
+    "source": "checkout.md #1"
+  },
+  {
+    "id": "S022",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How long does an order confirmation email take?"
+    ],
+    "intent": "place_order",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How long does an order confirmation email take?"
+        }
+      ]
+    ],
+    "must_include": [
+      "15 minutes"
+    ],
+    "source": "checkout.md #3"
+  },
+  {
+    "id": "S023",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "My payment is pending. When should I retry?"
+    ],
+    "intent": "payment_issue",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "My payment is pending. When should I retry?"
+        }
+      ]
+    ],
+    "must_include": [
+      "30 minutes"
+    ],
+    "source": "payment-issues.md #1"
+  },
+  {
+    "id": "S024",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "How do I switch to a different account?"
+    ],
+    "intent": "switch_account",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "How do I switch to a different account?"
+        }
+      ]
+    ],
+    "must_include": [
+      "Sign out"
+    ],
+    "source": "account-management.md #2"
+  },
+  {
+    "id": "S025",
+    "type": "information",
+    "customer_id": "C0001",
+    "turns": [
+      "Can I edit a product review I posted?"
+    ],
+    "intent": "review",
+    "tools": [
+      [
+        "search_policy",
+        {
+          "k": 3,
+          "query": "Can I edit a product review I posted?"
+        }
+      ]
+    ],
+    "must_include": [
+      "30 calendar days"
+    ],
+    "source": "reviews.md #3"
+  },
+  {
+    "id": "S026",
+    "type": "read",
+    "customer_id": "C0001",
+    "turns": [
+      "Where is order KK-10001?"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10001"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10001",
+      "placed"
+    ]
+  },
+  {
+    "id": "S027",
+    "type": "read",
+    "customer_id": "C0002",
+    "turns": [
+      "Track package KK-10002 please"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10002"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10002",
+      "packed"
+    ]
+  },
+  {
+    "id": "S028",
+    "type": "read",
+    "customer_id": "C0003",
+    "turns": [
+      "Check the status of order KK-10003"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10003"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10003",
+      "shipped"
+    ]
+  },
+  {
+    "id": "S029",
+    "type": "read",
+    "customer_id": "C0004",
+    "turns": [
+      "Has order KK-10004 shipped?"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10004"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10004",
+      "delivered"
+    ]
+  },
+  {
+    "id": "S030",
+    "type": "read",
+    "customer_id": "C0005",
+    "turns": [
+      "Can you look up my order KK-10005 for me?"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10005"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10005",
+      "cancelled"
+    ]
+  },
+  {
+    "id": "S031",
+    "type": "read",
+    "customer_id": "C0006",
+    "turns": [
+      "Where is order KK-10006?"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10006"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10006",
+      "placed"
+    ]
+  },
+  {
+    "id": "S032",
+    "type": "read",
+    "customer_id": "C0007",
+    "turns": [
+      "Track package KK-10007 please"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10007"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10007",
+      "packed"
+    ]
+  },
+  {
+    "id": "S033",
+    "type": "read",
+    "customer_id": "C0008",
+    "turns": [
+      "Check the status of order KK-10008"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10008"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10008",
+      "shipped"
+    ]
+  },
+  {
+    "id": "S034",
+    "type": "read",
+    "customer_id": "C0009",
+    "turns": [
+      "Has order KK-10009 shipped?"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10009"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10009",
+      "delivered"
+    ]
+  },
+  {
+    "id": "S035",
+    "type": "read",
+    "customer_id": "C0010",
+    "turns": [
+      "Can you look up my order KK-10010 for me?"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10010"
+        }
+      ]
+    ],
+    "must_include": [
+      "KK-10010",
+      "cancelled"
+    ]
+  },
+  {
+    "id": "S036",
+    "type": "read",
+    "customer_id": "C0005",
+    "turns": [
+      "Track my refund for RF-0005"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "refund_id": "RF-0005"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0005",
+      "processing"
+    ]
+  },
+  {
+    "id": "S037",
+    "type": "read",
+    "customer_id": "C0010",
+    "turns": [
+      "Track my refund for KK-10010"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "order_id": "KK-10010"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0010",
+      "processing"
+    ]
+  },
+  {
+    "id": "S038",
+    "type": "read",
+    "customer_id": "C0015",
+    "turns": [
+      "Track my refund for RF-0015"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "refund_id": "RF-0015"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0015",
+      "processing"
+    ]
+  },
+  {
+    "id": "S039",
+    "type": "read",
+    "customer_id": "C0020",
+    "turns": [
+      "Track my refund for KK-10020"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "order_id": "KK-10020"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0020",
+      "processing"
+    ]
+  },
+  {
+    "id": "S040",
+    "type": "read",
+    "customer_id": "C0025",
+    "turns": [
+      "Track my refund for RF-0025"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "refund_id": "RF-0025"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0025",
+      "processing"
+    ]
+  },
+  {
+    "id": "S041",
+    "type": "read",
+    "customer_id": "C0030",
+    "turns": [
+      "Track my refund for KK-10030"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "order_id": "KK-10030"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0030",
+      "processing"
+    ]
+  },
+  {
+    "id": "S042",
+    "type": "read",
+    "customer_id": "C0035",
+    "turns": [
+      "Track my refund for RF-0035"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "refund_id": "RF-0035"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0035",
+      "processing"
+    ]
+  },
+  {
+    "id": "S043",
+    "type": "read",
+    "customer_id": "C0040",
+    "turns": [
+      "Track my refund for KK-10040"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "order_id": "KK-10040"
+        }
+      ]
+    ],
+    "must_include": [
+      "RF-0040",
+      "processing"
+    ]
+  },
+  {
+    "id": "S044",
+    "type": "read",
+    "customer_id": "C0041",
+    "turns": [
+      "Please send me the invoice for KK-10041"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10041"
+        }
+      ]
+    ],
+    "must_include": [
+      "INV-10041",
+      "GST"
+    ]
+  },
+  {
+    "id": "S045",
+    "type": "read",
+    "customer_id": "C0042",
+    "turns": [
+      "Please send me the invoice for KK-10042"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10042"
+        }
+      ]
+    ],
+    "must_include": [
+      "INV-10042",
+      "GST"
+    ]
+  },
+  {
+    "id": "S046",
+    "type": "read",
+    "customer_id": "C0043",
+    "turns": [
+      "Please send me the invoice for KK-10043"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10043"
+        }
+      ]
+    ],
+    "must_include": [
+      "INV-10043",
+      "GST"
+    ]
+  },
+  {
+    "id": "S047",
+    "type": "read",
+    "customer_id": "C0044",
+    "turns": [
+      "Please send me the invoice for KK-10044"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10044"
+        }
+      ]
+    ],
+    "must_include": [
+      "INV-10044",
+      "GST"
+    ]
+  },
+  {
+    "id": "S048",
+    "type": "read",
+    "customer_id": "C0045",
+    "turns": [
+      "Please send me the invoice for KK-10045"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10045"
+        }
+      ]
+    ],
+    "must_include": [
+      "INV-10045",
+      "GST"
+    ]
+  },
+  {
+    "id": "S049",
+    "type": "read",
+    "customer_id": "C0046",
+    "turns": [
+      "Please send me the invoice for KK-10046"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10046"
+        }
+      ]
+    ],
+    "must_include": [
+      "INV-10046",
+      "GST"
+    ]
+  },
+  {
+    "id": "S050",
+    "type": "read",
+    "customer_id": "C0047",
+    "turns": [
+      "Please send me the invoice for KK-10047"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10047"
+        }
+      ]
+    ],
+    "must_include": [
+      "INV-10047",
+      "GST"
+    ]
+  },
+  {
+    "id": "S051",
+    "type": "write_confirm",
+    "customer_id": "C0001",
+    "turns": [
+      "Please cancel order KK-10001",
+      "yes"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10001"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10001",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "placed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10001",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10001",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S052",
+    "type": "write_confirm",
+    "customer_id": "C0002",
+    "turns": [
+      "Please cancel order KK-10002",
+      "yes please"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10002"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10002",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "packed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10002",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10002",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S053",
+    "type": "write_confirm",
+    "customer_id": "C0006",
+    "turns": [
+      "Please cancel order KK-10006",
+      "yes please"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10006"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10006",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "placed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10006",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10006",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S054",
+    "type": "write_confirm",
+    "customer_id": "C0007",
+    "turns": [
+      "Please cancel order KK-10007",
+      "yes"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10007"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10007",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "packed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10007",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10007",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S055",
+    "type": "write_confirm",
+    "customer_id": "C0011",
+    "turns": [
+      "Please cancel order KK-10011",
+      "yes"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10011"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10011",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "placed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10011",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10011",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S056",
+    "type": "write_confirm",
+    "customer_id": "C0012",
+    "turns": [
+      "Please cancel order KK-10012",
+      "yes please"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10012"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10012",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "packed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10012",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10012",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S057",
+    "type": "write_confirm",
+    "customer_id": "C0016",
+    "turns": [
+      "Please cancel order KK-10016",
+      "yes please"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10016"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10016",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "placed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10016",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10016",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S058",
+    "type": "write_confirm",
+    "customer_id": "C0017",
+    "turns": [
+      "Please cancel order KK-10017",
+      "yes"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10017"
+        }
+      ],
+      [
+        "cancel_order",
+        {
+          "order_id": "KK-10017",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "packed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10017",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10017",
+      "cancelled",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S059",
+    "type": "write_confirm",
+    "customer_id": "C0004",
+    "turns": [
+      "Please initiate a refund for KK-10004 because the product arrived damaged",
+      "confirm"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10004"
+        }
+      ],
+      [
+        "initiate_refund",
+        {
+          "order_id": "KK-10004",
+          "reason": "the product arrived damaged",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10004",
+      "status": "delivered",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10004",
+      "initiated",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S060",
+    "type": "write_confirm",
+    "customer_id": "C0009",
+    "turns": [
+      "Please initiate a refund for KK-10009 because the product arrived damaged",
+      "confirm"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10009"
+        }
+      ],
+      [
+        "initiate_refund",
+        {
+          "order_id": "KK-10009",
+          "reason": "the product arrived damaged",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10009",
+      "status": "delivered",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10009",
+      "initiated",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S061",
+    "type": "write_confirm",
+    "customer_id": "C0014",
+    "turns": [
+      "Please initiate a refund for KK-10014 because the product arrived damaged",
+      "confirm"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10014"
+        }
+      ],
+      [
+        "initiate_refund",
+        {
+          "order_id": "KK-10014",
+          "reason": "the product arrived damaged",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10014",
+      "status": "delivered",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10014",
+      "initiated",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S062",
+    "type": "write_confirm",
+    "customer_id": "C0019",
+    "turns": [
+      "Please initiate a refund for KK-10019 because the product arrived damaged",
+      "confirm"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10019"
+        }
+      ],
+      [
+        "initiate_refund",
+        {
+          "order_id": "KK-10019",
+          "reason": "the product arrived damaged",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10019",
+      "status": "delivered",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10019",
+      "initiated",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S063",
+    "type": "write_confirm",
+    "customer_id": "C0024",
+    "turns": [
+      "Please initiate a refund for KK-10024 because the product arrived damaged",
+      "confirm"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10024"
+        }
+      ],
+      [
+        "initiate_refund",
+        {
+          "order_id": "KK-10024",
+          "reason": "the product arrived damaged",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10024",
+      "status": "delivered",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10024",
+      "initiated",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S064",
+    "type": "write_confirm",
+    "customer_id": "C0029",
+    "turns": [
+      "Please initiate a refund for KK-10029 because the product arrived damaged",
+      "confirm"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10029"
+        }
+      ],
+      [
+        "initiate_refund",
+        {
+          "order_id": "KK-10029",
+          "reason": "the product arrived damaged",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10029",
+      "status": "delivered",
+      "refund_count": 1
+    },
+    "must_include": [
+      "KK-10029",
+      "initiated",
+      "RF-"
+    ]
+  },
+  {
+    "id": "S065",
+    "type": "write_confirm",
+    "customer_id": "C0021",
+    "turns": [
+      "Change the shipping address for KK-10021. New address: 21 Orchid Demo Lane, Pune",
+      "go ahead"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10021"
+        }
+      ],
+      [
+        "update_shipping_address",
+        {
+          "order_id": "KK-10021",
+          "new_address": "21 Orchid Demo Lane, Pune",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "placed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10021",
+      "shipping_address": "21 Orchid Demo Lane, Pune"
+    },
+    "must_include": [
+      "KK-10021",
+      "was updated"
+    ]
+  },
+  {
+    "id": "S066",
+    "type": "write_confirm",
+    "customer_id": "C0022",
+    "turns": [
+      "Change the shipping address for KK-10022. New address: 22 Orchid Demo Lane, Pune",
+      "go ahead"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10022"
+        }
+      ],
+      [
+        "update_shipping_address",
+        {
+          "order_id": "KK-10022",
+          "new_address": "22 Orchid Demo Lane, Pune",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "packed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10022",
+      "shipping_address": "22 Orchid Demo Lane, Pune"
+    },
+    "must_include": [
+      "KK-10022",
+      "was updated"
+    ]
+  },
+  {
+    "id": "S067",
+    "type": "write_confirm",
+    "customer_id": "C0026",
+    "turns": [
+      "Change the shipping address for KK-10026. New address: 26 Orchid Demo Lane, Pune",
+      "go ahead"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10026"
+        }
+      ],
+      [
+        "update_shipping_address",
+        {
+          "order_id": "KK-10026",
+          "new_address": "26 Orchid Demo Lane, Pune",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "placed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10026",
+      "shipping_address": "26 Orchid Demo Lane, Pune"
+    },
+    "must_include": [
+      "KK-10026",
+      "was updated"
+    ]
+  },
+  {
+    "id": "S068",
+    "type": "write_confirm",
+    "customer_id": "C0027",
+    "turns": [
+      "Change the shipping address for KK-10027. New address: 27 Orchid Demo Lane, Pune",
+      "go ahead"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10027"
+        }
+      ],
+      [
+        "update_shipping_address",
+        {
+          "order_id": "KK-10027",
+          "new_address": "27 Orchid Demo Lane, Pune",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "packed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10027",
+      "shipping_address": "27 Orchid Demo Lane, Pune"
+    },
+    "must_include": [
+      "KK-10027",
+      "was updated"
+    ]
+  },
+  {
+    "id": "S069",
+    "type": "write_confirm",
+    "customer_id": "C0031",
+    "turns": [
+      "Change the shipping address for KK-10031. New address: 31 Orchid Demo Lane, Pune",
+      "go ahead"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10031"
+        }
+      ],
+      [
+        "update_shipping_address",
+        {
+          "order_id": "KK-10031",
+          "new_address": "31 Orchid Demo Lane, Pune",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "placed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10031",
+      "shipping_address": "31 Orchid Demo Lane, Pune"
+    },
+    "must_include": [
+      "KK-10031",
+      "was updated"
+    ]
+  },
+  {
+    "id": "S070",
+    "type": "write_confirm",
+    "customer_id": "C0032",
+    "turns": [
+      "Change the shipping address for KK-10032. New address: 32 Orchid Demo Lane, Pune",
+      "go ahead"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10032"
+        }
+      ],
+      [
+        "update_shipping_address",
+        {
+          "order_id": "KK-10032",
+          "new_address": "32 Orchid Demo Lane, Pune",
+          "confirmed": true
+        }
+      ]
+    ],
+    "before_confirm": {
+      "status": "packed",
+      "refund_count": 0
+    },
+    "after": {
+      "order_id": "KK-10032",
+      "shipping_address": "32 Orchid Demo Lane, Pune"
+    },
+    "must_include": [
+      "KK-10032",
+      "was updated"
+    ]
+  },
+  {
+    "id": "S071",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "Cancel my order, please"
+    ],
+    "intent": "cancel_order",
+    "tools": [],
+    "must_include": [
+      "What is the order ID"
+    ]
+  },
+  {
+    "id": "S072",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "Can you cancel my latest order?"
+    ],
+    "intent": "cancel_order",
+    "tools": [],
+    "must_include": [
+      "What is the order ID"
+    ]
+  },
+  {
+    "id": "S073",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "Where is my order?"
+    ],
+    "intent": "track_order",
+    "tools": [],
+    "must_include": [
+      "What is the order ID"
+    ]
+  },
+  {
+    "id": "S074",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "Track my package"
+    ],
+    "intent": "track_order",
+    "tools": [],
+    "must_include": [
+      "What is the order ID"
+    ]
+  },
+  {
+    "id": "S075",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "Can I get an invoice?"
+    ],
+    "intent": "get_invoice",
+    "tools": [],
+    "must_include": [
+      "What is the order ID"
+    ]
+  },
+  {
+    "id": "S076",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "Can you find my GST receipt?"
+    ],
+    "intent": "get_invoice",
+    "tools": [],
+    "must_include": [
+      "What is the order ID"
+    ]
+  },
+  {
+    "id": "S077",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "What's my refund status?"
+    ],
+    "intent": "track_refund",
+    "tools": [],
+    "must_include": [
+      "Which order or refund reference"
+    ]
+  },
+  {
+    "id": "S078",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "I need to change my shipping address"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [],
+    "must_include": [
+      "What is the order ID"
+    ]
+  },
+  {
+    "id": "S079",
+    "type": "missing_slot",
+    "customer_id": "C0001",
+    "turns": [
+      "Track my order",
+      "KK-10001"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10001"
+        }
+      ]
+    ],
+    "must_include": [
+      "placed",
+      "KK-10001"
+    ]
+  },
+  {
+    "id": "S080",
+    "type": "missing_slot",
+    "customer_id": "C0004",
+    "turns": [
+      "I need a refund for KK-10004"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10004"
+        }
+      ]
+    ],
+    "must_include": [
+      "reason for the refund"
+    ]
+  },
+  {
+    "id": "S081",
+    "type": "denied",
+    "customer_id": "C0003",
+    "turns": [
+      "Cancel KK-10003"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10003"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10003",
+      "status": "shipped",
+      "refund_count": 0
+    },
+    "must_include": [
+      "no longer eligible"
+    ]
+  },
+  {
+    "id": "S082",
+    "type": "denied",
+    "customer_id": "C0004",
+    "turns": [
+      "Cancel KK-10004"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10004"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10004",
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "must_include": [
+      "no longer eligible"
+    ]
+  },
+  {
+    "id": "S083",
+    "type": "denied",
+    "customer_id": "C0005",
+    "turns": [
+      "Cancel KK-10005"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10005"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10005",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "no longer eligible"
+    ]
+  },
+  {
+    "id": "S084",
+    "type": "denied",
+    "customer_id": "C0002",
+    "turns": [
+      "Cancel KK-10001"
+    ],
+    "intent": "cancel_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10001"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10001",
+      "status": "placed",
+      "refund_count": 0
+    },
+    "must_include": [
+      "couldn't find that order"
+    ]
+  },
+  {
+    "id": "S085",
+    "type": "denied",
+    "customer_id": "C0001",
+    "turns": [
+      "Track order KK-10002"
+    ],
+    "intent": "track_order",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10002"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10002",
+      "status": "packed",
+      "refund_count": 0
+    },
+    "must_include": [
+      "couldn't find that order"
+    ]
+  },
+  {
+    "id": "S086",
+    "type": "denied",
+    "customer_id": "C0001",
+    "turns": [
+      "Get invoice KK-10004"
+    ],
+    "intent": "get_invoice",
+    "tools": [
+      [
+        "get_invoice",
+        {
+          "order_id": "KK-10004"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10004",
+      "status": "delivered",
+      "refund_count": 0
+    },
+    "must_include": [
+      "couldn't find that invoice"
+    ]
+  },
+  {
+    "id": "S087",
+    "type": "denied",
+    "customer_id": "C0001",
+    "turns": [
+      "Track refund for KK-10005"
+    ],
+    "intent": "track_refund",
+    "tools": [
+      [
+        "track_refund",
+        {
+          "order_id": "KK-10005"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10005",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "couldn't find that refund"
+    ]
+  },
+  {
+    "id": "S088",
+    "type": "denied",
+    "customer_id": "C0003",
+    "turns": [
+      "Change the shipping address for KK-10003"
+    ],
+    "intent": "change_shipping_address",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10003"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10003",
+      "status": "shipped",
+      "refund_count": 0
+    },
+    "must_include": [
+      "shipping address can no longer"
+    ]
+  },
+  {
+    "id": "S089",
+    "type": "denied",
+    "customer_id": "C0003",
+    "turns": [
+      "I want a refund for KK-10003"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10003"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10003",
+      "status": "shipped",
+      "refund_count": 0
+    },
+    "must_include": [
+      "outside the refund eligibility"
+    ]
+  },
+  {
+    "id": "S090",
+    "type": "denied",
+    "customer_id": "C0005",
+    "turns": [
+      "I want a refund for KK-10005"
+    ],
+    "intent": "get_refund",
+    "tools": [
+      [
+        "get_order_status",
+        {
+          "order_id": "KK-10005"
+        }
+      ]
+    ],
+    "after": {
+      "order_id": "KK-10005",
+      "status": "cancelled",
+      "refund_count": 1
+    },
+    "must_include": [
+      "already exists"
+    ]
+  },
+  {
+    "id": "S091",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "I want to file a complaint about my delivery"
+    ],
+    "intent": "complaint",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "complaint",
+          "summary": "I want to file a complaint about my delivery"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S092",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "Please connect me to a human agent"
+    ],
+    "intent": "contact_human_agent",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "contact_human_agent",
+          "summary": "Please connect me to a human agent"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S093",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "This service is unacceptable and I want a complaint recorded"
+    ],
+    "intent": "complaint",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "complaint",
+          "summary": "This service is unacceptable and I want a complaint recorded"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S094",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "I need a manager to speak to about my case"
+    ],
+    "intent": "contact_human_agent",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "contact_human_agent",
+          "summary": "I need a manager to speak to about my case"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S095",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "I have a complaint about repeated delays"
+    ],
+    "intent": "complaint",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "complaint",
+          "summary": "I have a complaint about repeated delays"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S096",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "Can I speak to a person about a billing problem?"
+    ],
+    "intent": "contact_human_agent",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "contact_human_agent",
+          "summary": "Can I speak to a person about a billing problem?"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S097",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "Please register a complaint for a missing item"
+    ],
+    "intent": "complaint",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "complaint",
+          "summary": "Please register a complaint for a missing item"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S098",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "Transfer me to a live agent please"
+    ],
+    "intent": "contact_human_agent",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "contact_human_agent",
+          "summary": "Transfer me to a live agent please"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S099",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "I want to make a complaint about terrible service"
+    ],
+    "intent": "complaint",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "complaint",
+          "summary": "I want to make a complaint about terrible service"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  },
+  {
+    "id": "S100",
+    "type": "escalation",
+    "customer_id": "C0001",
+    "turns": [
+      "This is the third time. I want a supervisor"
+    ],
+    "intent": "contact_human_agent",
+    "tools": [
+      [
+        "escalate_to_human",
+        {
+          "reason": "contact_human_agent",
+          "summary": "This is the third time. I want a supervisor"
+        }
+      ]
+    ],
+    "ticket_count": 1,
+    "must_include": [
+      "ticket TK-"
+    ]
+  }
+]

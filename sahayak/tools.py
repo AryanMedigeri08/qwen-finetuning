@@ -82,7 +82,7 @@ class Tools:
             args = INPUTS[name].model_validate(arguments).model_dump(exclude_none=True)
             if name in MUTATIONS and not args.pop("confirmed"):
                 return error("CONFIRMATION_REQUIRED")
-            return getattr(self, name)(customer_id, **args)
+            return getattr(self, "_" + name)(customer_id, **args)
         except ValidationError:
             return error("INVALID_ARGUMENTS")
         except DatabaseError:
@@ -94,7 +94,7 @@ class Tools:
             "SELECT * FROM orders WHERE order_id=? AND customer_id=?", (order_id, customer)
         ).fetchone()
 
-    def get_order_status(self, customer, order_id):
+    def _get_order_status(self, customer, order_id):
         with self.store.connect() as connection:
             row = self._order(connection, customer, order_id)
             if row is None:
@@ -114,7 +114,7 @@ class Tools:
         )
         return details
 
-    def cancel_order(self, customer, order_id):
+    def _cancel_order(self, customer, order_id):
         with self.store.connect(write=True) as connection:
             row = self._order(connection, customer, order_id)
             if row is None:
@@ -125,7 +125,7 @@ class Tools:
             connection.execute("UPDATE orders SET status='cancelled' WHERE order_id=?", (order_id,))
             return ok(**(refund | {"status": "cancelled"}))
 
-    def initiate_refund(self, customer, order_id, reason):
+    def _initiate_refund(self, customer, order_id, reason):
         if len(reason.strip()) < 3:
             return error("INVALID_ARGUMENTS")
         with self.store.connect(write=True) as connection:
@@ -140,7 +140,7 @@ class Tools:
                 return error("REFUND_NOT_ELIGIBLE")
             return ok(**self._create_refund(connection, row, reason))
 
-    def track_refund(self, customer, order_id=None, refund_id=None):
+    def _track_refund(self, customer, order_id=None, refund_id=None):
         if (order_id is None) == (refund_id is None):
             return error("INVALID_ARGUMENTS")
         column, value = ("r.order_id", order_id) if order_id else ("r.refund_id", refund_id)
@@ -152,7 +152,7 @@ class Tools:
             ).fetchone()
             return ok(**dict(row)) if row else error("REFUND_NOT_FOUND")
 
-    def update_shipping_address(self, customer, order_id, new_address):
+    def _update_shipping_address(self, customer, order_id, new_address):
         new_address = new_address.strip()
         if len(new_address) < 8 or any(ord(char) < 32 for char in new_address):
             return error("INVALID_ARGUMENTS")
@@ -165,7 +165,7 @@ class Tools:
             connection.execute("UPDATE orders SET shipping_address=? WHERE order_id=?", (new_address, order_id))
             return ok(order_id=order_id, shipping_address=new_address)
 
-    def get_invoice(self, customer, order_id):
+    def _get_invoice(self, customer, order_id):
         with self.store.connect() as connection:
             row = connection.execute(
                 "SELECT i.* FROM invoices i JOIN orders o USING (order_id) WHERE o.customer_id=? AND i.order_id=?",
@@ -173,10 +173,10 @@ class Tools:
             ).fetchone()
             return ok(**dict(row)) if row else error("INVOICE_NOT_FOUND")
 
-    def search_policy(self, customer, query, k=3):
+    def _search_policy(self, customer, query, k=3):
         return ok(chunks=self.retriever.search(query, k))
 
-    def escalate_to_human(self, customer, reason, summary):
+    def _escalate_to_human(self, customer, reason, summary):
         with self.store.connect(write=True) as connection:
             if not connection.execute("SELECT 1 FROM customers WHERE customer_id=?", (customer,)).fetchone():
                 return error("INVALID_CUSTOMER")
