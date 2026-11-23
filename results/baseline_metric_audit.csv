@@ -1,0 +1,25 @@
+run_id,n,metric,recorded,measured,method,match
+B0_test,2388,intent_acc,0.5536013400335008,0.5536013400335008,Prediction replay,True
+B0_test,2388,intent_macro_f1,0.5011646713320402,0.5011646713320402,Prediction replay,True
+B0_test,2388,invalid_json_rate,0.0,0.0,Prediction replay,True
+B0_test,2388,rougeL,0.2135306186665051,0.21353061866650513,Prediction replay,True
+B0_test,2388,leak_pct,9.42211055276382,9.42211055276382,Prediction replay,True
+B0_test,2388,bertscore_f1,0.8737230896949768,0.8737230095981153,Saved per-example BERTScore mean,True
+B1_test,2388,intent_acc,0.6323283082077052,0.6323283082077052,Prediction replay,True
+B1_test,2388,intent_macro_f1,0.6149574841610578,0.6149574841610578,Prediction replay,True
+B1_test,2388,invalid_json_rate,0.0,0.0,Prediction replay,True
+B1_test,2388,rougeL,0.267355683042536,0.267355683042536,Prediction replay,True
+B1_test,2388,leak_pct,21.06365159128978,21.06365159128978,Prediction replay,True
+B1_test,2388,bertscore_f1,0.8868309855461121,0.8868310465485207,Saved per-example BERTScore mean,True
+B0_evalmini,300,intent_acc,0.54,0.54,Prediction replay,True
+B0_evalmini,300,intent_macro_f1,0.48136677801544,0.48136677801544003,Prediction replay,True
+B0_evalmini,300,invalid_json_rate,0.0,0.0,Prediction replay,True
+B0_evalmini,300,rougeL,0.218709551146297,0.218709551146297,Prediction replay,True
+B0_evalmini,300,leak_pct,7.333333333333333,7.333333333333333,Prediction replay,True
+B0_evalmini,300,bertscore_f1,0.8747060894966125,0.8747060704231262,Saved per-example BERTScore mean,True
+B1_evalmini,300,intent_acc,0.6466666666666666,0.6466666666666666,Prediction replay,True
+B1_evalmini,300,intent_macro_f1,0.6211992423904367,0.6211992423904367,Prediction replay,True
+B1_evalmini,300,invalid_json_rate,0.0,0.0,Prediction replay,True
+B1_evalmini,300,rougeL,0.2671440824590987,0.2671440824590987,Prediction replay,True
+B1_evalmini,300,leak_pct,21.0,21.0,Prediction replay,True
+B1_evalmini,300,bertscore_f1,0.8865370750427246,0.8865370378891627,Saved per-example BERTScore mean,True

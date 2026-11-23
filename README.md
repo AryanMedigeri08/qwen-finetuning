@@ -26,7 +26,8 @@ Select C0001 for the scripted demo. Ask about the UPI refund timeline, track KK-
 | Stage | Command or entry point |
 | --- | --- |
 | Audit, split, and reproduce B0/B1 | Run the cells in [Notebook 01](notebooks/01_data_and_baselines.ipynb). The original Team 10 prompt and split manifests are under prompts/ and data/splits/. |
-| Restore the original split export | Run `python -m sahayak.provenance --splits path/to/SahayakLLM.zip`. This verifies file hashes against the checked-in manifests. The raw Bitext splits remain local. |
+| Restore the original split export | Run `python -m sahayak.provenance --splits path/to/SahayakLLM.zip` or pass the extracted data/splits directory. This verifies file hashes against the checked-in manifests. |
+| Audit the archived baselines | Run `python -m sahayak.audit_baselines path/to/SahayakLLM.zip --output results/baseline_metric_audit.csv` to replay the saved predictions and check the logged metrics. |
 | Reproduce C2 or train the data budgets | Run [Notebook 02](notebooks/02_finetune_and_budget.ipynb) on a Kaggle T4 with the Notebook 01 outputs attached. Enable RUN_DATA_BUDGET for the additional budgets. |
 | Seed a mock database | Run `python -m sahayak.db --seed 10`. The date and identifiers are fixed for repeatable fixtures. |
 | Build and score the index | Run `python -m sahayak.retrieval --evaluate results/retrieval.json --sweep results/e5_retrieval_sweep.csv`. |

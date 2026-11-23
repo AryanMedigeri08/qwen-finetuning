@@ -20,7 +20,7 @@ The task descriptions, owners and weeks follow Section 27 of the brief. Recovere
 | T14 | Stratified 80/10/10 split on remaining intents; write manifest with per-intent counts and SHA-256 hashes | S1 | 2 | Verified | All ordinary split file hashes against data/splits/manifest.json. |
 | T15 | Create fixed 300-row stratified eval-mini from validation | S4 | 2 | Verified | Restored the hashed 300-row eval-mini. |
 | T16 | Convert records to chat-message format via apply_chat_template; build routing records (instruction → intent JSON), ~20% of train | S1 | 2 | Verified | Restored both SFT files using data/splits/sft_manifest.json. |
-| T17 | Implement evaluation harness: intent accuracy/macro-F1, ROUGE-L, BERTScore, perplexity, placeholder leakage, latency | S4 | 2 | Recovered | eval/metrics.py. Independent metric replication pending. |
+| T17 | Implement evaluation harness: intent accuracy/macro-F1, ROUGE-L, BERTScore, perplexity, placeholder leakage, latency | S4 | 2 | Baselines audited | Replaying archived base predictions matched 20 reported values. Aggregating saved per-example BERTScores matched four more. |
 | T18 | Run B0 zero-shot on eval-mini and test; save predictions | S1 | 2 | Recovered | B0 test and eval-mini results in results/results_log.csv. |
 | T19 | Run B1 few-shot with five fixed exemplars | S1 | 2 | Recovered | B1 rows and fixed exemplars. |
 | T20 | Compare three system-prompt variants on eval-mini; freeze the best | S2 | 2 | Recovered | Frozen prompts and results/prompt_comparison.csv. |
