@@ -47,13 +47,13 @@ The task descriptions, owners and weeks follow Section 27 of the brief. Recovere
 | T41 | Multi-turn memory: last 6 turns plus pending slot/confirmation state | S3 | 5 | Verified | Multi-turn slot collection, confirmation and dropped confirmation on account change. |
 | T42 | Write 100-scenario suite (Section 16.2) against the team database | All | 5 | Verified | 100 scenarios with the prescribed category counts. |
 | T43 | Scenario runner: runs any config, computes TSR, tool accuracy, hallucination, leakage, steps, latency | S4 | 5 | Implemented | Scenario and safety runner with isolated fixtures and resumable output. |
-| T44 | Run C0–C5 on test set and scenarios; fill main table (Section 17); plot Figure 1 | S4 | 6 | Pending compute | Run matched C0–C5 scenarios and publish the comparison. |
-| T45 | Human evaluation: 100 C2 and C4 responses, two raters, 1–5 rubric; Cohen's kappa | All | 6 | Pending raters | Rater sheet generation and agreement calculation implemented. |
-| T46 | Error analysis with R1–R7 taxonomy on all failed C4/C5 scenarios | S4 | 6 | Partial | R1–R7 output supported. Full C4/C5 error review pending. |
+| T44 | Run C0–C5 on test set and scenarios; fill main table (Section 17); plot Figure 1 | S4 | 6 | CPU evidence | Each configuration ran 100 CPU scenarios. The comparison CSV and figure are available. Matched T4 run pending. |
+| T45 | Human evaluation: 100 C2 and C4 responses, two raters, 1–5 rubric; Cohen's kappa | All | 6 | Pending raters | A blinded CPU pilot sheet with 100 responses was generated. Two independent scores are required. |
+| T46 | Error analysis with R1–R7 taxonomy on all failed C4/C5 scenarios | S4 | 6 | CPU evidence | Case-level labels and counts were exported for C4 and C5. The manuscript reviews examples. |
 | T47 | Red-team suite (40 prompts, Section 21); safe-handling rate for C4 and C5 | S4 | 7 | CPU evidence | Both C4 and C5 passed all 40 prompts on the Q4_K_M CPU run. Matched T4 run pending. |
 | T48 | Streamlit Chat and Database pages with confirmation buttons and citations | S4 | 7 | Verified | Chat, confirmation and database tested through Streamlit. |
 | T49 | Streamlit Trace viewer and Experiments pages | S4 | 7 | Verified | Trace viewer and Experiments pages verified. Results are read from files. |
 | T50 | Optional extension (Section 23), if chosen | All | 7 | Optional | Outside the required submission. |
 | T51 | Reproducibility README: one command per stage (split, train, index, seed, run, app) | S3 | 8 | Review pending | README provides run commands. Independent clean-room reproduction pending. |
-| T52 | Research-paper-style report (IEEE format, 6–8 pages): abstract, method, experiments, RQ answers, limitations | All | 8 | Partial | Manuscript draft records measured findings. Final IEEE paper depends on the matched runs. |
+| T52 | Research-paper-style report (IEEE format, 6–8 pages): abstract, method, experiments, RQ answers, limitations | All | 8 | Partial | Six-page manuscript draft includes the training evidence, CPU comparison and error analysis. Final IEEE paper depends on matched runs and human ratings. |
 | T53 | Five-minute demo video, slides, individual contribution logs; viva preparation | All | 8 | Partial | Captioned demo, editable slides and walkthrough are available. Individual contribution logs and viva are pending. |

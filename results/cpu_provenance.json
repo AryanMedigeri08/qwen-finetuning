@@ -1,0 +1,25 @@
+{
+  "engine": "llama.cpp",
+  "release": "b12651",
+  "base": "Qwen/Qwen2.5-1.5B-Instruct",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "published_adapter": "aryan22medigeri/llm-qwen2.5-1.5b-qlora",
+  "published_adapter_revision": "4939e0a84f71d7c7712a55045a377b59a2df9cc4",
+  "original_adapter_sha256": "5beeb22de44eb2b7d5c7f9573b3feb8207e783a27526f5827f917e5e18d1a00f",
+  "base_gguf_sha256": "b8737b4f8ab11bb5b5c9b526edd497ab4106571c8c04afd5560c185d96a96f08",
+  "adapter_gguf_sha256": "4fb209910cd3e41bc9a7333e7327c0b6d87e473e93caa531d734078f1881aad8",
+  "machine": "Windows, Intel64 Family 6 Model 154, 7.70 GiB RAM",
+  "base_precision": "Q4_K_M",
+  "adapter_precision": "F16",
+  "threads": 6,
+  "context_tokens": 2048,
+  "parallel_slots": 1,
+  "run_order": [
+    "C4",
+    "C5",
+    "C2",
+    "C3",
+    "C0",
+    "C1"
+  ]
+}

@@ -58,9 +58,10 @@ class Qwen:
         torch.set_num_threads(int(os.environ.get("SAHAYAK_THREADS", "4")))
         base = base or os.environ.get("SAHAYAK_BASE", BASE)
         self.base = base
+        self.base_revision = BASE_REVISION if base == BASE else None
         kwargs = {"cache_dir": RUNTIME / "hf/hub"} if not (os.environ.get("HF_HOME") or os.environ.get("HF_HUB_CACHE")) else {}
-        if base == BASE:
-            kwargs["revision"] = BASE_REVISION
+        if self.base_revision:
+            kwargs["revision"] = self.base_revision
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.precision = "nf4" if nf4 else ("float16" if self.device == "cuda" else "float32")
         dtype = torch.float16 if self.device == "cuda" else torch.float32
@@ -174,6 +175,7 @@ class LocalQwen(Qwen):
             raise ValueError("Use a local llama.cpp server URL such as http://127.0.0.1:8098.")
         self.url = url.rstrip("/")
         self.base = BASE
+        self.base_revision = BASE_REVISION
         self.device = "cpu"
         self.precision = "Q4_K_M"
         self.tuned = tuned

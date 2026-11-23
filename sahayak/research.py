@@ -34,15 +34,43 @@ def report(runs, results, figures):
                   key=lambda row: row["config"])
     if not rows:
         raise ValueError("A full configuration run is required for the comparison table.")
-    provenance = {(row["device"], row.get("hardware"), row["precision"], row["scenarios_sha256"], row["data_manifest_hash"])
-                  for row in rows}
+    provenance = {
+        (row["device"], row.get("hardware"), row["precision"], row.get("engine"), row.get("base_revision"),
+         row["scenarios_sha256"], row["data_manifest_hash"])
+        for row in rows
+    }
     if len(provenance) != 1:
         raise ValueError("Run the configurations with the same hardware, precision and scenario fixtures.")
+    from .benchmark import CONFIGS, failure_code, task_facts
+
+    ids = [row["config"] for row in rows]
+    raw = {cid: read_jsonl(runs / f"{cid.lower()}_scenarios.jsonl") for cid in ids}
+    suite = {row["id"]: row for row in json.loads((ROOT / "benchmarks/scenarios.json").read_text(encoding="utf-8"))}
+    output_cases = []
+    for row in rows:
+        cid = row["config"]
+        agents = CONFIGS[cid][1]
+        n_success = 0
+        for case in raw[cid]:
+            scenario = suite[case["id"]]
+            turns = case["turns"]
+            success = (case["db_ok"] and task_facts(scenario, turns[-1]["answer"], agents)
+                       and all(t["steps"] <= 6 and len(t["calls"]) <= 3 for t in turns))
+            n_success += success
+            output_cases.append({
+                "config": cid, "id": case["id"], "type": case["type"], "task_success": success,
+                "cited_success": case["success"], "intent": case["intent"], "expected_intent": case["expected_intent"],
+                "unsupported_claim": case["hallucination_flag"], "placeholder": case["placeholder"],
+                "failure_code": failure_code(scenario, turns, case) if agents else None,
+                "turn_latency_s": sum(t["latency_s"] for t in turns),
+            })
+        row["fact_success_pct"] = 100 * n_success / row["n"]
     write_csv(results / "main_table.csv", rows)
+    write_csv(results / "cases.csv", output_cases)
     figures.mkdir(parents=True, exist_ok=True)
     fig, ax = plt.subplots(figsize=(8, 4))
     x = range(len(rows))
-    ax.bar_label(ax.bar([i - .18 for i in x], [r["tsr_pct"] for r in rows], .36, label="Task success"), fmt="%.0f%%")
+    ax.bar_label(ax.bar([i - .18 for i in x], [r["fact_success_pct"] for r in rows], .36, label="Task success"), fmt="%.0f%%")
     ax.bar_label(ax.bar([i + .18 for i in x], [r["hallucination_flags_pct"] for r in rows], .36,
                        label="Unsupported-claim flag"), fmt="%.0f%%")
     ax.set(xticks=list(x), xticklabels=[r["config"] for r in rows], ylabel="Scenarios (%)", ylim=(0, 112))
@@ -50,25 +78,30 @@ def report(runs, results, figures):
     fig.tight_layout()
     fig.savefig(figures / "fig1_main.png", dpi=160)
     plt.close(fig)
-    ids = [row["config"] for row in rows]
-    raw = {cid: read_jsonl(runs / f"{cid.lower()}_scenarios.jsonl") for cid in ids}
     fig, ax = plt.subplots(figsize=(8, 4))
     ax.boxplot([[turn["latency_s"] for row in raw[cid] for turn in row["turns"]] for cid in ids])
     ax.set(xticks=list(range(1, len(ids) + 1)), xticklabels=ids, ylabel="Latency per turn (s)")
     fig.tight_layout()
     fig.savefig(figures / "fig5_latency.png", dpi=160)
     plt.close(fig)
-    from .benchmark import failure_code
-
-    suite = {row["id"]: row for row in json.loads((ROOT / "benchmarks/scenarios.json").read_text(encoding="utf-8"))}
     errors = []
     for cid in ("C4", "C5"):
-        counts = Counter(failure_code(suite[row["id"]], row["turns"], row)
-                         for row in raw.get(cid, []) if not row["success"])
+        counts = Counter(case["failure_code"] for case in output_cases if case["config"] == cid and case["failure_code"])
         errors.extend({"config": cid, "code": code, "count": count} for code, count in sorted(counts.items()))
     write_csv(results / "error_taxonomy.csv", errors)
     write_csv(results / "e6_safety.csv", [{"config": r["config"], "n": r["n_red"], "safe_pct": r["safe_handling_pct"]}
                                         for r in rows if r.get("n_red") == 40])
+    safety_cases = []
+    for row in rows:
+        if row.get("n_red") != 40:
+            continue
+        filename = runs / f'{row["config"].lower()}_red_team.jsonl'
+        for case in read_jsonl(filename):
+            safety_cases.append({
+                "config": row["config"], "id": case["id"], "type": case["type"], "safe": case["safe"],
+                "answer": case["turns"][-1]["answer"],
+            })
+    write_csv(results / "safety_cases.csv", safety_cases)
     if "C4" in raw:
         from sklearn.metrics import ConfusionMatrixDisplay
 
@@ -148,8 +181,9 @@ def budget_report(root, results, figures):
         if outcome["n"] != 100 or outcome["scenarios_sha256"] != full["scenarios_sha256"]:
             raise ValueError(f"Size {size} does not use the full scenario suite.")
         rows.append({"training_rows": size, "intent_macro_f1": float(language["intent_macro_f1"]),
-                     "bertscore_f1": float(language["bertscore_f1"]), "c4_tsr_pct": outcome["tsr_pct"]})
-    threshold = .95 * full["tsr_pct"]
+                     "bertscore_f1": float(language["bertscore_f1"]),
+                     "c4_tsr_pct": outcome.get("fact_success_pct", outcome["tsr_pct"])})
+    threshold = .95 * full.get("fact_success_pct", full["tsr_pct"])
     minimum = next(row["training_rows"] for row in rows if row["c4_tsr_pct"] >= threshold)
     write_csv(results / "data_budget.csv", [
         row | {"target_tsr_pct": threshold, "meets_target": row["c4_tsr_pct"] >= threshold} for row in rows

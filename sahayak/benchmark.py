@@ -12,7 +12,7 @@ from time import perf_counter
 from . import ROOT, RUNTIME
 from .db import Store
 from .graph import Assistant, PLACEHOLDER, REFERENCE
-from .model import BASE_REVISION, LocalQwen, Qwen, adapter_fingerprint
+from .model import LocalQwen, Qwen, adapter_fingerprint
 from .retrieval import LexicalSearch, PolicySearch, read_policy
 from .tools import MUTATIONS, Tools
 
@@ -21,6 +21,7 @@ CONFIGS = {"C0": (False, False, False), "C1": (False, False, True), "C2": (True,
 CLAIM = re.compile(r"₹|\b(?:Rs\.?|INR)\s*\d|\b\d+\s+(?:working |calendar )?(?:days?|hours?|minutes?)\b|"
                    r"\b(?:order|parcel|refund)\b[^.!?\n]{0,40}\b(?:is|was|has been)\s+(?:shipped|delivered|"
                    r"cancelled|packed|placed|processing|initiated|completed|refunded)\b", re.I)
+DECLINES_ACTION = re.compile(r"\b(?:can't|cannot|unable|don't have access|contact support)\b", re.I)
 
 
 def load(path):
@@ -44,6 +45,12 @@ def actual_order(store, order):
 
 def fields_match(actual, expected):
     return all(actual.get(key) == value for key, value in expected.items())
+
+
+def task_facts(case, answer, agents):
+    if not agents and case["type"] in {"read", "write_confirm", "escalation"}:
+        return bool(DECLINES_ACTION.search(answer))
+    return all(part.casefold() in answer.casefold() for part in case["must_include"])
 
 
 def grounded(answer, turn):
@@ -93,18 +100,18 @@ def score(case, turns, store, original, agent_enabled):
     if case.get("ticket_count"):
         with store.connect() as db:
             db_ok = db.execute("SELECT count(*) FROM tickets").fetchone()[0] == case["ticket_count"]
-    facts = all(part.casefold() in final.casefold() for part in case["must_include"])
+    facts = task_facts(case, final, agent_enabled)
     cited = not case.get("source") or f'[{case["source"]}]' in final
     intent = turns[0].get("intent")
     hallucinated = any(not grounded(turn["answer"], turn) for turn in turns)
     leak = any(PLACEHOLDER.search(turn["answer"]) for turn in turns)
     if not agent_enabled and case["type"] in {"read", "write_confirm", "escalation"}:
-        facts = bool(re.search(r"\b(?:can't|cannot|unable|don't have access|contact support)\b", final, re.I))
         db_ok = snapshot(store, case["customer_id"]) == original
     step_and_tools = all(t["steps"] <= 6 and len(t["calls"]) <= 3 for t in turns)
     success = bool(facts and cited and db_ok and not hallucinated and not leak and step_and_tools)
     result = {
-        "success": success, "db_ok": db_ok, "expected_intent": case["intent"], "intent": intent,
+        "success": success, "fact_success": bool(facts and db_ok and step_and_tools),
+        "db_ok": db_ok, "expected_intent": case["intent"], "intent": intent,
         "tool_match": sum(a == b for a, b in zip(wanted, actual_tools)),
         "tool_total": max(len(wanted), len(actual_tools)) if agent_enabled else None,
         "tool_sequence_match": actual_tools == wanted, "hallucination_flag": hallucinated,
@@ -157,7 +164,7 @@ def run_case(case, store, model, assistant, config, red):
         turns.append(turn)
     metrics = score_red(case, turns, store, original) if red else score(case, turns, store, original, bool(assistant))
     if turns[0].get("before_confirm_ok") is False:
-        metrics.update(success=False, db_ok=False, failure="R4")
+        metrics.update(success=False, fact_success=False, db_ok=False, failure="R4")
     return {"id": case["id"], "type": case.get("type", case.get("group")), "turns": turns, **metrics}
 
 
@@ -186,6 +193,7 @@ def aggregate(rows, red=False):
             labels=gold, average="macro", zero_division=0,
         ),
         "tsr_pct": 100 * sum(row["success"] for row in rows) / len(rows),
+        "fact_success_pct": 100 * sum(row.get("fact_success", row["success"]) for row in rows) / len(rows),
         "tool_accuracy_pct": (100 * sum(row["tool_match"] for row in rows) / tool_total) if tool_total else None,
         "hallucination_flags_pct": 100 * sum(row["hallucination_flag"] for row in rows) / len(rows),
         "placeholder_pct": 100 * sum(row["placeholder"] for row in rows) / len(rows),
@@ -242,7 +250,7 @@ def main():
                 "platform": platform.platform(), "device": stack_model.device if stack_model else "cpu",
                 "precision": stack_model.precision if stack_model else "deterministic rules",
                 "engine": "llama.cpp" if args.local_server else ("Transformers" if stack_model else "rules"),
-                "base_revision": BASE_REVISION if stack_model else None,
+                "base_revision": stack_model.base_revision if stack_model else None,
                 "base": stack_model.base if stack_model else None,
                 "adapter": stack_model.adapter if stack_model else None,
                 "adapter_revision": stack_model.adapter_revision if stack_model else None,

@@ -28,7 +28,7 @@ The Verifier checks whether the draft exactly matches an approved, evidence-deri
 
 C0 uses the base model with a zero-shot prompt. C1 adds five fixed examples. C2 applies the QLoRA adapter without tools. C3 applies the workflow to the base model, C4 combines the workflow with the adapter, and C5 removes the Verifier from C4. All comparisons use greedy generation. The language test measures intent macro-F1, ROUGE-L, BERTScore-F1, perplexity and placeholder leakage. The provided notebook records a Tesla T4 systems benchmark for base and adapted weights.
 
-The scripted scenario benchmark contains 25 policy questions, 25 reads, 20 confirmed mutations, 10 missing-slot cases, 10 denied requests, and 10 escalations. Each case starts with a copy of the same seed database. A success satisfies the scenario's required facts and citations and checks the final database state. Tool accuracy compares both the handler name and arguments. An automated unsupported-claim flag identifies suspicious responses for independent review.
+The scripted scenario benchmark contains 25 policy questions, 25 reads, 20 confirmed mutations, 10 missing-slot cases, 10 denied requests, and 10 escalations. Each case starts with a copy of the same seed database. Task success checks the required facts and final database state. A configuration without tools can receive credit on an action case if it explicitly declines and leaves the database unchanged. Cited task success also checks the expected citation where applicable and excludes flagged answers. Tool accuracy compares the handler name and arguments. An automated unsupported-claim flag identifies suspicious responses for independent review.
 
 The 40-prompt suite probes instruction overrides, cross-customer requests, out-of-scope content, premature confirmation and emotional escalation. C5 still runs ownership checks and confirmation logic, so the ablation measures the draft-verification component while preserving database transaction rules.
 
@@ -44,7 +44,18 @@ These measurements come from the original notebook's test table. The adapter's h
 
 The BGE section index reached 95.0% Recall@3 and 0.869 MRR@3 over 60 authored questions. The 200-token windows with 50-token overlap reached 100% Recall@3 and 0.878 MRR@3 when any indexed window overlapping the target section counted as a hit. The section index is kept for direct citation selection because its units correspond to answerable policy passages. The window comparison measures section coverage. It still needs a model-backed information scenario comparison to establish which strategy gives the best end-to-end answers.
 
-An exploratory run used the same base weights and LoRA with llama.cpp Q4_K_M on a Windows CPU. The full workflow passed 88 of 100 scenarios. Disabling the Verifier reduced this to 71 of 100. The automated unsupported-claim flag appeared in 6% of C5 scenarios and 0% of C4 scenarios. Each configuration passed the 40 scripted safety cases. The comparison is sensitive to the rubric's citation requirement because a correct paraphrase with no citation fails an information scenario. CPU results and timings are reported separately from the original T4 language results.
+An exploratory run used the same base weights and LoRA with llama.cpp Q4_K_M on a Windows CPU. Task success was 89% for C4 and 76% for C5. Requiring cited, unflagged answers reduced these rates to 88% and 71%. The automated unsupported-claim flag appeared in 6% of C5 scenarios and 0% of C4 scenarios. Each configuration passed the 40 scripted safety cases. C2 without tools passed 0 of the 100 scripted cases and left placeholders in 64. CPU results and timings are reported separately from the original T4 language results.
+
+| Configuration | CPU task success | Cited task success | Placeholder leakage |
+| --- | ---: | ---: | ---: |
+| C0 Base zero-shot | 9% | 5% | 33% |
+| C1 Base five-shot | 15% | 14% | 14% |
+| C2 Adapter | 0% | 0% | 64% |
+| C3 Base and agents | 47% | 47% | 0% |
+| C4 Adapter and verified agents | 89% | 88% | 0% |
+| C5 Adapter and agents without the Verifier | 76% | 71% | 0% |
+
+Each row used the same 100 scenario fixtures. The difference between C3 and C4 measures the observed effect of the adapter on this CPU workflow. The full per-case scores and timing data are in the repository.
 
 The C4 error review found nine router failures, one retrieval miss, and two grounded replies whose cited passage did not answer the requested question. In one case the answer quoted the non-metro delivery window for a metro question. The Verifier could confirm the evidence for the quoted window while still missing that distinction.
 

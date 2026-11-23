@@ -8,7 +8,7 @@ from eval.generation import build_response_messages, build_route_messages, gener
 from eval.metrics import bertscore_f1, intent_metrics, parse_route_json, placeholder_leakage, rouge_l
 
 from . import ROOT
-from .model import BASE_REVISION, CATEGORIES, Qwen, adapter_fingerprint
+from .model import CATEGORIES, Qwen, adapter_fingerprint
 from .research import read_jsonl, write_csv
 
 
@@ -30,7 +30,7 @@ def evaluate(config, split, output, adapter, batch_size, nf4):
     if adapter_id and Path(adapter_id).is_dir():
         adapter_id = adapter_fingerprint(adapter_id)
     metadata = {
-        "config": config, "split": split, "adapter": adapter_id, "base": qwen.base, "base_revision": BASE_REVISION,
+        "config": config, "split": split, "adapter": adapter_id, "base": qwen.base, "base_revision": qwen.base_revision,
         "adapter_revision": qwen.adapter_revision,
         "device": qwen.device, "precision": qwen.precision, "data_manifest_hash": manifest["manifest_hash"],
         "prompt_sha256": hashlib.sha256((qwen.system + "\n" + qwen.router).encode()).hexdigest(),

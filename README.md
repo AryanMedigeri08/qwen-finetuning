@@ -44,7 +44,8 @@ The benchmark uses 100 scripted scenarios and a 40-prompt red-team suite. Each s
 - [Architecture, schema and demo](docs/ARCHITECTURE.md)
 - [Model card](docs/MODEL_CARD.md) and [data audit](reports/data_audit.md)
 - [Training experiment table](results/training_notebook_e1.csv) and [retrieval benchmark](results/retrieval.json)
-- [Research manuscript source](reports/manuscript.md) and [demo walkthrough](docs/DEMO.md)
+- [All six CPU configurations](results/cpu_scenarios.csv), [per-scenario scores](results/cpu_scenario_cases.csv) and [safety cases](results/cpu_safety_cases.csv)
+- [Research manuscript draft](reports/SahayakLLM.pdf), [editable source](reports/manuscript.md) and [demo walkthrough](docs/DEMO.md)
 
 ## Attribution
 

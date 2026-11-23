@@ -82,6 +82,7 @@ def submit(query, customer, store, demo):
     st.session_state.context = result["next_context"]
     st.session_state.history.extend([{"role": "user", "content": query}, {"role": "assistant", "content": result["answer"]}])
     st.session_state.last = result
+    RUNTIME.mkdir(parents=True, exist_ok=True)
     path = RUNTIME / "chat-traces.jsonl"
     event = {"session": st.session_state.session, "customer": customer, "mode": "demo" if demo else "C4",
              "query": query, "intent": result.get("intent"), "trace": result["trace"], "steps": result["steps"]}
