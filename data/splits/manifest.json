@@ -1,0 +1,158 @@
+{
+  "seed": 42,
+  "held_out_intents": [
+    "check_invoice",
+    "review",
+    "switch_account"
+  ],
+  "files": {
+    "train": {
+      "file": "train.jsonl",
+      "rows": 19100,
+      "sha256": "4fb226401098bcf0d07e76618ffecb3efa961b77b4e851a2c00aed810530a623",
+      "per_intent": {
+        "cancel_order": 798,
+        "change_order": 798,
+        "change_shipping_address": 779,
+        "check_cancellation_fee": 760,
+        "check_payment_methods": 799,
+        "check_refund_policy": 798,
+        "complaint": 800,
+        "contact_customer_service": 800,
+        "contact_human_agent": 799,
+        "create_account": 798,
+        "delete_account": 796,
+        "delivery_options": 796,
+        "delivery_period": 799,
+        "edit_account": 800,
+        "get_invoice": 799,
+        "get_refund": 798,
+        "newsletter_subscription": 799,
+        "payment_issue": 799,
+        "place_order": 798,
+        "recover_password": 796,
+        "registration_problems": 799,
+        "set_up_shipping_address": 798,
+        "track_order": 796,
+        "track_refund": 798
+      }
+    },
+    "val": {
+      "file": "val.jsonl",
+      "rows": 2387,
+      "sha256": "2534a60a93e5a66bb229230304a4f9e85f42511bba317bd52096446e8622e205",
+      "per_intent": {
+        "cancel_order": 100,
+        "change_order": 100,
+        "change_shipping_address": 97,
+        "check_cancellation_fee": 95,
+        "check_payment_methods": 100,
+        "check_refund_policy": 100,
+        "complaint": 100,
+        "contact_customer_service": 100,
+        "contact_human_agent": 100,
+        "create_account": 99,
+        "delete_account": 100,
+        "delivery_options": 99,
+        "delivery_period": 100,
+        "edit_account": 100,
+        "get_invoice": 100,
+        "get_refund": 99,
+        "newsletter_subscription": 100,
+        "payment_issue": 100,
+        "place_order": 100,
+        "recover_password": 100,
+        "registration_problems": 100,
+        "set_up_shipping_address": 99,
+        "track_order": 99,
+        "track_refund": 100
+      }
+    },
+    "test": {
+      "file": "test.jsonl",
+      "rows": 2388,
+      "sha256": "904b1640ffd1c0857e6011d653c9da3555d7411e88f2af8c84d3560a71800640",
+      "per_intent": {
+        "cancel_order": 100,
+        "change_order": 99,
+        "change_shipping_address": 97,
+        "check_cancellation_fee": 95,
+        "check_payment_methods": 100,
+        "check_refund_policy": 99,
+        "complaint": 100,
+        "contact_customer_service": 100,
+        "contact_human_agent": 100,
+        "create_account": 100,
+        "delete_account": 99,
+        "delivery_options": 100,
+        "delivery_period": 100,
+        "edit_account": 100,
+        "get_invoice": 100,
+        "get_refund": 100,
+        "newsletter_subscription": 100,
+        "payment_issue": 100,
+        "place_order": 100,
+        "recover_password": 99,
+        "registration_problems": 100,
+        "set_up_shipping_address": 100,
+        "track_order": 100,
+        "track_refund": 100
+      }
+    },
+    "held_out_test": {
+      "file": "held_out_test.jsonl",
+      "rows": 2997,
+      "sha256": "3909b433934d812d0f3ff2aeb369628078191ccad63e53fb095a8cbf652f4ae0",
+      "per_intent": {
+        "check_invoice": 1000,
+        "review": 997,
+        "switch_account": 1000
+      }
+    },
+    "eval_mini": {
+      "file": "eval_mini.jsonl",
+      "rows": 300,
+      "sha256": "c644f240edbef3a29f82426e5d4d98652928277599ec56b6e2b2902c3e9c7e2c",
+      "per_intent": {
+        "cancel_order": 13,
+        "change_order": 13,
+        "change_shipping_address": 12,
+        "check_cancellation_fee": 12,
+        "check_payment_methods": 13,
+        "check_refund_policy": 12,
+        "complaint": 13,
+        "contact_customer_service": 13,
+        "contact_human_agent": 12,
+        "create_account": 12,
+        "delete_account": 12,
+        "delivery_options": 12,
+        "delivery_period": 13,
+        "edit_account": 13,
+        "get_invoice": 12,
+        "get_refund": 12,
+        "newsletter_subscription": 13,
+        "payment_issue": 12,
+        "place_order": 13,
+        "recover_password": 13,
+        "registration_problems": 13,
+        "set_up_shipping_address": 12,
+        "track_order": 12,
+        "track_refund": 13
+      }
+    }
+  },
+  "manifest_hash": "1182a97b9d392682e8dd80db916a5eb6103057d4752e1d66c79818cd83b67c46",
+  "team_number": 10,
+  "source_dataset": "bitext/Bitext-customer-support-llm-chatbot-training-dataset",
+  "cleaning_log": {
+    "rows_in": 26872,
+    "dropped_empty": 0,
+    "dropped_exact_duplicate_pairs": 0,
+    "rows_out": 26872
+  },
+  "cross_split_instruction_overlap": {
+    "val": 282,
+    "test": 269
+  },
+  "protocol": "held-out intents; stratified 80/10/10 on remaining intents; eval_mini = 300 stratified rows of val"
+}

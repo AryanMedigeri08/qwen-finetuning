@@ -1,0 +1,42 @@
+[
+  {
+    "family": "orders",
+    "row_id": 1349,
+    "intent": "change_order",
+    "category": "ORDER",
+    "instruction": "how can I change some articles of order {{Order Number}}?",
+    "response": "Appreciate your message to us with your request to change some articles in order number {{Order Number}}. We understand the importance of ensuring that your order is exactly what you desire. To assist you with making the necessary changes, please provide us with the specific articles you would like to modify. Once we have this information, our team will work diligently to fulfill your request. We greatly appreciate your patience and understanding as we strive to provide you with the best possible service."
+  },
+  {
+    "family": "money",
+    "row_id": 15374,
+    "intent": "get_invoice",
+    "category": "INVOICE",
+    "instruction": "mail me the bill from {{Person Name}}",
+    "response": "I certainly recognize your request to receive the bill from {{Salutation}} {{Client Last Name}} by email. To facilitate this process, could you please provide me with the email address to which you would like the bill to be sent? Once I have that information, I will ensure that the bill is promptly emailed to you."
+  },
+  {
+    "family": "account",
+    "row_id": 14356,
+    "intent": "edit_account",
+    "category": "ACCOUNT",
+    "instruction": "update premium account",
+    "response": "How marvelous it is to witness your dedication to updating your premium account!I'm here to provide you with the necessary guidance and support throughout this process. Rest assured, I'll ensure a seamless experience as we work together to make the desired changes. Could you please let me know which specific details you would like to update on your premium account?"
+  },
+  {
+    "family": "logistics",
+    "row_id": 2742,
+    "intent": "change_shipping_address",
+    "category": "SHIPPING",
+    "instruction": "i do not know what to do to modify my address",
+    "response": "No problem at all! To modify your address, you can either log in to your account on our website and update it in your profile settings, or you can reach out to our customer service team and they will assist you in making the necessary changes."
+  },
+  {
+    "family": "service",
+    "row_id": 9471,
+    "intent": "contact_human_agent",
+    "category": "CONTACT",
+    "instruction": "I want assistance to speak to somebody",
+    "response": "Your reach-out is appreciated! I'm sensing that you are seeking assistance and would like to speak to somebody. We are here to help! To connect you with the right person, may I know the specific nature of your inquiry or the topic you want to discuss? By understanding your needs, I can ensure that our representative is well-prepared to assist you effectively. Please take a moment to provide some additional details."
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "data_manifest_hash": "1182a97b9d392682e8dd80db916a5eb6103057d4752e1d66c79818cd83b67c46",
+  "system_prompt_sha256": "900d9551d9d7e6efe0c7f2a55f5a0fdb1b8af51d74ad51af06e812f7583f246f",
+  "routing_share": 0.2,
+  "sft_train_sha256": "eb1bbed6799a8c3eda9444240820e94e670597fc19479407e7ef7b29f2ee5420",
+  "sft_val_sha256": "0e6c9614b3c434c57380deb02dfad59726b51b90134e4d96a52e23bb50d5684b",
+  "n_train_records": 23875,
+  "n_val_records": 625
+}

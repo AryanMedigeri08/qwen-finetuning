@@ -1,0 +1,8 @@
+team_number: 10
+held_out_intents:
+- switch_account
+- review
+- check_invoice
+global_seed: 42
+base_model: Qwen/Qwen2.5-1.5B-Instruct
+dataset: bitext/Bitext-customer-support-llm-chatbot-training-dataset

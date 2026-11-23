@@ -1,0 +1,11 @@
+.runtime/
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+*.sqlite3*
+*.safetensors
+*.faiss
+*.pt
+/data/splits/*.jsonl
+/results/runs/

@@ -1,0 +1,33 @@
+{
+  "chosen_variant": "V2",
+  "selection_rule": "max BERTScore-F1 on eval-mini (ROUGE-L tie-break)",
+  "system_sha256": "900d9551d9d7e6efe0c7f2a55f5a0fdb1b8af51d74ad51af06e812f7583f246f",
+  "router_sha256": "970d46faaf65246c80f9b6e52bb3095a6c01b53f3dfa3731ebfe4c78680befa0",
+  "data_manifest_hash": "1182a97b9d392682e8dd80db916a5eb6103057d4752e1d66c79818cd83b67c46",
+  "scores": {
+    "V1": {
+      "rougeL": 0.2244,
+      "bertscore_f1": 0.8742,
+      "leak_pct": 9.3333,
+      "avg_words": 52.3367,
+      "trunc_pct": 1.0,
+      "prompt_hash": "aa799f81cd49"
+    },
+    "V2": {
+      "rougeL": 0.2187,
+      "bertscore_f1": 0.8747,
+      "leak_pct": 7.3333,
+      "avg_words": 39.7433,
+      "trunc_pct": 0.6667,
+      "prompt_hash": "900d9551d9d7"
+    },
+    "V3": {
+      "rougeL": 0.2176,
+      "bertscore_f1": 0.8747,
+      "leak_pct": 17.6667,
+      "avg_words": 40.26,
+      "trunc_pct": 1.0,
+      "prompt_hash": "56eaff661065"
+    }
+  }
+}

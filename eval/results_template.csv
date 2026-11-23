@@ -1,0 +1,1 @@
+run_id,config,split,data_manifest_hash,seed,prompt_hash,n,intent_acc,intent_macro_f1,invalid_json_rate,rougeL,bertscore_f1,perplexity,leak_pct,avg_resp_tokens,trunc_pct,p50_s,p95_s,tokens_per_s,peak_gpu_gb,tsr,tool_acc,halluc_pct,date,notes

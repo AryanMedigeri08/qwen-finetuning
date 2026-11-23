@@ -1,0 +1,610 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+  "policy_sha256": "d0b29caae16be8a5ba0000971591b803940c160589c9549ecaf5fc7f57b017c2",
+  "n": 60,
+  "recall_at_3": 0.9166666666666666,
+  "mrr_at_3": 0.85,
+  "queries": [
+    {
+      "question": "Is there a fee if I cancel while packed?",
+      "gold": "cancellation.md #1",
+      "retrieved": [
+        "cancellation.md #1",
+        "cancellation.md #2",
+        "cancellation.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Can a parcel in transit be cancelled?",
+      "gold": "cancellation.md #2",
+      "retrieved": [
+        "cancellation.md #1",
+        "cancellation.md #2",
+        "cancellation.md #3"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "What happens to my money when an order is cancelled?",
+      "gold": "cancellation.md #3",
+      "retrieved": [
+        "cancellation.md #3",
+        "cancellation.md #1",
+        "cancellation.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How many days after delivery can I request a refund?",
+      "gold": "refund-policy.md #1",
+      "retrieved": [
+        "refund-policy.md #1",
+        "cancellation.md #2",
+        "refund-timelines.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Will you confirm before starting a refund?",
+      "gold": "refund-policy.md #2",
+      "retrieved": [
+        "refund-policy.md #2",
+        "cancellation.md #3",
+        "refund-policy.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What are the stages a refund can be in?",
+      "gold": "refund-policy.md #3",
+      "retrieved": [
+        "refund-policy.md #3",
+        "refund-policy.md #2",
+        "cancellation.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long does a UPI refund take?",
+      "gold": "refund-timelines.md #1",
+      "retrieved": [
+        "refund-timelines.md #1",
+        "refund-timelines.md #3",
+        "refund-timelines.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "When will a credit card or net banking refund arrive?",
+      "gold": "refund-timelines.md #2",
+      "retrieved": [
+        "refund-timelines.md #2",
+        "refund-timelines.md #3",
+        "refund-policy.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What is the refund time if I paid cash on delivery?",
+      "gold": "refund-timelines.md #3",
+      "retrieved": [
+        "refund-timelines.md #3",
+        "refund-policy.md #1",
+        "cancellation.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How much is standard shipping below \u20b9999?",
+      "gold": "delivery-options.md #1",
+      "retrieved": [
+        "delivery-options.md #1",
+        "delivery-options.md #2",
+        "payment-methods.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What does express shipping cost?",
+      "gold": "delivery-options.md #2",
+      "retrieved": [
+        "delivery-options.md #2",
+        "delivery-periods.md #3",
+        "delivery-options.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long will you hold my pickup parcel?",
+      "gold": "delivery-options.md #3",
+      "retrieved": [
+        "delivery-options.md #3",
+        "cancellation.md #2",
+        "checkout.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long is metro standard delivery?",
+      "gold": "delivery-periods.md #1",
+      "retrieved": [
+        "delivery-periods.md #2",
+        "delivery-periods.md #1",
+        "delivery-periods.md #3"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "How long does ordinary delivery take outside a metro?",
+      "gold": "delivery-periods.md #2",
+      "retrieved": [
+        "delivery-periods.md #2",
+        "delivery-periods.md #1",
+        "delivery-periods.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How soon can express shipping arrive after dispatch?",
+      "gold": "delivery-periods.md #3",
+      "retrieved": [
+        "delivery-periods.md #3",
+        "cancellation.md #2",
+        "cancellation.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Which online payment methods can I use?",
+      "gold": "payment-methods.md #1",
+      "retrieved": [
+        "payment-methods.md #1",
+        "payment-methods.md #3",
+        "payment-issues.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What is the maximum COD order amount?",
+      "gold": "payment-methods.md #2",
+      "retrieved": [
+        "payment-methods.md #2",
+        "refund-policy.md #1",
+        "shipping-address.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Should I give a support agent my UPI PIN?",
+      "gold": "payment-methods.md #3",
+      "retrieved": [
+        "payment-methods.md #3",
+        "refund-timelines.md #1",
+        "privacy.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How do I locate the invoice for an order I own?",
+      "gold": "invoices-gst.md #1",
+      "retrieved": [
+        "invoices-gst.md #1",
+        "invoices-gst.md #3",
+        "privacy.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Where can I find the GST amount and total I was charged?",
+      "gold": "invoices-gst.md #2",
+      "retrieved": [
+        "invoices-gst.md #2",
+        "invoices-gst.md #3",
+        "invoices-gst.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What is the deadline to ask about missing business invoice details?",
+      "gold": "invoices-gst.md #3",
+      "retrieved": [
+        "invoices-gst.md #3",
+        "privacy.md #2",
+        "contact-hours.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How do I sign up for a new account?",
+      "gold": "account-creation.md #1",
+      "retrieved": [
+        "account-creation.md #2",
+        "account-management.md #2",
+        "account-creation.md #3"
+      ],
+      "rank": null
+    },
+    {
+      "question": "How long is my new account verification link valid?",
+      "gold": "account-creation.md #2",
+      "retrieved": [
+        "account-creation.md #2",
+        "account-management.md #3",
+        "password-recovery.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Can I register twice with the same email?",
+      "gold": "account-creation.md #3",
+      "retrieved": [
+        "account-creation.md #3",
+        "account-management.md #3",
+        "newsletter.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How do I start deleting my account?",
+      "gold": "account-deletion.md #1",
+      "retrieved": [
+        "account-deletion.md #2",
+        "account-deletion.md #1",
+        "newsletter.md #2"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "Can I delete my account during a pending refund?",
+      "gold": "account-deletion.md #2",
+      "retrieved": [
+        "account-deletion.md #2",
+        "refund-policy.md #3",
+        "cancellation.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Do you keep transaction records when I delete my account?",
+      "gold": "account-deletion.md #3",
+      "retrieved": [
+        "account-deletion.md #3",
+        "account-deletion.md #2",
+        "account-management.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long is a reset password link valid?",
+      "gold": "password-recovery.md #1",
+      "retrieved": [
+        "password-recovery.md #1",
+        "account-creation.md #2",
+        "password-recovery.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "When can I resend a missing reset email?",
+      "gold": "password-recovery.md #2",
+      "retrieved": [
+        "password-recovery.md #2",
+        "account-creation.md #3",
+        "newsletter.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Can the help desk use my password or reset code?",
+      "gold": "password-recovery.md #3",
+      "retrieved": [
+        "password-recovery.md #3",
+        "password-recovery.md #2",
+        "password-recovery.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "When can I change the shipping address on a packed order?",
+      "gold": "shipping-address.md #1",
+      "retrieved": [
+        "shipping-address.md #1",
+        "shipping-address.md #3",
+        "shipping-address.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Can I redirect a package after it ships?",
+      "gold": "shipping-address.md #2",
+      "retrieved": [
+        "cancellation.md #2",
+        "shipping-address.md #2",
+        "shipping-address.md #1"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "How many addresses can I save in my profile?",
+      "gold": "shipping-address.md #3",
+      "retrieved": [
+        "shipping-address.md #3",
+        "account-creation.md #3",
+        "privacy.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long can I use my newsletter confirmation link?",
+      "gold": "newsletter.md #1",
+      "retrieved": [
+        "newsletter.md #2",
+        "checkout.md #3",
+        "account-creation.md #2"
+      ],
+      "rank": null
+    },
+    {
+      "question": "How soon does a newsletter unsubscribe take effect?",
+      "gold": "newsletter.md #2",
+      "retrieved": [
+        "newsletter.md #2",
+        "newsletter.md #3",
+        "newsletter.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Will unsubscribe stop emails about my orders?",
+      "gold": "newsletter.md #3",
+      "retrieved": [
+        "newsletter.md #2",
+        "newsletter.md #3",
+        "password-recovery.md #2"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "How quickly will you acknowledge a complaint?",
+      "gold": "complaints.md #1",
+      "retrieved": [
+        "complaints.md #1",
+        "complaints.md #2",
+        "complaints.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "When will a supervisor review my complaint?",
+      "gold": "complaints.md #2",
+      "retrieved": [
+        "complaints.md #2",
+        "complaints.md #1",
+        "reviews.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Should I create another complaint ticket for the same issue?",
+      "gold": "complaints.md #3",
+      "retrieved": [
+        "complaints.md #3",
+        "complaints.md #1",
+        "complaints.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What hours can I talk to a person?",
+      "gold": "contact-hours.md #1",
+      "retrieved": [
+        "contact-hours.md #2",
+        "contact-hours.md #1",
+        "complaints.md #2"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "How can I contact support on Sunday?",
+      "gold": "contact-hours.md #2",
+      "retrieved": [
+        "contact-hours.md #2",
+        "contact-hours.md #1",
+        "password-recovery.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What should I include in my message to support?",
+      "gold": "contact-hours.md #3",
+      "retrieved": [
+        "password-recovery.md #2",
+        "password-recovery.md #3",
+        "complaints.md #3"
+      ],
+      "rank": null
+    },
+    {
+      "question": "Can a friend look up my order using the order number?",
+      "gold": "privacy.md #1",
+      "retrieved": [
+        "privacy.md #1",
+        "reviews.md #1",
+        "checkout.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long does a copy of my personal data take?",
+      "gold": "privacy.md #2",
+      "retrieved": [
+        "privacy.md #2",
+        "payment-issues.md #3",
+        "account-creation.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What personal credentials should I never tell support?",
+      "gold": "privacy.md #3",
+      "retrieved": [
+        "privacy.md #3",
+        "password-recovery.md #3",
+        "account-creation.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long do I have to return something after it arrives?",
+      "gold": "returns-exchanges.md #1",
+      "retrieved": [
+        "cancellation.md #2",
+        "refund-policy.md #1",
+        "returns-exchanges.md #3"
+      ],
+      "rank": null
+    },
+    {
+      "question": "When can I request an exchange for my item?",
+      "gold": "returns-exchanges.md #2",
+      "retrieved": [
+        "returns-exchanges.md #2",
+        "privacy.md #2",
+        "password-recovery.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What is the deadline for reporting an item damaged in shipping?",
+      "gold": "returns-exchanges.md #3",
+      "retrieved": [
+        "returns-exchanges.md #3",
+        "cancellation.md #2",
+        "refund-policy.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How do I place a new order?",
+      "gold": "checkout.md #1",
+      "retrieved": [
+        "checkout.md #1",
+        "account-deletion.md #2",
+        "shipping-address.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Does putting an item in my cart hold stock?",
+      "gold": "checkout.md #2",
+      "retrieved": [
+        "checkout.md #2",
+        "checkout.md #1",
+        "account-deletion.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How long until I receive my order confirmation email?",
+      "gold": "checkout.md #3",
+      "retrieved": [
+        "checkout.md #3",
+        "newsletter.md #1",
+        "refund-policy.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How soon should I retry a payment that is pending?",
+      "gold": "payment-issues.md #1",
+      "retrieved": [
+        "payment-issues.md #1",
+        "payment-issues.md #2",
+        "payment-issues.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What if money was debited but no order was created?",
+      "gold": "payment-issues.md #2",
+      "retrieved": [
+        "payment-issues.md #2",
+        "cancellation.md #3",
+        "refund-policy.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "When should I report being charged twice?",
+      "gold": "payment-issues.md #3",
+      "retrieved": [
+        "payment-issues.md #3",
+        "complaints.md #3",
+        "payment-issues.md #1"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "How do I change the email in my account?",
+      "gold": "account-management.md #1",
+      "retrieved": [
+        "password-recovery.md #2",
+        "account-creation.md #3",
+        "newsletter.md #2"
+      ],
+      "rank": null
+    },
+    {
+      "question": "How do I switch to a different account on this device?",
+      "gold": "account-management.md #2",
+      "retrieved": [
+        "account-management.md #2",
+        "newsletter.md #2",
+        "account-creation.md #3"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "What should I do if registration is stuck?",
+      "gold": "account-management.md #3",
+      "retrieved": [
+        "account-management.md #3",
+        "password-recovery.md #2",
+        "account-creation.md #2"
+      ],
+      "rank": 1
+    },
+    {
+      "question": "Who can write a product review?",
+      "gold": "reviews.md #1",
+      "retrieved": [
+        "reviews.md #3",
+        "reviews.md #1",
+        "reviews.md #2"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "How long until my product review appears?",
+      "gold": "reviews.md #2",
+      "retrieved": [
+        "reviews.md #3",
+        "reviews.md #2",
+        "checkout.md #3"
+      ],
+      "rank": 2
+    },
+    {
+      "question": "Can I edit a review I already published?",
+      "gold": "reviews.md #3",
+      "retrieved": [
+        "reviews.md #3",
+        "reviews.md #1",
+        "reviews.md #2"
+      ],
+      "rank": 1
+    }
+  ]
+}

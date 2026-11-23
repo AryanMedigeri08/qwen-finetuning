@@ -1,0 +1,15 @@
+{
+  "max_seq_length": 480,
+  "max_new_tokens_resp": 256,
+  "max_new_tokens_route": 48,
+  "length_percentiles": {
+    "p50": 194.0,
+    "p90": 303.0,
+    "p95": 346.0,
+    "p98": 422.5799999999981,
+    "p99": 449.0,
+    "p100": 569.0
+  },
+  "system_prompt_sha256": "900d9551d9d7e6efe0c7f2a55f5a0fdb1b8af51d74ad51af06e812f7583f246f",
+  "data_manifest_hash": "1182a97b9d392682e8dd80db916a5eb6103057d4752e1d66c79818cd83b67c46"
+}

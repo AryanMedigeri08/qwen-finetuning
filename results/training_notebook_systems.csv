@@ -1,0 +1,3 @@
+model,gpu,n_probes,p50_s,p95_s,tokens_per_s,peak_gpu_gb,adapter_size_mb
+base (B0 weights),Tesla T4,20,2.031,3.897,18.959,2.149,0.0
+fine-tuned (C2 adapter),Tesla T4,20,10.037,16.37,9.753,2.222,73.911
