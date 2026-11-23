@@ -124,9 +124,10 @@ def render_tool(name, result):
 
 
 class Assistant:
-    def __init__(self, tools, model=None, verify=True):
+    def __init__(self, tools, model=None, verify=True, *, policy_k=3):
         self.tools = tools
         self.model = model
+        self.policy_k = policy_k
         graph = StateGraph(State)
         for name in ("router", "knowledge", "action", "verifier", "escalate"):
             graph.add_node(name, self.timed(name))
@@ -298,7 +299,7 @@ class Assistant:
     def knowledge(self, state):
         if state["retry"]:
             return {"draft": state["approved"][0]}
-        result, calls = self.call(state, "search_policy", {"query": state["query"], "k": 3})
+        result, calls = self.call(state, "search_policy", {"query": state["query"], "k": self.policy_k})
         chunks = result.get("data", {}).get("chunks", [])
         matches = [chunk for chunk in chunks if state["intent"] in chunk["intents"]]
         if not matches:

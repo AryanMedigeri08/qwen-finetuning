@@ -8,11 +8,11 @@ from eval.generation import build_response_messages, build_route_messages, gener
 from eval.metrics import bertscore_f1, intent_metrics, parse_route_json, placeholder_leakage, rouge_l
 
 from . import ROOT
-from .model import CATEGORIES, Qwen, adapter_fingerprint
+from .model import CATEGORIES, ROUTE_RETRY_SUFFIX, ROUTE_TOKEN_LIMIT, Qwen, adapter_fingerprint, parse_route
 from .research import read_jsonl, write_csv
 
 
-def evaluate(config, split, output, adapter, batch_size, nf4):
+def evaluate(config, split, output, adapter, batch_size, nf4, *, router_only=False):
     import torch
 
     manifest = json.loads((ROOT / "data/splits/manifest.json").read_text(encoding="utf-8"))
@@ -24,7 +24,6 @@ def evaluate(config, split, output, adapter, batch_size, nf4):
     ids = [row["row_id"] for row in rows]
     qwen = Qwen(tuned=config == "C2", adapter=adapter, nf4=nf4)
     examples = qwen.examples if config == "C1" else []
-    response = [build_response_messages(qwen.system, row["instruction"], examples) for row in rows]
     route = [build_route_messages(qwen.router, row["instruction"], examples) for row in rows]
     adapter_id = qwen.adapter
     if adapter_id and Path(adapter_id).is_dir():
@@ -35,27 +34,47 @@ def evaluate(config, split, output, adapter, batch_size, nf4):
         "device": qwen.device, "precision": qwen.precision, "data_manifest_hash": manifest["manifest_hash"],
         "prompt_sha256": hashlib.sha256((qwen.system + "\n" + qwen.router).encode()).hexdigest(),
     }
+    if router_only:
+        metadata.update(router_only=True, route_token_limit=ROUTE_TOKEN_LIMIT, retry_suffix=ROUTE_RETRY_SUFFIX)
     output.mkdir(parents=True, exist_ok=True)
     signature = output / "language_manifest.json"
     if signature.exists() and json.loads(signature.read_text(encoding="utf-8")) != metadata:
         raise ValueError("Existing predictions use different evaluation settings.")
     signature.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
-    routes = generate_chat(qwen.model, qwen.tokenizer, route, ids, 48, batch_size, output / "routes.jsonl")
-    answers = generate_chat(qwen.model, qwen.tokenizer, response, ids, 256, batch_size, output / "answers.jsonl")
+    route_limit = ROUTE_TOKEN_LIMIT if router_only else 48
+    routes = generate_chat(qwen.model, qwen.tokenizer, route, ids, route_limit, batch_size, output / "routes.jsonl")
+    if router_only:
+        pred = [parse_route(row["output"]).intent for row in routes]
+        invalid = [i for i, intent in enumerate(pred) if intent == "unknown"]
+        retry_messages = [
+            [route[i][0] | {"content": qwen.router + ROUTE_RETRY_SUFFIX}, *route[i][1:]]
+            for i in invalid
+        ]
+        if invalid:
+            retries = generate_chat(
+                qwen.model, qwen.tokenizer, retry_messages, [ids[i] for i in invalid],
+                route_limit, batch_size, output / "route_retries.jsonl",
+            )
+            for i, retry in zip(invalid, retries):
+                pred[i] = parse_route(retry["output"]).intent
+        pred = [intent if intent != "unknown" else None for intent in pred]
+    else:
+        response = [build_response_messages(qwen.system, row["instruction"], examples) for row in rows]
+        answers = generate_chat(qwen.model, qwen.tokenizer, response, ids, 256, batch_size, output / "answers.jsonl")
+        pred = [parse_route_json(row["output"], CATEGORIES)[0] for row in routes]
     device = qwen.device
     del qwen
     gc.collect()
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
-    pred = [parse_route_json(row["output"], CATEGORIES)[0] for row in routes]
     gold = [row["intent"] for row in rows]
-    responses, refs = [row["output"] for row in answers], [row["response"] for row in rows]
-    bert, _ = bertscore_f1(responses, refs, batch_size=batch_size, device=device)
-    rouge, _ = rouge_l(responses, refs)
-    result = metadata | intent_metrics(gold, pred) | {
-        "n": len(rows), "bertscore_f1": bert, "rougeL": rouge, "leak_pct": placeholder_leakage(responses),
-    }
-    write_csv(output / "language.csv", [result])
+    result = metadata | intent_metrics(gold, pred) | {"n": len(rows)}
+    if not router_only:
+        responses, refs = [row["output"] for row in answers], [row["response"] for row in rows]
+        bert, _ = bertscore_f1(responses, refs, batch_size=batch_size, device=device)
+        rouge, _ = rouge_l(responses, refs)
+        result.update(bertscore_f1=bert, rougeL=rouge, leak_pct=placeholder_leakage(responses))
+    write_csv(output / ("router.csv" if router_only else "language.csv"), [result])
     if split == "test":
         import matplotlib
 
@@ -83,6 +102,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--adapter")
     parser.add_argument("--nf4", action="store_true")
+    parser.add_argument("--router-only", action="store_true", help="Measure strict routing JSON and retry invalid replies")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    evaluate(args.config, args.split, args.output, args.adapter, args.batch_size, args.nf4)
+    evaluate(args.config, args.split, args.output, args.adapter, args.batch_size, args.nf4, router_only=args.router_only)

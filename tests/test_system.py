@@ -154,6 +154,13 @@ def test_benchmark_counts():
         assert len(data) == size
 
 
+def test_policy_search_uses_configured_limit(services):
+    _, tools = services
+    result = Assistant(tools, policy_k=5).ask("C0001", "How long does a UPI refund take?")
+    assert result["calls"][0]["args"]["k"] == 5
+    assert "[refund-timelines.md #1]" in result["answer"]
+
+
 def test_streamlit_confirmation(tmp_path, monkeypatch):
     from streamlit.testing.v1 import AppTest
 

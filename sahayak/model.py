@@ -13,6 +13,8 @@ BASE = "Qwen/Qwen2.5-1.5B-Instruct"
 BASE_REVISION = "989aa7980e4cf806f80c7fef2b1adb7bc71aa306"
 ADAPTER = "aryan22medigeri/llm-qwen2.5-1.5b-qlora"
 ADAPTER_REVISION = "4939e0a84f71d7c7712a55045a377b59a2df9cc4"
+ROUTE_TOKEN_LIMIT = 42
+ROUTE_RETRY_SUFFIX = " Use matching intent and category labels."
 CATEGORIES = {
     "cancel_order": "ORDER", "check_cancellation_fee": "CANCEL",
     "change_shipping_address": "SHIPPING", "set_up_shipping_address": "SHIPPING",
@@ -121,11 +123,11 @@ class Qwen:
     @lru_cache(maxsize=512)
     def classify(self, query, few_shot=False):
         messages = self.messages(self.router, query, examples=self.examples if few_shot else (), routing=True)
-        text, ids, scores = self.generate(messages, 42, scores=True)
+        text, ids, scores = self.generate(messages, ROUTE_TOKEN_LIMIT, scores=True)
         route = parse_route(text)
         if route.intent == "unknown":
-            messages[0] = {"role": "system", "content": self.router + " Use matching intent and category labels."}
-            text, ids, scores = self.generate(messages, 42, scores=True)
+            messages[0] = {"role": "system", "content": self.router + ROUTE_RETRY_SUFFIX}
+            text, ids, scores = self.generate(messages, ROUTE_TOKEN_LIMIT, scores=True)
             route = parse_route(text)
         if route.intent == "unknown":
             return route
@@ -203,7 +205,7 @@ class LocalQwen(Qwen):
         text, _, scores = self.generate(messages, 48, scores=True)
         route = parse_route(text)
         if route.intent == "unknown":
-            messages[0]["content"] += " Use matching intent and category labels."
+            messages[0]["content"] += ROUTE_RETRY_SUFFIX
             text, _, scores = self.generate(messages, 48, scores=True)
             route = parse_route(text)
         if route.intent == "unknown":

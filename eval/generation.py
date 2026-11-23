@@ -44,15 +44,15 @@ def render(tok, messages):
     return tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
 
-def load_model_4bit(model_id, adapter_path=None, cache_dir=None):
+def load_model_4bit(model_id, adapter_path=None, cache_dir=None, *, revision=None):
     from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
     bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
                              bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=torch.float16)
-    tok = AutoTokenizer.from_pretrained(model_id, cache_dir=cache_dir)
+    tok = AutoTokenizer.from_pretrained(model_id, cache_dir=cache_dir, revision=revision)
     tok.padding_side = "left"
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
-    kw = dict(quantization_config=bnb, device_map={"": 0}, cache_dir=cache_dir)
+    kw = dict(quantization_config=bnb, device_map={"": 0}, cache_dir=cache_dir, revision=revision)
     try:
         model = AutoModelForCausalLM.from_pretrained(model_id, dtype=torch.float16, **kw)
     except (TypeError, ValueError):

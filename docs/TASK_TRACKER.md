@@ -33,7 +33,7 @@ The task descriptions, owners and weeks follow Section 27 of the brief. Recovere
 | T27 | Write 20–25 KharidiKart policy documents (Section 9.1) with concrete numbers | S2 | 2 | Verified | 20 Markdown policies, each over 250 words, under policies/. |
 | T28 | Chunk (300 tokens, 50 overlap), embed with bge-small-en-v1.5, build FAISS index with doc/section metadata | S2 | 3 | Verified | One-command section index with BGE and FAISS. E5 compares token windows separately. |
 | T29 | Create 60 question → gold-section pairs; compute Recall@3 and MRR | S2 | 3 | Verified | 60 labelled questions and measured recall@3 and MRR. |
-| T30 | Tune chunk size (200/300/500) × k (3/5); select best (Experiment E5) | S2 | 3 | Partial | Six retrieval configurations measured. Model-backed info-scenario comparison pending. |
+| T30 | Tune chunk size (200/300/500) × k (3/5); select best (Experiment E5) | S2 | 3 | Runner ready | Six retrieval configurations measured. The C4 runner compares end-to-end task success and exact citations on 25 information scenarios. T4 measurements pending. |
 | T31 | Design SQLite schema (Section 9.2); draw ER diagram | S3 | 2 | Implemented | schema.sql and ER diagram in docs/ARCHITECTURE.md. |
 | T32 | Write Faker seed script (team seed): 200 customers, 500 orders in all statuses, refunds, invoices | S3 | 2 | Verified | 200 customers, 500 orders, invoices and refunds with seed 10. |
 | T33 | Implement 8 tool functions (Section 15) with JSON schemas, validation and structured errors | S3 | 3 | Verified | Eight validated tool schemas and handlers in sahayak/tools.py. |

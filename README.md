@@ -30,9 +30,11 @@ Select C0001 for the scripted demo. Ask about the UPI refund timeline, track KK-
 | Reproduce C2 or train the data budgets | Run [Notebook 02](notebooks/02_finetune_and_budget.ipynb) on a Kaggle T4 with the Notebook 01 outputs attached. Enable RUN_DATA_BUDGET for the additional budgets. |
 | Seed a mock database | Run `python -m sahayak.db --seed 10`. The date and identifiers are fixed for repeatable fixtures. |
 | Build and score the index | Run `python -m sahayak.retrieval --evaluate results/retrieval.json --sweep results/e5_retrieval_sweep.csv`. |
+| Compare retrieval settings end to end | Run `python -m sahayak.retrieval_eval --nf4 --output results/runs/t4/e5`. This compares the section index with six token-window settings on the same 25 information scenarios. |
 | Check the pipeline | Run `python -m pytest -q` after installing requirements-eval.txt. |
 | Run the fixture-only integration suite | Run `python -m sahayak.benchmark --configs demo --output .runtime/demo-check`. |
 | Run the matched Qwen benchmark | Run [Notebook 03](notebooks/03_evaluate_agents.ipynb) on a CUDA runner, or run `python -m sahayak.benchmark --nf4 --configs C0 C1 C3 C2 C4 C5 --resume --output results/runs/t4` after installing requirements-gpu.txt. Use the same GPU and precision throughout. |
+| Check the Router on the frozen test split | Run `python -m sahayak.language_eval --router-only --nf4 --split test --output results/runs/t4/router-test`. Repeat with held_out_test to check generalization. |
 | Build the experiment table and figures | Run `python -m sahayak.research --runs results/runs/t4`. |
 | Prepare independent human ratings | Run `python -m sahayak.research --runs results/runs/t4 --human-sheet .runtime/ratings.csv`. Share the prompts, evidence, and rating rubric with two raters. After both have completed the sheet, run `python -m sahayak.research --raters rater1.csv rater2.csv`. |
 

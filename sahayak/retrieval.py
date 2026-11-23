@@ -12,6 +12,8 @@ EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 EMBEDDING_REVISION = "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
 INDEX = RUNTIME / "policy.faiss"
 BGE_QUERY = "Represent this sentence for searching relevant passages: "
+WINDOW_SIZES = (200, 300, 500)
+WINDOW_OVERLAP = 50
 
 
 def read_policy():
@@ -73,15 +75,67 @@ class PolicySearch:
                 faiss.write_index(self.index, str(path))
                 metadata.write_text(json.dumps(signature), encoding="utf-8")
 
-    def rank(self, queries, k=3):
-        matrix = self.encoder.encode(
+    def encode_queries(self, queries):
+        return self.encoder.encode(
             [BGE_QUERY + query for query in queries], normalize_embeddings=True, show_progress_bar=False
         )
+
+    def rank(self, queries, k=3):
+        matrix = self.encode_queries(queries)
         _, indices = self.index.search(matrix, min(k, len(self.chunks)))
         return [[self.chunks[int(index)] for index in row] for row in indices]
 
     def search(self, query, k=3):
         return self.rank([query], k)[0]
+
+
+def policy_windows(chunks, tokenizer, size):
+    by_document = defaultdict(list)
+    for index, chunk in enumerate(chunks):
+        by_document[chunk["id"].split(" #", 1)[0]].append((index, chunk))
+    windows = []
+    for sections in by_document.values():
+        ids, labels = [], []
+        for index, section in sections:
+            text = f'{section["title"]}\n{section["heading"]}\n{section["text"]}\n'
+            block = tokenizer.encode(text, add_special_tokens=False)
+            ids.extend(block)
+            labels.extend([index] * len(block))
+        for start in range(0, len(ids), size - WINDOW_OVERLAP):
+            end = start + size
+            windows.append((tokenizer.decode(ids[start:end]), set(labels[start:end])))
+            if end >= len(ids):
+                break
+    return windows
+
+
+class WindowPolicySearch:
+    """Retrieve token windows and rerank the sections they cover for stable citations."""
+
+    def __init__(self, sections, size):
+        import faiss
+
+        if size not in WINDOW_SIZES:
+            raise ValueError(f"Choose a window size from {WINDOW_SIZES}.")
+        self.sections = sections
+        self.windows = policy_windows(sections.chunks, sections.encoder.tokenizer, size)
+        encoded = sections.encoder.encode(
+            [text for text, _ in self.windows], normalize_embeddings=True, show_progress_bar=False
+        )
+        self.index = faiss.IndexFlatIP(encoded.shape[1])
+        self.index.add(encoded)
+        self.section_vectors = sections.index.reconstruct_n(0, len(sections.chunks))
+
+    def window_ranks(self, vectors, k):
+        _, hits = self.index.search(vectors, min(k, len(self.windows)))
+        return [[self.windows[int(index)][1] for index in row] for row in hits]
+
+    def search(self, query, k=3):
+        vector = self.sections.encode_queries([query])
+        candidates = set().union(*self.window_ranks(vector, k)[0])
+        scored = self.section_vectors @ vector[0]
+        ranked = sorted(candidates, key=lambda index: (-scored[index], index))
+        return [self.sections.chunks[index] for index in ranked[:k]]
 
 
 def evaluate(search):
@@ -101,44 +155,22 @@ def evaluate(search):
 
 def sweep(search):
     """Compare token windows against the labelled policy sections."""
-    import faiss
-
     suite = json.loads((ROOT / "benchmarks/retrieval.json").read_text(encoding="utf-8"))
-    queries = search.encoder.encode([BGE_QUERY + row["question"] for row in suite],
-                                    normalize_embeddings=True, show_progress_bar=False)
-    by_document = defaultdict(list)
-    for chunk in search.chunks:
-        by_document[chunk["id"].split(" #")[0]].append(chunk)
+    vectors = search.encode_queries([row["question"] for row in suite])
+    section_ids = {chunk["id"]: index for index, chunk in enumerate(search.chunks)}
     rows = []
-    tokenizer = search.encoder.tokenizer
-    for size in (200, 300, 500):
-        windows = []
-        for sections in by_document.values():
-            ids, labels = [], []
-            for section in sections:
-                text = f'{section["title"]}\n{section["heading"]}\n{section["text"]}\n'
-                block = tokenizer.encode(text, add_special_tokens=False)
-                ids.extend(block)
-                labels.extend([section["id"]] * len(block))
-            start = 0
-            while start < len(ids):
-                end = start + size
-                windows.append((tokenizer.decode(ids[start:end]), set(labels[start:end])))
-                if end >= len(ids):
-                    break
-                start = end - 50
-        encoded = search.encoder.encode([text for text, _ in windows], normalize_embeddings=True, show_progress_bar=False)
-        index = faiss.IndexFlatIP(encoded.shape[1])
-        index.add(encoded)
-        _, hits = index.search(queries, 5)
+    for size in WINDOW_SIZES:
+        index = WindowPolicySearch(search, size)
+        hits = index.window_ranks(vectors, 5)
         for k in (3, 5):
             ranks = [
-                next((rank for rank, window in enumerate(indices[:k], start=1)
-                      if row["gold"] in windows[int(window)][1]), None)
-                for indices, row in zip(hits, suite)
+                next((rank for rank, sections in enumerate(windows[:k], start=1)
+                      if section_ids[row["gold"]] in sections), None)
+                for windows, row in zip(hits, suite)
             ]
             rows.append({
-                "chunk_tokens": size, "overlap_tokens": 50, "k": k, "n": len(suite), "windows": len(windows),
+                "chunk_tokens": size, "overlap_tokens": WINDOW_OVERLAP, "k": k, "n": len(ranks),
+                "windows": len(index.windows),
                 "recall_at_k": sum(rank is not None for rank in ranks) / len(ranks),
                 "mrr_at_k": sum(1 / rank for rank in ranks if rank) / len(ranks),
             })
