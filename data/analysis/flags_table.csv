@@ -1,0 +1,15 @@
+tag,meaning,rows,pct_rows
+B,Basic syntactic structure,26872,100.0
+L,Lexical variation (synonyms),24115,89.74
+Q,Colloquial variation,8968,33.37
+I,Interrogative structure,7839,29.17
+Z,Noise (spelling / punctuation errors),5286,19.67
+M,"Morphological variation (plurals, tenses...)",4920,18.31
+C,Coordinated syntactic structure,2646,9.85
+K,Keyword language,2227,8.29
+E,Expanded abbreviations (I'm -> I am),1882,7.0
+P,Politeness variation,1329,4.95
+W,Offensive language,1288,4.79
+N,"Negation (don't, can't...)",463,1.72
+S,Syntactic structure (older card versions),417,1.55
+V,NOT IN CARD TABLE - check card,77,0.29

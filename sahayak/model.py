@@ -57,14 +57,12 @@ class Qwen:
         self.base = base
         kwargs = {"revision": BASE_REVISION} if base == BASE else {}
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        if nf4 and self.device != "cuda":
-            raise RuntimeError("NF4 evaluation requires a CUDA runtime.")
-        self.precision = "nf4" if nf4 else ("float16" if self.device == "cuda" else "bfloat16")
-        dtype = torch.float16 if self.device == "cuda" else torch.bfloat16
+        self.precision = "nf4" if nf4 else ("float16" if self.device == "cuda" else "float32")
+        dtype = torch.float16 if self.device == "cuda" else torch.float32
         if nf4:
             kwargs["quantization_config"] = BitsAndBytesConfig(
                 load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True,
-                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_compute_dtype=dtype,
             )
         self.tokenizer = AutoTokenizer.from_pretrained(base, **{k: v for k, v in kwargs.items() if k == "revision"})
         self.model = AutoModelForCausalLM.from_pretrained(
@@ -76,8 +74,6 @@ class Qwen:
             local = RUNTIME / "C2_adapter"
             self.adapter = str(adapter or os.environ.get("SAHAYAK_ADAPTER") or (local if local.is_dir() else ADAPTER))
             self.model = PeftModel.from_pretrained(self.model, self.adapter)
-            if not nf4:
-                self.model = self.model.merge_and_unload()
         self.model.eval()
         self.system = (ROOT / "prompts/system.txt").read_text(encoding="utf-8").strip()
         self.router = (ROOT / "prompts/router_system.txt").read_text(encoding="utf-8").strip()
@@ -112,6 +108,10 @@ class Qwen:
         text, ids, scores = self.generate(messages, 42, scores=True)
         route = parse_route(text)
         if route.intent == "unknown":
+            messages[0] = {"role": "system", "content": self.router + " Use matching intent and category labels."}
+            text, ids, scores = self.generate(messages, 42, scores=True)
+            route = parse_route(text)
+        if route.intent == "unknown":
             return route
         joined = self.tokenizer.decode(ids, skip_special_tokens=True)
         start = joined.find('"' + route.intent + '"') + 1
@@ -139,7 +139,7 @@ class Qwen:
         return Route(route.intent, route.category, confidence, top)
 
     def answer(self, query, history=(), few_shot=False):
-        return self.generate(self.messages(self.system, query, history, self.examples if few_shot else ()), 160)[0]
+        return self.generate(self.messages(self.system, query, history, self.examples if few_shot else ()), 256)[0]
 
     @lru_cache(maxsize=512)
     def policy_draft(self, query, approved):

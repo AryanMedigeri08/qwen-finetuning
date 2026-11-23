@@ -46,13 +46,10 @@ def fields_match(actual, expected):
     return all(actual.get(key) == value for key, value in expected.items())
 
 
-def grounded(answer, turn, case):
+def grounded(answer, turn):
     if not CLAIM.search(answer):
         return True
     if answer in (turn.get("approved") or ()):
-        source = case.get("source")
-        if source and not answer.endswith(f"[{source}]"):
-            return False
         return True
     # Answers without tools have no authoritative policy or order evidence. A reference
     # copied from the question is not, on its own, a factual claim.
@@ -73,7 +70,7 @@ def score(case, turns, store, original, agent_enabled):
     facts = all(part.casefold() in final.casefold() for part in case["must_include"])
     cited = not case.get("source") or f'[{case["source"]}]' in final
     intent = turns[0].get("intent")
-    hallucinated = any(not grounded(turn["answer"], turn, case) for turn in turns)
+    hallucinated = any(not grounded(turn["answer"], turn) for turn in turns)
     leak = any(PLACEHOLDER.search(turn["answer"]) for turn in turns)
     if not agent_enabled and case["type"] in {"read", "write_confirm", "escalation"}:
         facts = bool(re.search(r"\b(?:can't|cannot|unable|don't have access|contact support)\b", final, re.I))
@@ -92,8 +89,10 @@ def score(case, turns, store, original, agent_enabled):
             failure = "R4"
         elif wanted != actual_tools or not db_ok:
             failure = "R3"
+        elif hallucinated or leak or (case.get("source") and not cited and turns[-1].get("verdict") == "PASS"):
+            failure = "R5"
         else:
-            failure = "R5" if hallucinated or leak else "R6"
+            failure = "R6"
     return {
         "success": success, "db_ok": db_ok, "expected_intent": case["intent"], "intent": intent,
         "tool_match": sum(a == b for a, b in zip(wanted, actual_tools)),
@@ -139,7 +138,10 @@ def run_case(case, store, model, assistant, config, red):
         turn["query"] = query
         history.extend([{"role": "user", "content": query}, {"role": "assistant", "content": turn["answer"]}])
         if index == 0 and case.get("before_confirm"):
-            turn["before_confirm_ok"] = fields_match(actual_order(store, case["after"]["order_id"]), case["before_confirm"])
+            turn["before_confirm_ok"] = (
+                fields_match(actual_order(store, case["after"]["order_id"]), case["before_confirm"])
+                and snapshot(store, case["customer_id"]) == original
+            )
         turns.append(turn)
     metrics = score_red(case, turns, store, original) if red else score(case, turns, store, original, bool(assistant))
     if turns[0].get("before_confirm_ok") is False:
@@ -190,6 +192,8 @@ def main():
     parser.add_argument("--adapter")
     parser.add_argument("--nf4", action="store_true")
     parser.add_argument("--lexical", action="store_true")
+    parser.add_argument("--skip-red", action="store_true")
+    parser.add_argument("--resume", action="store_true", help="Resume a run in the same output directory")
     args = parser.parse_args()
     if args.lexical and any(config != "demo" for config in args.configs):
         parser.error("Lexical retrieval is reserved for the deterministic demo.")
@@ -227,10 +231,15 @@ def main():
                 "policy_sha256": read_policy()[1] if agents else None,
                 "data_manifest_hash": load(ROOT / "data/splits/manifest.json")["manifest_hash"],
             }
+            if stack_model:
+                import torch
+
+                status["hardware"] = torch.cuda.get_device_name() if stack_model.device == "cuda" else platform.processor()
+                status["torch"] = str(torch.__version__)
             if status["adapter"] and Path(status["adapter"]).is_dir():
                 status["adapter"] = adapter_fingerprint(status["adapter"])
             for red, path in suite_paths.items():
-                if red and config not in {"demo", "C4", "C5"}:
+                if red and (args.skip_red or config not in {"demo", "C4", "C5"}):
                     continue
                 cases = [case for case in load(path) if not args.ids or case["id"] in args.ids][:args.limit]
                 if not cases:
@@ -239,8 +248,18 @@ def main():
                 status[f"{label}_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
                 output = args.output / f"{config.lower()}_{label}.jsonl"
                 rows = []
-                with output.open("w", encoding="utf-8", newline="\n") as handle:
-                    for case in cases:
+                manifest = output.with_suffix(".manifest.json")
+                signature = status | {"ids": [case["id"] for case in cases], "retrieval": "lexical" if args.lexical else "bge"}
+                if args.resume and output.exists():
+                    if not manifest.exists() or load(manifest) != signature:
+                        raise ValueError(f"Cannot resume {output.name}: the run settings changed.")
+                    with output.open(encoding="utf-8") as previous:
+                        rows = [json.loads(line) for line in previous if line.strip()]
+                    if [row["id"] for row in rows] != signature["ids"][:len(rows)]:
+                        raise ValueError(f"Cannot resume {output.name}: case rows are out of sequence.")
+                manifest.write_text(json.dumps(signature, indent=2) + "\n", encoding="utf-8")
+                with output.open("a" if rows else "w", encoding="utf-8", newline="\n") as handle:
+                    for case in cases[len(rows):]:
                         shutil.copyfile(seed, target)
                         row = run_case(case, Store(target), stack_model, assistant, config, red)
                         rows.append(row)

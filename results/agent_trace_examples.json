@@ -1,0 +1,290 @@
+{
+  "tracking_success": {
+    "query": "Where is order KK-10001?",
+    "trace": [
+      {
+        "node": "router",
+        "ms": 0.12,
+        "input": "Where is order KK-10001?",
+        "output": {
+          "intent": "track_order",
+          "confidence": 1.0,
+          "alternatives": [],
+          "entities": {
+            "order_id": "KK-10001"
+          }
+        }
+      },
+      {
+        "node": "action",
+        "ms": 3.63,
+        "input": "track_order",
+        "output": {
+          "draft": "Order KK-10001 is placed. Its recorded delivery date is 2026-11-27."
+        },
+        "tools": [
+          {
+            "name": "get_order_status",
+            "args": {
+              "order_id": "KK-10001"
+            },
+            "result": {
+              "ok": true,
+              "data": {
+                "order_id": "KK-10001",
+                "status": "placed",
+                "amount_inr": 4590,
+                "eta": "2026-11-27",
+                "placed_at": "2026-11-15"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "node": "verifier",
+        "ms": 0.01,
+        "input": "track_order",
+        "output": {
+          "verdict": "PASS",
+          "checks": {
+            "no_placeholders": true,
+            "grounded": true,
+            "tool_budget": true,
+            "step_budget": true
+          }
+        }
+      }
+    ]
+  },
+  "cancellation_confirmation": {
+    "turns": [
+      {
+        "query": "Please cancel order KK-10001",
+        "trace": [
+          {
+            "node": "router",
+            "ms": 0.16,
+            "input": "Please cancel order KK-10001",
+            "output": {
+              "intent": "cancel_order",
+              "confidence": 1.0,
+              "alternatives": [],
+              "entities": {
+                "order_id": "KK-10001"
+              }
+            }
+          },
+          {
+            "node": "action",
+            "ms": 4.65,
+            "input": "cancel_order",
+            "output": {
+              "draft": "Please confirm that you want me to cancel order KK-10001."
+            },
+            "tools": [
+              {
+                "name": "get_order_status",
+                "args": {
+                  "order_id": "KK-10001"
+                },
+                "result": {
+                  "ok": true,
+                  "data": {
+                    "order_id": "KK-10001",
+                    "status": "placed",
+                    "amount_inr": 4590,
+                    "eta": "2026-11-27",
+                    "placed_at": "2026-11-15"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node": "verifier",
+            "ms": 0.01,
+            "input": "cancel_order",
+            "output": {
+              "verdict": "PASS",
+              "checks": {
+                "no_placeholders": true,
+                "grounded": true,
+                "tool_budget": true,
+                "step_budget": true
+              }
+            }
+          }
+        ],
+        "answer": "Please confirm that you want me to cancel order KK-10001."
+      },
+      {
+        "query": "yes",
+        "trace": [
+          {
+            "node": "router",
+            "ms": 0.03,
+            "input": "yes",
+            "output": {
+              "intent": "cancel_order",
+              "confidence": 1.0,
+              "entities": {
+                "order_id": "KK-10001"
+              }
+            }
+          },
+          {
+            "node": "action",
+            "ms": 25.04,
+            "input": "cancel_order",
+            "output": {
+              "draft": "Order KK-10001 is cancelled. Refund RF-10001 for KK-10001 is ₹4,590. The estimated timeline is 5 working days."
+            },
+            "tools": [
+              {
+                "name": "cancel_order",
+                "args": {
+                  "order_id": "KK-10001",
+                  "confirmed": true
+                },
+                "result": {
+                  "ok": true,
+                  "data": {
+                    "refund_id": "RF-10001",
+                    "order_id": "KK-10001",
+                    "amount_inr": 4590,
+                    "status": "cancelled",
+                    "eta_days": 5
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node": "verifier",
+            "ms": 0.01,
+            "input": "cancel_order",
+            "output": {
+              "verdict": "PASS",
+              "checks": {
+                "no_placeholders": true,
+                "grounded": true,
+                "tool_budget": true,
+                "step_budget": true
+              }
+            }
+          }
+        ],
+        "answer": "Order KK-10001 is cancelled. Refund RF-10001 for KK-10001 is ₹4,590. The estimated timeline is 5 working days."
+      }
+    ]
+  },
+  "verifier_revision": {
+    "fixture": "Deliberately unsupported draft for regression testing",
+    "query": "How long does a UPI refund take?",
+    "trace": [
+      {
+        "node": "router",
+        "ms": 1.55,
+        "input": "How long does a UPI refund take?",
+        "output": {
+          "intent": "check_refund_policy",
+          "confidence": 1.0,
+          "alternatives": [],
+          "entities": {}
+        }
+      },
+      {
+        "node": "knowledge",
+        "ms": 0.28,
+        "input": "check_refund_policy",
+        "output": {
+          "draft": "UPI refunds arrive in 99 working days."
+        },
+        "tools": [
+          {
+            "name": "search_policy",
+            "args": {
+              "query": "How long does a UPI refund take?",
+              "k": 3
+            },
+            "result": {
+              "ok": true,
+              "data": {
+                "chunks": [
+                  {
+                    "id": "refund-timelines.md #1",
+                    "title": "Refund timelines",
+                    "heading": "UPI",
+                    "answer": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.",
+                    "text": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days.\n\nGeneral policy applies across the fictional KharidiKart store. Check My Orders for details tied to a particular purchase. The demo displays order information only after selecting the account that owns the order.\n\nLook for the original UPI transaction in the payment app or bank statement linked to the order. Allow for weekends and holidays when comparing the elapsed time to working days. If the expected period has passed, open the refund record and have its identifier ready before contacting support. The order status alone gives no information about the payment provider's progress.",
+                    "intents": [
+                      "check_refund_policy"
+                    ]
+                  },
+                  {
+                    "id": "cancellation.md #3",
+                    "title": "Cancellation and fees",
+                    "heading": "Refund after cancellation",
+                    "answer": "A confirmed cancellation creates a refund for the order amount. Use the refund reference to check the status.",
+                    "text": "A confirmed cancellation creates a refund for the order amount. Use the refund reference to check the status.\n\n\nCheck the original payment method and retain the refund identifier. The estimated time depends on the payment method and starts when the refund is initiated. If the refund record already exists, follow that record instead of submitting a duplicate request.",
+                    "intents": [
+                      "check_cancellation_fee"
+                    ]
+                  },
+                  {
+                    "id": "refund-policy.md #2",
+                    "title": "Refund policy",
+                    "heading": "Confirmation",
+                    "answer": "Refund initiation requires explicit confirmation for the specified order. Each order has at most one refund record.",
+                    "text": "Refund initiation requires explicit confirmation for the specified order. Each order has at most one refund record.\n\nIf the method or timing is unclear, check the refund timeline policy for the original payment method. A support ticket can preserve the case history when a refund is overdue.\n\nReview the order reference and reason shown at confirmation. If the details need correction, decline and start a new request with the corrected information. Support may ask for supporting material through an existing ticket or follow up using account contact details. Keep evidence of the purchase and use the same ticket while the team is reviewing it.",
+                    "intents": [
+                      "check_refund_policy"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "node": "verifier",
+        "ms": 0.01,
+        "input": "check_refund_policy",
+        "output": {
+          "verdict": "REVISE",
+          "checks": {
+            "no_placeholders": true,
+            "grounded": false,
+            "tool_budget": true,
+            "step_budget": true
+          }
+        }
+      },
+      {
+        "node": "knowledge",
+        "ms": 0.0,
+        "input": "check_refund_policy",
+        "output": {
+          "draft": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days. [refund-timelines.md #1]"
+        }
+      },
+      {
+        "node": "verifier",
+        "ms": 0.01,
+        "input": "check_refund_policy",
+        "output": {
+          "verdict": "PASS",
+          "checks": {
+            "no_placeholders": true,
+            "grounded": true,
+            "tool_budget": true,
+            "step_budget": true
+          }
+        }
+      }
+    ],
+    "answer": "UPI refunds typically take 3–5 working days from initiation, with an estimated upper limit of 5 working days. [refund-timelines.md #1]"
+  }
+}

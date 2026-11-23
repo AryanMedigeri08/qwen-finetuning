@@ -1,0 +1,390 @@
+placeholder,count,n_intents,typical_intents,source_type,source_ref
+Order Number,4036,8,"change_order, cancel_order, track_order",DB,orders.order_id
+Customer Support Phone Number,2633,25,"cancel_order, contact_customer_service, payment_issue",CONFIG,support_phone
+Website URL,2524,25,"cancel_order, contact_customer_service, payment_issue",CONFIG,ui_navigation_text
+Customer Support Hours,2322,25,"cancel_order, contact_customer_service, recover_password",KB,human_agent_hours.md
+Account Type,1777,4,"switch_account, create_account, delete_account",DB,customers.*
+Account Category,1248,4,"switch_account, create_account, delete_account",DB,customers.*
+Online Company Portal Info,1054,2,"cancel_order, edit_account",CONFIG,ui_navigation_text
+Invoice Number,1054,2,"check_invoice, get_invoice",DB,invoices.invoice_id
+Online Order Interaction,1014,2,"cancel_order, track_order",UNMAPPED,needs manual review
+Tracking Number,896,1,delivery_period,UNMAPPED,needs manual review
+Client Last Name,692,2,"check_invoice, get_invoice",DB,customers.name
+Salutation,686,2,"check_invoice, get_invoice",UNMAPPED,needs manual review
+Settings,616,4,"switch_account, recover_password, get_invoice",CONFIG,ui_navigation_text
+Refund Amount,560,2,"track_refund, get_refund",DB,refunds.amount_inr
+Profile,478,3,"switch_account, recover_password, set_up_shipping_address",CONFIG,ui_navigation_text
+Date Range,470,2,"delivery_options, check_invoice",DB,orders.eta / orders.placed_at
+Account Change,466,1,switch_account,DB,customers.*
+Upgrade Account,446,1,switch_account,DB,customers.*
+Login Page URL,397,1,recover_password,CONFIG,ui_navigation_text
+Currency Symbol,373,1,track_refund,UNMAPPED,needs manual review
+Store Location,325,2,"delivery_options, place_order",CONFIG,ui_navigation_text
+Person Name,280,2,"get_invoice, check_invoice",DB,customers.name
+Delivery City,234,1,delivery_options,UNMAPPED,needs manual review
+Forgot Password,212,1,recover_password,UNMAPPED,needs manual review
+Order Status,187,1,track_order,UNMAPPED,needs manual review
+Delivery Country,183,1,delivery_options,UNMAPPED,needs manual review
+Customer Support Email,174,14,"contact_customer_service, contact_human_agent, payment_issue",CONFIG,support_email
+Profile Type,135,1,switch_account,CONFIG,ui_navigation_text
+Order Tracking,79,2,"track_order, delivery_period",UNMAPPED,needs manual review
+Forgot PIN,72,1,recover_password,UNMAPPED,needs manual review
+Client Name,55,3,"get_invoice, check_invoice, track_order",DB,customers.name
+Forgot Access Key,54,1,recover_password,UNMAPPED,needs manual review
+Account Recovery Page URL,52,1,recover_password,CONFIG,ui_navigation_text
+Money Amount,50,1,track_refund,DB,orders.amount_inr
+Company Name,44,11,"edit_account, check_refund_policy, track_refund",CONFIG,ui_navigation_text
+Account Recovery,36,1,recover_password,DB,customers.*
+Security,32,1,recover_password,UNMAPPED,needs manual review
+Cancel Purchase,28,1,cancel_order,UNMAPPED,needs manual review
+Profile Settings,27,2,"recover_password, switch_account",CONFIG,ui_navigation_text
+Forgot Key,25,1,recover_password,UNMAPPED,needs manual review
+Account Recovery Page,24,1,recover_password,CONFIG,ui_navigation_text
+Reset PIN,20,1,recover_password,UNMAPPED,needs manual review
+Client First Name,18,2,"check_invoice, get_invoice",DB,customers.name
+Purchase History,14,1,track_order,UNMAPPED,needs manual review
+Company Account,13,1,cancel_order,CONFIG,ui_navigation_text
+Live Chat Support,13,9,"get_refund, recover_password, edit_account",CONFIG,ui_navigation_text
+Toll-Free Number,11,1,contact_customer_service,UNMAPPED,needs manual review
+tracking number,10,1,delivery_period,UNMAPPED,needs manual review
+order number,10,1,delivery_period,DB,orders.order_id
+PIN Code,10,1,recover_password,UNMAPPED,needs manual review
+Reset Password,9,1,recover_password,UNMAPPED,needs manual review
+Track Order,9,1,track_order,UNMAPPED,needs manual review
+Feedback Email Address,8,1,review,DB,customers.email
+Feature 3,8,1,switch_account,UNMAPPED,needs manual review
+Feature 1,8,1,switch_account,UNMAPPED,needs manual review
+Feature 2,8,1,switch_account,UNMAPPED,needs manual review
+Company,7,2,"cancel_order, edit_account",CONFIG,ui_navigation_text
+Client Full Name,7,1,get_invoice,DB,customers.name
+PIN Recovery,7,1,recover_password,UNMAPPED,needs manual review
+PIN Settings,7,1,recover_password,CONFIG,ui_navigation_text
+Reset Access Key,6,1,recover_password,UNMAPPED,needs manual review
+Reset Key,6,1,recover_password,UNMAPPED,needs manual review
+Password Reset Page,6,1,recover_password,CONFIG,ui_navigation_text
+Password Recovery Page URL,5,1,recover_password,CONFIG,ui_navigation_text
+Refund Processing Time,5,2,"check_refund_policy, get_refund",KB,refund_policy.md
+Password,5,2,"recover_password, switch_account",UNMAPPED,needs manual review
+Customer Service Email,5,4,"complaint, contact_customer_service, contact_human_agent",DB,customers.email
+Privacy,5,1,recover_password,UNMAPPED,needs manual review
+PIN Retrieval,4,1,recover_password,UNMAPPED,needs manual review
+PIN,4,1,recover_password,UNMAPPED,needs manual review
+PIN Management,4,1,recover_password,UNMAPPED,needs manual review
+Customer Service Hours,4,3,"contact_customer_service, review, switch_account",KB,human_agent_hours.md
+Submit,4,2,"recover_password, set_up_shipping_address",UNMAPPED,needs manual review
+Forgot Account Key,4,1,recover_password,DB,customers.*
+Forgot Pin Code,4,1,recover_password,UNMAPPED,needs manual review
+Forgot Profile Key,4,1,recover_password,CONFIG,ui_navigation_text
+Online Customer Support Channel,4,4,"edit_account, recover_password, set_up_shipping_address",CONFIG,ui_navigation_text
+Contact Method,4,4,"contact_customer_service, delete_account, get_refund",UNMAPPED,needs manual review
+Profile Recovery Page URL,4,1,recover_password,CONFIG,ui_navigation_text
+Standard Shipping Time,3,1,delivery_options,UNMAPPED,needs manual review
+User Account Settings,3,1,recover_password,CONFIG,ui_navigation_text
+Recover PIN,3,1,recover_password,UNMAPPED,needs manual review
+Security & Privacy,3,1,recover_password,UNMAPPED,needs manual review
+Customer Service Email Address,3,1,contact_customer_service,DB,customers.email
+Date,3,1,check_invoice,DB,orders.eta / orders.placed_at
+Retrieve PIN,3,1,recover_password,UNMAPPED,needs manual review
+Expedited Shipping Time,3,1,delivery_options,UNMAPPED,needs manual review
+Feedback Email,3,1,review,DB,customers.email
+PIN Code Recovery,3,1,recover_password,UNMAPPED,needs manual review
+PIN Reset,3,1,recover_password,UNMAPPED,needs manual review
+PIN Code Retrieval,3,1,recover_password,UNMAPPED,needs manual review
+Customer Support Team,3,3,"cancel_order, delivery_period, switch_account",UNMAPPED,needs manual review
+Forgot User Key,3,1,recover_password,UNMAPPED,needs manual review
+Account Security,3,1,recover_password,DB,customers.*
+Account Number,3,2,"check_invoice, check_refund_policy",DB,customers.*
+Upgrade to {{Account Type,3,1,switch_account,DB,customers.*
+Rebate Tracking Number,3,1,track_refund,UNMAPPED,needs manual review
+User Account Recovery,3,1,recover_password,DB,customers.*
+Purchase Details,3,1,track_order,DB,orders.eta / orders.placed_at
+Support Page URL,2,2,"recover_password, registration_problems",CONFIG,ui_navigation_text
+Access Key Recovery,2,1,recover_password,UNMAPPED,needs manual review
+Access Key,2,1,recover_password,UNMAPPED,needs manual review
+Switch User,2,1,switch_account,UNMAPPED,needs manual review
+Switch to {{Account Type,2,1,switch_account,DB,customers.*
+Standard Shipping Days,2,1,delivery_options,KB,delivery_periods.md
+Standard Delivery Time,2,1,delivery_options,UNMAPPED,needs manual review
+Reset User Key,2,1,recover_password,UNMAPPED,needs manual review
+Restore Password,2,1,recover_password,CONFIG,ui_navigation_text
+Change User,2,1,switch_account,UNMAPPED,needs manual review
+Change PIN,2,1,recover_password,UNMAPPED,needs manual review
+Shipping Cut-off Time,2,1,delivery_options,UNMAPPED,needs manual review
+Save,2,2,"recover_password, set_up_shipping_address",UNMAPPED,needs manual review
+Delivery Time,2,1,delivery_options,UNMAPPED,needs manual review
+ETA,2,1,track_order,DB,orders.eta / orders.placed_at
+Date of the Invoice,2,1,check_invoice,DB,orders.eta / orders.placed_at
+Product Feedback Email,2,1,review,DB,customers.email
+Password Reset Page URL,2,1,recover_password,CONFIG,ui_navigation_text
+Complaint Email Address,2,1,complaint,DB,customers.email
+Profile Recovery,2,1,recover_password,CONFIG,ui_navigation_text
+Profile Recovery Page,2,1,recover_password,CONFIG,ui_navigation_text
+Customer Assistance Phone Number,2,1,contact_customer_service,CONFIG,support_phone
+Customer Assistance Hours,2,1,contact_customer_service,KB,human_agent_hours.md
+Customer Assistance Email Address,2,1,contact_customer_service,DB,customers.email
+Reimbursement ID,2,1,track_refund,UNMAPPED,needs manual review
+Recover Access Key,2,1,recover_password,UNMAPPED,needs manual review
+Reference Number,2,1,track_refund,UNMAPPED,needs manual review
+Purchase Status,2,1,track_order,UNMAPPED,needs manual review
+Rebate ID,2,1,track_refund,UNMAPPED,needs manual review
+Retrieve Account Key,2,1,recover_password,DB,customers.*
+Forgot User Account Key,2,1,recover_password,DB,customers.*
+Help Center URL,2,1,recover_password,CONFIG,ui_navigation_text
+Live Chat,2,2,"contact_customer_service, switch_account",CONFIG,ui_navigation_text
+My Purchases,2,1,cancel_order,UNMAPPED,needs manual review
+PIN Code Restoration,2,1,recover_password,UNMAPPED,needs manual review
+PIN Code Management,2,1,recover_password,UNMAPPED,needs manual review
+PIN Code Reset,2,1,recover_password,UNMAPPED,needs manual review
+Forgot User Access Key,2,1,recover_password,UNMAPPED,needs manual review
+Expedited Delivery Time,2,1,delivery_options,UNMAPPED,needs manual review
+User Profile Settings,2,1,recover_password,CONFIG,ui_navigation_text
+Basic Account,2,1,switch_account,DB,customers.*
+Cancellation Policy,2,1,cancel_order,KB,refund_policy.md
+Account Upgrade,2,1,switch_account,DB,customers.*
+Basic,2,1,switch_account,UNMAPPED,needs manual review
+Account,2,2,"recover_password, switch_account",DB,customers.*
+Access Key Retrieval,1,1,recover_password,UNMAPPED,needs manual review
+Account Access Key Reset,1,1,recover_password,DB,customers.*
+Account Closure Process,1,1,delete_account,DB,customers.*
+Account Closure Timeframe,1,1,delete_account,KB,delivery_periods.md
+Account Details,1,1,track_refund,DB,orders.eta / orders.placed_at
+Account ID,1,1,delete_account,DB,customers.*
+Account Key Recovery,1,1,recover_password,DB,customers.*
+Account Management,1,1,recover_password,DB,customers.*
+Account Name,1,1,check_invoice,DB,customers.name
+Account Page,1,1,set_up_shipping_address,CONFIG,ui_navigation_text
+Account Plan,1,1,switch_account,DB,customers.*
+Account Type Switch,1,1,switch_account,DB,customers.*
+Add a New Address,1,1,set_up_shipping_address,DB,orders.shipping_address
+Billing,1,1,check_invoice,UNMAPPED,needs manual review
+Billing Category,1,1,check_invoice,UNMAPPED,needs manual review
+Billing History,1,1,get_invoice,UNMAPPED,needs manual review
+Business Hours,1,1,contact_customer_service,KB,human_agent_hours.md
+Business Name Anonymized,1,1,complaint,DB,customers.name
+Update Profile,1,1,switch_account,CONFIG,ui_navigation_text
+Upgrade Account Type,1,1,switch_account,DB,customers.*
+Upgrade or Downgrade Account,1,1,switch_account,DB,customers.*
+User Key Retrieval,1,1,recover_password,UNMAPPED,needs manual review
+User Key Retrieval Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+User Management,1,1,switch_account,UNMAPPED,needs manual review
+User Profile,1,1,recover_password,CONFIG,ui_navigation_text
+User Profile Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+User Settings,1,1,recover_password,CONFIG,ui_navigation_text
+Username,1,1,switch_account,DB,customers.name
+Working Hours,1,1,contact_customer_service,KB,human_agent_hours.md
+X-day/money back guarantee period,1,1,check_refund_policy,UNMAPPED,needs manual review
+Year,1,1,check_invoice,UNMAPPED,needs manual review
+Zip Code,1,1,delivery_period,UNMAPPED,needs manual review
+additional details,1,1,check_invoice,DB,orders.eta / orders.placed_at
+contact_method,1,1,contact_customer_service,UNMAPPED,needs manual review
+customer_support_phone_number,1,1,create_account,CONFIG,support_phone
+mention the different contact options available,1,1,contact_customer_service,CONFIG,ui_navigation_text
+month,1,1,check_invoice,UNMAPPED,needs manual review
+number of days,1,1,check_refund_policy,KB,delivery_periods.md
+proceed to our website and click on the 'Contact Us' button / dial our customer support number / reach out to our live chat support,1,1,contact_human_agent,CONFIG,ui_navigation_text
+provide step-by-step instructions,1,1,edit_account,UNMAPPED,needs manual review
+the reason for your call,1,1,contact_human_agent,UNMAPPED,needs manual review
+the specific topic you need assistance with,1,1,contact_human_agent,UNMAPPED,needs manual review
+Access Key Reset Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+Expedited Shipping Days,1,1,delivery_options,KB,delivery_periods.md
+Explanation of Feature 1,1,1,switch_account,UNMAPPED,needs manual review
+Explanation of Feature 2,1,1,switch_account,UNMAPPED,needs manual review
+Explanation of Feature 3,1,1,switch_account,UNMAPPED,needs manual review
+Express Delivery Time,1,1,delivery_options,UNMAPPED,needs manual review
+Express Shipping Days,1,1,delivery_options,KB,delivery_periods.md
+Express Shipping Time,1,1,delivery_options,UNMAPPED,needs manual review
+Fifth Step,1,1,switch_account,UNMAPPED,needs manual review
+First Step,1,1,switch_account,UNMAPPED,needs manual review
+Forgot Account Access Key,1,1,recover_password,DB,customers.*
+Forgot PIN Code,1,1,recover_password,UNMAPPED,needs manual review
+Forgot PIN code,1,1,recover_password,UNMAPPED,needs manual review
+Forgot Pin,1,1,recover_password,UNMAPPED,needs manual review
+Forgot Profile Access Key,1,1,recover_password,CONFIG,ui_navigation_text
+Forgot User Profile Key,1,1,recover_password,CONFIG,ui_navigation_text
+Forgot Your Access Key,1,1,recover_password,UNMAPPED,needs manual review
+Fourth Step,1,1,switch_account,UNMAPPED,needs manual review
+Free Account Name,1,1,edit_account,DB,customers.name
+Free Customer Support Number,1,1,contact_customer_service,UNMAPPED,needs manual review
+Full Name,1,1,get_invoice,DB,customers.name
+Help Center,1,1,recover_password,UNMAPPED,needs manual review
+Invoice Name,1,1,get_invoice,DB,customers.name
+Key Management,1,1,recover_password,UNMAPPED,needs manual review
+Key Recovery Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+Live Chat Feature,1,1,contact_customer_service,CONFIG,ui_navigation_text
+Login Page,1,1,recover_password,CONFIG,ui_navigation_text
+Login URL,1,1,recover_password,CONFIG,ui_navigation_text
+Login page URL,1,1,recover_password,CONFIG,ui_navigation_text
+Login steps,1,1,switch_account,UNMAPPED,needs manual review
+Lost Key,1,1,recover_password,UNMAPPED,needs manual review
+Manage PIN,1,1,recover_password,UNMAPPED,needs manual review
+Manage Subscription,1,1,switch_account,UNMAPPED,needs manual review
+Max Delivery Time,1,1,delivery_period,UNMAPPED,needs manual review
+Membership Type,1,1,switch_account,UNMAPPED,needs manual review
+Min Delivery Time,1,1,delivery_period,UNMAPPED,needs manual review
+Month,1,1,get_invoice,UNMAPPED,needs manual review
+My Account,1,1,set_up_shipping_address,DB,customers.*
+Navigation steps,1,1,switch_account,CONFIG,ui_navigation_text
+Non-receipt of Goods Refund Time,1,1,check_refund_policy,KB,refund_policy.md
+Number of Days,1,1,delivery_options,KB,delivery_periods.md
+Online Marketplace,1,1,place_order,UNMAPPED,needs manual review
+Online Store,1,1,place_order,CONFIG,ui_navigation_text
+Opening Time,1,1,contact_customer_service,UNMAPPED,needs manual review
+Order Tracker,1,1,track_order,UNMAPPED,needs manual review
+Order Tracking Method,1,1,delivery_period,UNMAPPED,needs manual review
+Order/Claim Number,1,1,track_refund,UNMAPPED,needs manual review
+Order/Claim/Compensation,1,1,track_refund,UNMAPPED,needs manual review
+Order/Invoice Number,1,1,track_refund,DB,invoices.invoice_id
+Order/Refund/Case Number,1,1,track_refund,KB,refund_policy.md
+Order/Refund/Transaction,1,1,track_refund,KB,refund_policy.md
+Order/Transaction ID,1,1,track_refund,UNMAPPED,needs manual review
+Order/Transaction/Reference Number,1,1,track_refund,UNMAPPED,needs manual review
+Order/Transaction/Reimbursement,1,1,track_refund,UNMAPPED,needs manual review
+PIN Recovery Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+PIN Reset Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+Customer Support Hotline,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Live Chat URL,1,1,track_order,CONFIG,ui_navigation_text
+Customer Support Opening Time,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Start Time,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Team Name,1,1,contact_human_agent,DB,customers.name
+Customer Support Ticket Number,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Toll-Free Number,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Website,1,1,contact_customer_service,CONFIG,ui_navigation_text
+Cut Off Time,1,1,delivery_options,UNMAPPED,needs manual review
+Dashboard,1,1,switch_account,UNMAPPED,needs manual review
+Date of the Bill,1,1,check_invoice,DB,orders.eta / orders.placed_at
+Delivery Date,1,1,track_order,DB,orders.eta / orders.placed_at
+Destination,1,1,delivery_period,UNMAPPED,needs manual review
+Downgrade,1,1,switch_account,UNMAPPED,needs manual review
+Duplicate Charges Refund Time,1,1,check_refund_policy,KB,cancellation_and_fees.md
+E-commerce Platform 1,1,1,place_order,CONFIG,ui_navigation_text
+E-commerce Platform 2,1,1,place_order,CONFIG,ui_navigation_text
+E-commerce Platform Names,1,1,place_order,CONFIG,ui_navigation_text
+Edit PIN,1,1,recover_password,UNMAPPED,needs manual review
+Email Address,1,1,track_order,DB,customers.email
+Estimated Delivery Time,1,1,delivery_options,UNMAPPED,needs manual review
+Event Cancellation Refund Time,1,1,check_refund_policy,KB,refund_policy.md
+PIN Retrieval Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+PIN code,1,1,recover_password,UNMAPPED,needs manual review
+Password Management,1,1,recover_password,UNMAPPED,needs manual review
+Password Recovery,1,1,recover_password,UNMAPPED,needs manual review
+Password Recovery Page,1,1,recover_password,CONFIG,ui_navigation_text
+Password Reset,1,1,recover_password,UNMAPPED,needs manual review
+Password and Security,1,1,recover_password,UNMAPPED,needs manual review
+Payment Issue Email,1,1,payment_issue,DB,customers.email
+Payment Issue Phone Number,1,1,payment_issue,CONFIG,support_phone
+Pin Code Settings,1,1,recover_password,CONFIG,ui_navigation_text
+Platform Login URL,1,1,recover_password,CONFIG,ui_navigation_text
+Platform URL,1,1,recover_password,CONFIG,ui_navigation_text
+Product Category,1,1,place_order,UNMAPPED,needs manual review
+Product Reviews Email,1,1,review,DB,customers.email
+Product/Service Defect Refund Time,1,1,check_refund_policy,KB,refund_policy.md
+Product/Service Name,1,1,check_refund_policy,DB,customers.name
+Profile PIN Recovery,1,1,recover_password,CONFIG,ui_navigation_text
+Profile Security,1,1,recover_password,CONFIG,ui_navigation_text
+Compensation Identifier,1,1,track_refund,UNMAPPED,needs manual review
+Compensation Type,1,1,track_refund,UNMAPPED,needs manual review
+Complaint Hotline Number,1,1,complaint,UNMAPPED,needs manual review
+Completion steps,1,1,switch_account,UNMAPPED,needs manual review
+Confirm,1,1,recover_password,UNMAPPED,needs manual review
+Confirm Cancellation,1,1,cancel_order,UNMAPPED,needs manual review
+Consumer Complaint Email Address,1,1,complaint,DB,customers.email
+Contact Channel,1,1,switch_account,CONFIG,ui_navigation_text
+Contact Page URL,1,1,recover_password,CONFIG,ui_navigation_text
+Contact Us,1,1,set_up_shipping_address,UNMAPPED,needs manual review
+Country,1,1,delivery_options,UNMAPPED,needs manual review
+Country List,1,1,delivery_options,UNMAPPED,needs manual review
+Create Account,1,1,switch_account,DB,customers.*
+Create a Secondary Address,1,1,set_up_shipping_address,DB,orders.shipping_address
+Customer Assistance Email,1,1,contact_customer_service,DB,customers.email
+Customer Claims Email Address,1,1,complaint,DB,customers.email
+Customer ID,1,1,track_refund,UNMAPPED,needs manual review
+Customer Service Toll-Free Number,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Closing Time,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Contact Number,1,1,contact_customer_service,UNMAPPED,needs manual review
+Customer Support Days,1,1,contact_customer_service,KB,delivery_periods.md
+Customer Support End Time,1,1,contact_customer_service,UNMAPPED,needs manual review
+Purpose of the Features,1,1,switch_account,UNMAPPED,needs manual review
+Rebate Identifier,1,1,track_refund,UNMAPPED,needs manual review
+Rebate Number,1,1,track_refund,UNMAPPED,needs manual review
+Recover Key,1,1,recover_password,UNMAPPED,needs manual review
+Refund Helpline Number,1,1,get_refund,KB,refund_policy.md
+Refund Hotline Number,1,1,get_refund,KB,refund_policy.md
+Refund Policy,1,1,cancel_order,KB,refund_policy.md
+Registration Support Phone Number,1,1,registration_problems,CONFIG,support_phone
+Regular Profile,1,1,switch_account,CONFIG,ui_navigation_text
+Reimbursement Request Number,1,1,track_refund,UNMAPPED,needs manual review
+Remove,1,1,change_order,UNMAPPED,needs manual review
+Reset,1,1,recover_password,UNMAPPED,needs manual review
+Reset Account Key,1,1,recover_password,DB,customers.*
+Reset Pin Code,1,1,recover_password,UNMAPPED,needs manual review
+Restitution ID,1,1,track_refund,UNMAPPED,needs manual review
+Restore Access Key,1,1,recover_password,CONFIG,ui_navigation_text
+Restore PIN Code,1,1,recover_password,CONFIG,ui_navigation_text
+Restore User Access Key,1,1,recover_password,CONFIG,ui_navigation_text
+Restore User Key,1,1,recover_password,CONFIG,ui_navigation_text
+Retail Stores,1,1,place_order,CONFIG,ui_navigation_text
+Retrieve Account PIN,1,1,recover_password,DB,customers.*
+Retrieve Key,1,1,recover_password,UNMAPPED,needs manual review
+Retrieve PIN Code,1,1,recover_password,UNMAPPED,needs manual review
+Retrieve Profile Key,1,1,recover_password,CONFIG,ui_navigation_text
+Retrieve User Account Key,1,1,recover_password,DB,customers.*
+Retrieve User Key,1,1,recover_password,UNMAPPED,needs manual review
+Return Policy,1,1,cancel_order,KB,refund_policy.md
+Review Platform,1,1,review,CONFIG,ui_navigation_text
+Review Platform 1,1,1,review,CONFIG,ui_navigation_text
+Review Platform 2,1,1,review,CONFIG,ui_navigation_text
+Same-Day Order Time,1,1,delivery_options,UNMAPPED,needs manual review
+Second Step,1,1,switch_account,UNMAPPED,needs manual review
+Security Settings,1,1,recover_password,CONFIG,ui_navigation_text
+Security and Privacy,1,1,recover_password,UNMAPPED,needs manual review
+Shipment Tracking Number,1,1,delivery_period,UNMAPPED,needs manual review
+Shipping Address,1,1,delivery_period,DB,orders.shipping_address
+Shipping Addresses,1,1,set_up_shipping_address,DB,orders.shipping_address
+Shipping Method,1,1,delivery_period,UNMAPPED,needs manual review
+Shipping Status,1,1,track_order,UNMAPPED,needs manual review
+Cancellation Refund Time,1,1,check_refund_policy,KB,refund_policy.md
+Carrier Name,1,1,delivery_options,DB,customers.name
+Case Number,1,1,track_refund,UNMAPPED,needs manual review
+Change Access Key,1,1,recover_password,UNMAPPED,needs manual review
+Change Account,1,1,switch_account,DB,customers.*
+Change Key,1,1,recover_password,UNMAPPED,needs manual review
+Change Password,1,1,recover_password,UNMAPPED,needs manual review
+Change Profile,1,1,switch_account,CONFIG,ui_navigation_text
+Choose Account Type,1,1,switch_account,DB,customers.*
+Choose the {{Account Type,1,1,switch_account,DB,customers.*
+City 1,1,1,place_order,UNMAPPED,needs manual review
+City 2,1,1,place_order,UNMAPPED,needs manual review
+City 3,1,1,place_order,UNMAPPED,needs manual review
+Claims Contact Number,1,1,complaint,UNMAPPED,needs manual review
+Claims Department,1,1,complaint,UNMAPPED,needs manual review
+Claims Website URL,1,1,complaint,CONFIG,ui_navigation_text
+Closing Time,1,1,contact_customer_service,UNMAPPED,needs manual review
+Company Phone Number,1,1,contact_human_agent,CONFIG,support_phone
+Company Representative Name,1,1,get_invoice,CONFIG,ui_navigation_text
+Company Support Channels,1,1,contact_customer_service,CONFIG,ui_navigation_text
+Company Support Page URL,1,1,registration_problems,CONFIG,ui_navigation_text
+CompanyName,1,1,check_refund_policy,CONFIG,ui_navigation_text
+Compensation ID,1,1,track_refund,UNMAPPED,needs manual review
+Sign Up,1,1,switch_account,UNMAPPED,needs manual review
+Social Media Handles,1,1,contact_customer_service,UNMAPPED,needs manual review
+Social Media Platform,1,1,contact_customer_service,CONFIG,ui_navigation_text
+Stolen User Key,1,1,recover_password,UNMAPPED,needs manual review
+Store Address,1,1,place_order,CONFIG,ui_navigation_text
+Store Pickup Time,1,1,delivery_options,CONFIG,ui_navigation_text
+Support Channel,1,1,recover_password,CONFIG,ui_navigation_text
+Support Channel 1,1,1,switch_account,CONFIG,ui_navigation_text
+Support Channel 2,1,1,switch_account,CONFIG,ui_navigation_text
+Support Hours,1,1,registration_problems,KB,human_agent_hours.md
+Support Phone Number,1,1,recover_password,CONFIG,support_phone
+Switch Plan,1,1,switch_account,UNMAPPED,needs manual review
+Switch to {{Account Category,1,1,switch_account,DB,customers.*
+Switching option,1,1,switch_account,CONFIG,ui_navigation_text
+Third Step,1,1,switch_account,UNMAPPED,needs manual review
+Timeframe,1,1,check_invoice,KB,delivery_periods.md
+Track Reimbursement,1,1,track_refund,UNMAPPED,needs manual review
+Tracking Information,1,1,delivery_period,CONFIG,ui_navigation_text
+Tracking Page,1,1,track_order,CONFIG,ui_navigation_text
+Unauthorized Charges Refund Time,1,1,check_refund_policy,KB,cancellation_and_fees.md
+Update Account,1,1,switch_account,DB,orders.eta / orders.placed_at
+year,1,1,check_invoice,UNMAPPED,needs manual review
+your issue,1,1,contact_human_agent,UNMAPPED,needs manual review

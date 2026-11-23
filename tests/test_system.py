@@ -77,6 +77,14 @@ def test_cancel_and_confirm(services):
     assert "RF-" in reply["answer"]
 
 
+def test_precheck_trace_keeps_exact_arguments(services):
+    _, tools = services
+    assistant = Assistant(tools)
+    result = assistant.ask("C0004", "Request a refund for KK-10004 because the item arrived broken")
+    assert result["calls"][0]["args"] == {"order_id": "KK-10004"}
+    assert result["next_context"]["arguments"]["reason"] == "the item arrived broken"
+
+
 @pytest.mark.parametrize(("owner", "reply"), [
     ("C0002", "yes"),
     ("C0001", "yes, cancel KK-10002 instead"),

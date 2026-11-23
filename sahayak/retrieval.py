@@ -2,7 +2,7 @@ import argparse
 import hashlib
 import json
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from . import ROOT, RUNTIME
@@ -97,10 +97,57 @@ def evaluate(search):
     }
 
 
+def sweep(search):
+    """Compare token windows against the labelled policy sections."""
+    import faiss
+
+    suite = json.loads((ROOT / "benchmarks/retrieval.json").read_text(encoding="utf-8"))
+    queries = search.encoder.encode([BGE_QUERY + row["question"] for row in suite],
+                                    normalize_embeddings=True, show_progress_bar=False)
+    by_document = defaultdict(list)
+    for chunk in search.chunks:
+        by_document[chunk["id"].split(" #")[0]].append(chunk)
+    rows = []
+    tokenizer = search.encoder.tokenizer
+    for size in (200, 300, 500):
+        windows = []
+        for sections in by_document.values():
+            ids, labels = [], []
+            for section in sections:
+                text = f'{section["title"]}\n{section["heading"]}\n{section["text"]}\n'
+                block = tokenizer.encode(text, add_special_tokens=False)
+                ids.extend(block)
+                labels.extend([section["id"]] * len(block))
+            start = 0
+            while start < len(ids):
+                end = start + size
+                windows.append((tokenizer.decode(ids[start:end]), set(labels[start:end])))
+                if end >= len(ids):
+                    break
+                start = end - 50
+        encoded = search.encoder.encode([text for text, _ in windows], normalize_embeddings=True, show_progress_bar=False)
+        index = faiss.IndexFlatIP(encoded.shape[1])
+        index.add(encoded)
+        _, hits = index.search(queries, 5)
+        for k in (3, 5):
+            ranks = [
+                next((rank for rank, window in enumerate(indices[:k], start=1)
+                      if row["gold"] in windows[int(window)][1]), None)
+                for indices, row in zip(hits, suite)
+            ]
+            rows.append({
+                "chunk_tokens": size, "overlap_tokens": 50, "k": k, "n": len(suite), "windows": len(windows),
+                "recall_at_k": sum(rank is not None for rank in ranks) / len(ranks),
+                "mrr_at_k": sum(1 / rank for rank in ranks if rank) / len(ranks),
+            })
+    return rows
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build and evaluate the policy index")
     parser.add_argument("--rebuild", action="store_true")
     parser.add_argument("--evaluate", type=Path)
+    parser.add_argument("--sweep", type=Path)
     args = parser.parse_args()
     search = PolicySearch(force=args.rebuild)
     if args.evaluate:
@@ -110,3 +157,12 @@ if __name__ == "__main__":
         print({key: result[key] for key in ("n", "recall_at_3", "mrr_at_3")})
     else:
         print(f"Indexed {len(search.chunks)} policy sections at {INDEX}")
+    if args.sweep:
+        import csv
+
+        rows = sweep(search)
+        args.sweep.parent.mkdir(parents=True, exist_ok=True)
+        with args.sweep.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, rows[0])
+            writer.writeheader()
+            writer.writerows(rows)

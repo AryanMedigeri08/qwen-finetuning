@@ -92,6 +92,7 @@ class State(TypedDict, total=False):
     checks: dict
     executed: bool
     request: dict
+    routing_override: str
 
 
 def demo_route(query):
@@ -106,6 +107,8 @@ def render_tool(name, result):
         return ERROR_TEXT.get(result["error"], "I couldn't complete the request. Please contact support.")
     d = result["data"]
     if name == "get_order_status":
+        if d["status"] == "cancelled":
+            return f'Order {d["order_id"]} is cancelled.'
         return f'Order {d["order_id"]} is {d["status"]}. Its recorded delivery date is {d["eta"]}.'
     if name == "get_invoice":
         return f'Invoice {d["invoice_id"]} for {d["order_id"]} totals ₹{d["total_inr"]:,}, including ₹{d["gst_inr"]:,} GST.'
@@ -152,7 +155,7 @@ class Assistant:
                 "node": name_recorded, "ms": round((perf_counter() - start) * 1000, 2),
                 "input": state["query"] if name == "router" else state.get("intent", ""),
                 "output": {key: update[key] for key in (
-                    "intent", "confidence", "alternatives", "entities", "draft", "verdict", "checks"
+                    "intent", "confidence", "alternatives", "entities", "draft", "verdict", "checks", "routing_override"
                 ) if key in update},
             }
             if "calls" in update:
@@ -163,7 +166,7 @@ class Assistant:
 
     def ask(self, customer, query, context=None, history=()):
         return self.graph.invoke({
-            "customer": customer, "query": query.strip()[:2000], "history": list(history)[-4:],
+            "customer": customer, "query": query.strip()[:2000], "history": list(history)[-12:],
             "context": context or {}, "next_context": {}, "calls": [], "trace": [], "steps": 0,
             "retry": 0, "chunks": [], "executed": False,
         })
@@ -210,8 +213,14 @@ class Assistant:
             match = re.search(re.escape(delimiter) + r"\s+(.+)$", query, re.I)
             if match and len(match.group(1).strip()) >= (3 if field == "reason" else 8):
                 entities[field] = match.group(1).strip()
+        timing_question = re.search(r"\b(?:how long|how many (?:working )?days|refund timeline|refund policy)\b", query, re.I)
+        override = routed.intent == "get_refund" and not ids and "refund" in query.lower() and timing_question
+        if override:
+            routed = Route("check_refund_policy", "REFUND", routed.confidence, routed.alternatives)
         details = {"intent": routed.intent, "category": routed.category, "entities": entities,
                    "confidence": routed.confidence, "alternatives": list(routed.alternatives)}
+        if override:
+            details["routing_override"] = "A general policy timing question cannot initiate a refund."
         if routed.confidence < 0.5:
             return self.end("Could you clarify what you need help with at KharidiKart?", **details)
         branch = "action" if routed.intent in TOOL_FOR or routed.intent in ESCALATION else "knowledge"
@@ -227,7 +236,7 @@ class Assistant:
         if len(state["calls"]) >= (3 if escalation else 2):
             return {"ok": False, "error": "TOOL_BUDGET"}, state["calls"]
         result = self.tools.call(name, args, state["customer"])
-        return result, [*state["calls"], {"name": name, "args": args, "result": result}]
+        return result, [*state["calls"], {"name": name, "args": dict(args), "result": result}]
 
     def action(self, state):
         intent = state["intent"]
@@ -263,7 +272,7 @@ class Assistant:
                 if slot not in entities:
                     prompt = "What is the reason for the refund?" if slot == "reason" else "What is the new shipping address?"
                     return self.remember(state, "slot", args, prompt, slot=slot, calls=calls)
-                args[slot] = entities[slot]
+                args = args | {slot: entities[slot]}
             description = {"cancel_order": "cancel order", "initiate_refund": "initiate a refund for",
                            "update_shipping_address": "update the shipping address for"}[name]
             return self.remember(state, "confirm", args,

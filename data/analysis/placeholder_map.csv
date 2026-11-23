@@ -1,0 +1,31 @@
+placeholder,count,n_intents,typical_intents,source_type,source_ref
+Order Number,4036,8,"change_order, cancel_order, track_order",DB,orders.order_id
+Customer Support Phone Number,2633,25,"cancel_order, contact_customer_service, payment_issue",CONFIG,support_phone
+Website URL,2524,25,"cancel_order, contact_customer_service, payment_issue",CONFIG,ui_navigation_text
+Customer Support Hours,2322,25,"cancel_order, contact_customer_service, recover_password",KB,human_agent_hours.md
+Account Type,1777,4,"switch_account, create_account, delete_account",DB,customers.*
+Account Category,1248,4,"switch_account, create_account, delete_account",DB,customers.*
+Online Company Portal Info,1054,2,"cancel_order, edit_account",CONFIG,ui_navigation_text
+Invoice Number,1054,2,"check_invoice, get_invoice",DB,invoices.invoice_id
+Online Order Interaction,1014,2,"cancel_order, track_order",UNMAPPED,needs manual review
+Tracking Number,896,1,delivery_period,UNMAPPED,needs manual review
+Client Last Name,692,2,"check_invoice, get_invoice",DB,customers.name
+Salutation,686,2,"check_invoice, get_invoice",UNMAPPED,needs manual review
+Settings,616,4,"switch_account, recover_password, get_invoice",CONFIG,ui_navigation_text
+Refund Amount,560,2,"track_refund, get_refund",DB,refunds.amount_inr
+Profile,478,3,"switch_account, recover_password, set_up_shipping_address",CONFIG,ui_navigation_text
+Date Range,470,2,"delivery_options, check_invoice",DB,orders.eta / orders.placed_at
+Account Change,466,1,switch_account,DB,customers.*
+Upgrade Account,446,1,switch_account,DB,customers.*
+Login Page URL,397,1,recover_password,CONFIG,ui_navigation_text
+Currency Symbol,373,1,track_refund,UNMAPPED,needs manual review
+Store Location,325,2,"delivery_options, place_order",CONFIG,ui_navigation_text
+Person Name,280,2,"get_invoice, check_invoice",DB,customers.name
+Delivery City,234,1,delivery_options,UNMAPPED,needs manual review
+Forgot Password,212,1,recover_password,UNMAPPED,needs manual review
+Order Status,187,1,track_order,UNMAPPED,needs manual review
+Delivery Country,183,1,delivery_options,UNMAPPED,needs manual review
+Customer Support Email,174,14,"contact_customer_service, contact_human_agent, payment_issue",CONFIG,support_email
+Profile Type,135,1,switch_account,CONFIG,ui_navigation_text
+Order Tracking,79,2,"track_order, delivery_period",UNMAPPED,needs manual review
+Forgot PIN,72,1,recover_password,UNMAPPED,needs manual review
