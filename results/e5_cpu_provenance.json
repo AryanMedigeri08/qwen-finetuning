@@ -1,0 +1,15 @@
+{
+  "scenarios_sha256": "8d4c58c0cf3ec93b8ef844e1808495508d1458d5567e353ab55f5e8ee856e986",
+  "policy_sha256": "d4f9c4d9893acd4aaaa0ba7b7a065d70a6bc920f371c4848d01d2afd467d3481",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "adapter_revision": null,
+  "device": "cpu",
+  "precision": "Q4_K_M",
+  "routing": "Reuse one model decision per query across settings. Timings use precomputed routes.",
+  "best_observed_setting": "section_k3",
+  "rank_rule": "Higher cited task success, then higher factual success, then smaller k and smaller windows.",
+  "project_revision": "c504d8e8fed96586b5de7f547cd1009d8fb70663",
+  "inference_provenance": "cpu_provenance.json",
+  "base_gguf_sha256": "b8737b4f8ab11bb5b5c9b526edd497ab4106571c8c04afd5560c185d96a96f08",
+  "adapter_gguf_sha256": "4fb209910cd3e41bc9a7333e7327c0b6d87e473e93caa531d734078f1881aad8"
+}
