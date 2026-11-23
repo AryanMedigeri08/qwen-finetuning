@@ -4,7 +4,7 @@ Team 10 · MIT Academy of Engineering, Alandi, Pune
 
 ## Abstract
 
-We adapted Qwen2.5-1.5B-Instruct to customer support using a low-rank adapter, then connected it to an order database and a versioned policy index for the fictional KharidiKart store. On the original Bitext test split, the adapted model increased macro-F1 from 0.615 to 0.999 over a five-example baseline and increased BERTScore-F1 from 0.887 to 0.923. Placeholder leakage also increased from 21.1% to 46.9%, motivating a workflow that fills facts from SQLite or quotes supporting policy sections. The final policy index retrieved the labelled section in the top three for 57 of 60 questions. Matched model-backed scenario results and independent ratings are required before drawing conclusions about the workflow's effect on task success and hallucination.
+We adapted Qwen2.5-1.5B-Instruct to customer support using a low-rank adapter, then connected it to an order database and a versioned policy index for the fictional KharidiKart store. On the original Bitext test split, the adapted model increased macro-F1 from 0.615 to 0.999 over a five-example baseline and increased BERTScore-F1 from 0.887 to 0.923. Placeholder leakage increased from 21.1% to 46.9%. On 100 matched Tesla T4 scenarios, the verified workflow achieved 89% factual task success and 88% cited task success. Removing the Verifier reduced the latter to 71%. Both versions safely handled all 40 scripted safety prompts. Independent ratings and the minimum effective training budget remain open.
 
 ## I. Research questions
 
@@ -42,26 +42,26 @@ The 40-prompt suite probes instruction overrides, cross-customer requests, out-o
 
 These measurements come from the original notebook's test table. The adapter's held-out intent macro-F1 fell to 0.348 and BERTScore-F1 fell to 0.898. The difference suggests weak zero-shot routing for labels omitted from SFT, despite substantial improvement on labels the model saw during training. The higher placeholder leakage is consistent with learning the training response format.
 
-The BGE section index reached 95.0% Recall@3 and 0.869 MRR@3 over 60 authored questions. The 200-token windows with 50-token overlap reached 100% Recall@3 and 0.878 MRR@3 when any indexed window overlapping the target section counted as a hit. The E5 follow-up held Router decisions fixed on 25 information scenarios and compared the section index with six window settings on the Q4_K_M CPU runtime. Each setting achieved 17/25 cited task successes. The section index retrieved the expected passage on 22/25 cases, tying four window settings. The tie-break favored the existing section index with k=3. T4 results are pending.
+The strict Router reached macro-F1 of 0.9992 on 2,388 test inputs and 0.3604 on 2,997 held-out inputs in the T4 run. After retry, 16.3% of the held-out responses still failed to produce matching intent and category labels. This difference measures routing generalization to the three withheld intents.
 
-An exploratory run used the same base weights and LoRA with llama.cpp Q4_K_M on a Windows CPU. Task success was 89% for C4 and 76% for C5. Requiring cited, unflagged answers reduced these rates to 88% and 71%. The automated unsupported-claim flag appeared in 6% of C5 scenarios and 0% of C4 scenarios. Each configuration passed the 40 scripted safety cases. C2 without tools passed 0 of the 100 scripted cases and left placeholders in 64. CPU results and timings are reported separately from the original T4 language results.
+The BGE section index reached 95.0% Recall@3 and 0.869 MRR@3 over 60 authored questions. The 200-token windows with 50-token overlap reached 100% Recall@3 and 0.878 MRR@3 when any indexed window overlapping the target section counted as a hit. The E5 follow-up held Router decisions fixed across seven settings on 25 information scenarios. Each setting achieved 17/25 cited task successes on both Tesla T4 NF4 and the exploratory Q4_K_M CPU runtime. The section index retrieved the expected passage on 22/25 cases, tying four window settings on T4. The tie-break favored the existing section index with k=3.
 
-| Configuration | CPU task success | Cited task success | Placeholder leakage |
-| --- | ---: | ---: | ---: |
-| C0 Base zero-shot | 9% | 5% | 33% |
-| C1 Base five-shot | 15% | 14% | 14% |
-| C2 Adapter | 0% | 0% | 64% |
-| C3 Base and agents | 47% | 47% | 0% |
-| C4 Adapter and verified agents | 89% | 88% | 0% |
-| C5 Adapter and agents without the Verifier | 76% | 71% | 0% |
+| Configuration | T4 task success | Cited task success | Unsupported-claim flags | Placeholder leakage |
+| --- | ---: | ---: | ---: | ---: |
+| C0 Base zero-shot | 11% | 10% | 17% | 11% |
+| C1 Base five-shot | 9% | 5% | 13% | 1% |
+| C2 Adapter | 1% | 0% | 3% | 68% |
+| C3 Base and agents | 40% | 40% | 0% | 0% |
+| C4 Adapter and verified agents | 89% | 88% | 0% | 0% |
+| C5 Adapter and agents without the Verifier | 75% | 71% | 7% | 0% |
 
-Each row used the same 100 scenario fixtures. The difference between C3 and C4 measures the observed effect of the adapter on this CPU workflow. The full per-case scores and timing data are in the repository.
+Each row used the same 100 scenarios on a Tesla T4 with NF4. Adding the workflow to the adapter increased factual task success by 88 percentage points from C2 to C4. With the workflow held fixed, the adapter increased factual task success by 49 points from C3 to C4. Removing the Verifier reduced cited task success by 17 points and produced seven unsupported-claim flags. C4 and C5 both safely handled all 40 red-team cases. The exploratory Q4_K_M CPU run also measured 88% cited task success for C4 and 71% for C5.
 
-The C4 error review found nine router failures, one retrieval miss, and two grounded replies whose cited passage did not answer the requested question. In one case the answer quoted the non-metro delivery window for a metro question. The Verifier could confirm the evidence for the quoted window while still missing that distinction.
+The T4 error taxonomy assigned nine routing failures, one retrieval miss, and two answer or citation failures to C4. C5 recorded nine routing failures, one retrieval miss, and 19 answer or citation failures. In the exploratory CPU review, one answer quoted the non-metro delivery window for a metro question. The Verifier could confirm the quoted window against its supporting passage while missing the distinction in the question.
 
 ## VI. Remaining analyses
 
-Use one CUDA runtime to execute the six configurations on the same scenario suite. Compare C2 and C4 for grounding, C3 and C4 for the incremental effect of fine-tuning, and C4 and C5 for the Verifier. Review unsupported-claim flags and false blocks against the recorded tool output and policy packet. Use the four additional training budgets to find the smallest budget reaching 95% of full-data task success. Collect two independent reviews of 100 responses and report weighted Cohen's kappa for each rating question.
+Use the four additional training budgets to find the smallest budget reaching 95% of full-data task success. Collect two independent reviews of the 100 blinded T4 responses and report weighted Cohen's kappa for each rating question. The ratings will complement the automated unsupported-claim flags and case scores.
 
 ## VII. Limitations
 
