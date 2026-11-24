@@ -1,0 +1,4 @@
+criterion,paired_responses,weighted_cohen_kappa,exact_matches,within_one_point,rater1_mean,rater2_mean
+correctness,100,0.924579,66,100,3.32,3.30
+helpfulness,100,0.920235,68,98,3.10,3.18
+tone,100,0.705359,56,97,4.09,3.84

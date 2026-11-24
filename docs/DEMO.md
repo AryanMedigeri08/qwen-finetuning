@@ -2,7 +2,7 @@
 
 Use a fresh SQLite database. Show the runtime label in the sidebar so the audience can identify the model-backed or deterministic mode.
 
-The [five-minute captioned video](../reports/SahayakLLM-demo.webm) shows the Streamlit workflow in deterministic mode. The [editable demo slides](../reports/SahayakLLM-demo.pptx) use the original T4 language results and the local CPU evidence. The [adapter traces](../results/model_trace_examples.json) show a read, the two-step cancellation and a verifier revision.
+The [five-minute captioned video](../reports/SahayakLLM-demo.webm) shows the Streamlit workflow in deterministic mode. The [editable demo slides](../reports/SahayakLLM-demo.pptx) cover the T4 language and scenario results, data budget, and exploratory rating agreement. The [adapter traces](../results/model_trace_examples.json) show a read, the two-step cancellation and a verifier revision.
 
 | Time | On screen | Discussion |
 | --- | --- | --- |
@@ -11,7 +11,7 @@ The [five-minute captioned video](../reports/SahayakLLM-demo.webm) shows the Str
 | 1:30–2:30 | Chat and Database | Track KK-10001. Ask to cancel it. Open Database before confirmation, then approve and show the updated order and refund. |
 | 2:30–3:20 | Trace viewer | Show the tool arguments, the database result, Router and Verifier output, and time for the last turn. |
 | 3:20–4:00 | Chat | Try to look up KK-10002 as C0001. Explain the ownership condition and the limited information returned. |
-| 4:00–5:00 | Experiments | Present C0–C2 language scores and E5 retrieval. If matched scenario runs are available, show C2/C4/C5 together with their device and precision. |
+| 4:00–5:00 | Experiments | Present the matched T4 NF4 scenario results, retrieval and smallest tested budget that cleared the target. Explain the scope of the exploratory rating agreement. |
 
 Suggested slide sequence: research question, dataset and training, architecture, live demonstration, results and limitations. Use one graph or table per results slide and attribute the Bitext dataset.
 

@@ -4,7 +4,7 @@ Team 10 · MIT Academy of Engineering, Alandi, Pune
 
 ## Abstract
 
-We adapted Qwen2.5-1.5B-Instruct to customer support using a low-rank adapter, then connected it to an order database and a versioned policy index for the fictional KharidiKart store. On the original Bitext test split, the adapted model increased macro-F1 from 0.615 to 0.999 over a five-example baseline and increased BERTScore-F1 from 0.887 to 0.923. Placeholder leakage increased from 21.1% to 46.9%. On 100 matched Tesla T4 scenarios, the verified workflow achieved 89% factual task success and 88% cited task success. Removing the Verifier reduced the latter to 71%. Both versions safely handled all 40 scripted safety prompts. The smallest tested training budget used 1,000 rows and achieved 97.8% of the full-data factual task success. Independent ratings remain open.
+We adapted Qwen2.5-1.5B-Instruct to customer support using a low-rank adapter, then connected it to an order database and a versioned policy index for the fictional KharidiKart store. On the original Bitext test split, the adapted model increased macro-F1 from 0.615 to 0.999 over a five-example baseline and increased BERTScore-F1 from 0.887 to 0.923. Placeholder leakage increased from 21.1% to 46.9%. On 100 matched Tesla T4 scenarios, the verified workflow achieved 89% factual task success and 88% cited task success. Removing the Verifier reduced the latter to 71%. Both versions safely handled all 40 scripted safety prompts. The smallest tested training budget used 1,000 rows and achieved 97.8% of the full-data factual task success. An exploratory rating comparison yielded quadratic-weighted Cohen's κ of 0.925 for correctness, 0.920 for helpfulness, and 0.705 for tone. Independent human validation remains pending.
 
 ## I. Research questions
 
@@ -73,9 +73,17 @@ We stratified the four subsamples by intent with seed 42 and kept each selected 
 
 For RQ4, 95% of the 89% full-data factual task success is 84.55%. The 1,000-row adapter was the smallest tested budget that cleared this threshold. It used 5.2% of the training rows and achieved 97.8% of the full-data task success. The 10,000-row run led the scenario table by three cases over full data. Each budget was trained with one seed, and the epoch schedules varied, so this difference has no estimate of run-to-run variation.
 
-## VII. Human evaluation
+## VII. Exploratory rating agreement
 
-The 100 blinded T4 responses are ready for independent review. Two raters will score correctness, helpfulness, and tone, with weighted Cohen's kappa reported for each dimension.
+The study sample contains one final response from each of C2 and C4 for 50 matched T4 scenarios. Each sheet scores the 100 responses on a 1–5 scale for correctness, helpfulness, and tone. We verified that the sheets match on all response IDs, scenario IDs, prompts, and response text. Rater 1 is an AI review that used the blinded sheet and scenario reference evidence. All 100 triplets in the Rater 2 sheet match the repository's rating script, which includes configuration labels in its comments. [Rater 2 script](../eval/generate_ratings.py)
+
+| Criterion | Quadratic-weighted κ | Exact matches | Within one point | Rater 1 mean | Rater 2 mean |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Correctness | 0.925 | 66/100 | 100/100 | 3.32 | 3.30 |
+| Helpfulness | 0.920 | 68/100 | 98/100 | 3.10 | 3.18 |
+| Tone | 0.705 | 56/100 | 97/100 | 4.09 | 3.84 |
+
+Quadratic weights give larger score differences more weight and compare observed disagreement with the disagreement expected from the two score distributions [5]. Correctness and helpfulness showed the strongest ordinal agreement. Tone had the lowest exact agreement and the largest difference in mean scores, with Rater 1 scoring it 0.25 points higher. The results describe these two scoring procedures on the same sample. The planned study still requires two independent human raters using the same blinded materials. [Aggregate ratings](../results/rater_agreement.csv)
 
 ## VIII. Limitations
 
@@ -87,3 +95,4 @@ The store uses a mock database, a small authored policy base, and fixed evaluati
 2. Qwen Team. Qwen2.5-1.5B-Instruct. Apache-2.0. [Model card](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct)
 3. BAAI. bge-small-en-v1.5. [Embedding model card](https://huggingface.co/BAAI/bge-small-en-v1.5)
 4. Dettmers, T., Pagnoni, A., Holtzman, A., and Zettlemoyer, L. QLoRA: Efficient Finetuning of Quantized LLMs. 2023. [Preprint](https://arxiv.org/abs/2305.14314)
+5. Scikit-learn. `cohen_kappa_score`, quadratic weighting. [Metric documentation](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html)
