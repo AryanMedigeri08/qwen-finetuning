@@ -190,11 +190,15 @@ def budget_report(root, results, figures):
     ])
     figures.mkdir(parents=True, exist_ok=True)
     fig, axes = plt.subplots(1, 3, figsize=(12, 4))
+    sizes = [row["training_rows"] for row in rows]
     for ax, field, label in zip(axes, ("intent_macro_f1", "bertscore_f1", "c4_tsr_pct"),
                                 ("Intent macro-F1", "BERTScore-F1", "C4 task success (%)")):
-        ax.plot([row["training_rows"] for row in rows], [row[field] for row in rows], "o-")
+        ax.plot(sizes, [row[field] for row in rows], "o-")
         ax.set(xscale="log", xlabel="Training rows", ylabel=label)
+        ax.set_xticks(sizes, labels=[f"{size / 1000:g}k" for size in sizes])
     axes[-1].axhline(threshold, linestyle="--", color="gray")
+    axes[-1].annotate(f"95% of full-data score ({threshold:.2f}%)", xy=(.97, threshold),
+                      xycoords=("axes fraction", "data"), xytext=(0, 6), textcoords="offset points", ha="right")
     fig.tight_layout()
     fig.savefig(figures / "fig3_data_budget.png", dpi=160)
     plt.close(fig)

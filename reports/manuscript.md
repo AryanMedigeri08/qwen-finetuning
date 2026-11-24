@@ -4,7 +4,7 @@ Team 10 · MIT Academy of Engineering, Alandi, Pune
 
 ## Abstract
 
-We adapted Qwen2.5-1.5B-Instruct to customer support using a low-rank adapter, then connected it to an order database and a versioned policy index for the fictional KharidiKart store. On the original Bitext test split, the adapted model increased macro-F1 from 0.615 to 0.999 over a five-example baseline and increased BERTScore-F1 from 0.887 to 0.923. Placeholder leakage increased from 21.1% to 46.9%. On 100 matched Tesla T4 scenarios, the verified workflow achieved 89% factual task success and 88% cited task success. Removing the Verifier reduced the latter to 71%. Both versions safely handled all 40 scripted safety prompts. Independent ratings and the minimum effective training budget remain open.
+We adapted Qwen2.5-1.5B-Instruct to customer support using a low-rank adapter, then connected it to an order database and a versioned policy index for the fictional KharidiKart store. On the original Bitext test split, the adapted model increased macro-F1 from 0.615 to 0.999 over a five-example baseline and increased BERTScore-F1 from 0.887 to 0.923. Placeholder leakage increased from 21.1% to 46.9%. On 100 matched Tesla T4 scenarios, the verified workflow achieved 89% factual task success and 88% cited task success. Removing the Verifier reduced the latter to 71%. Both versions safely handled all 40 scripted safety prompts. The smallest tested training budget used 1,000 rows and achieved 97.8% of the full-data factual task success. Independent ratings remain open.
 
 ## I. Research questions
 
@@ -59,11 +59,25 @@ Each row used the same 100 scenarios on a Tesla T4 with NF4. Adding the workflow
 
 The T4 error taxonomy assigned nine routing failures, one retrieval miss, and two answer or citation failures to C4. C5 recorded nine routing failures, one retrieval miss, and 19 answer or citation failures. In the exploratory CPU review, one answer quoted the non-metro delivery window for a metro question. The Verifier could confirm the quoted window against its supporting passage while missing the distinction in the question.
 
-## VI. Remaining analyses
+## VI. Training-data budget
 
-Use the four additional training budgets to find the smallest budget reaching 95% of full-data task success. Collect two independent reviews of the 100 blinded T4 responses and report weighted Cohen's kappa for each rating question. The ratings will complement the automated unsupported-claim flags and case scores.
+We stratified the four subsamples by intent with seed 42 and kept each selected row's response record and any associated Router training record. We evaluated each adapter on the same 2,388 language test inputs and 100 C4 scenarios on Tesla T4 with NF4. The full-data row uses the original 19,100-row adapter.
 
-## VII. Limitations
+| Training rows | Epochs | Intent macro-F1 | BERTScore-F1 | C4 factual success | C4 cited success |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 1,000 | 3 | 0.9794 | 0.9132 | 87% | 86% |
+| 2,000 | 3 | 0.9874 | 0.9183 | 90% | 89% |
+| 5,000 | 2 | 0.9950 | 0.9211 | 91% | 90% |
+| 10,000 | 1 | 0.9943 | 0.9203 | 92% | 91% |
+| 19,100 | 1 | 0.9992 | 0.9226 | 89% | 88% |
+
+For RQ4, 95% of the 89% full-data factual task success is 84.55%. The 1,000-row adapter was the smallest tested budget that cleared this threshold. It used 5.2% of the training rows and achieved 97.8% of the full-data task success. The 10,000-row run led the scenario table by three cases over full data. Each budget was trained with one seed, and the epoch schedules varied, so this difference has no estimate of run-to-run variation.
+
+## VII. Human evaluation
+
+The 100 blinded T4 responses are ready for independent review. Two raters will score correctness, helpfulness, and tone, with weighted Cohen's kappa reported for each dimension.
+
+## VIII. Limitations
 
 The store uses a mock database, a small authored policy base, and fixed evaluation fixtures. The interface simulates identity through a demo account selector. Router token confidence remains uncalibrated. Exact evidence matching can reject valid paraphrases, and a retrieved passage can be factually correct while answering the wrong question. The authored policy suite and synthetic support prompts do not establish performance on production traffic.
 

@@ -1,0 +1,60 @@
+{
+  "kaggle_notebook": "aryanmedigeri/sahayakllm-t4-training-budgets",
+  "notebook_version": 3,
+  "project_revision": "214efede120f1e3f2e55d2c7429577a6a23ae795",
+  "full_data_evaluation_notebook_version": 3,
+  "seed": 42,
+  "full_train_rows": 19100,
+  "language_test_rows": 2388,
+  "device": "cuda",
+  "precision": "nf4",
+  "hardware": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "engine": "Transformers",
+  "base_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "policy_sha256": "d4f9c4d9893acd4aaaa0ba7b7a065d70a6bc920f371c4848d01d2afd467d3481",
+  "data_manifest_hash": "1182a97b9d392682e8dd80db916a5eb6103057d4752e1d66c79818cd83b67c46",
+  "scenarios_sha256": "8d4c58c0cf3ec93b8ef844e1808495508d1458d5567e353ab55f5e8ee856e986",
+  "subset_training": [
+    {
+      "training_rows": 1000,
+      "adapter_sha256": "895798e3caf6914b683165b7e87dad1e1a14962b23e7bf064850439ec74c46ee",
+      "sft_records": 1250,
+      "epochs": 3,
+      "steps": 237,
+      "train_seconds": 1700.8,
+      "final_train_loss": 0.7117850951504606,
+      "best_eval_loss": 0.7425012588500977
+    },
+    {
+      "training_rows": 2000,
+      "adapter_sha256": "dcb7f85ff7deb8d4de35c9ea18a23baefc0296b390e413def2bd67ca00dd45f6",
+      "sft_records": 2497,
+      "epochs": 3,
+      "steps": 471,
+      "train_seconds": 2976.5,
+      "final_train_loss": 0.6593189320493402,
+      "best_eval_loss": 0.6916135549545288
+    },
+    {
+      "training_rows": 5000,
+      "adapter_sha256": "d597badd825c0c447779f5daefa51a9c6426f7f1878c20648980a7b75bb92516",
+      "sft_records": 6230,
+      "epochs": 2,
+      "steps": 780,
+      "train_seconds": 5666.1,
+      "final_train_loss": 0.6592209815979004,
+      "best_eval_loss": 0.6279599070549011
+    },
+    {
+      "training_rows": 10000,
+      "adapter_sha256": "4efa16d89bf7d09f42cae7f717edbf7b30670434a332bb24271a18a81bce6341",
+      "sft_records": 12484,
+      "epochs": 1,
+      "steps": 781,
+      "train_seconds": 4944.6,
+      "final_train_loss": 0.6880387808082962,
+      "best_eval_loss": 0.6198899149894714
+    }
+  ]
+}

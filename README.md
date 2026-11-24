@@ -52,9 +52,10 @@ On a Kaggle or Colab CUDA image, `python -m sahayak.gpu_setup` keeps the image's
 - [Training experiment table](results/training_notebook_e1.csv) and [retrieval benchmark](results/retrieval.json)
 - [T4 main table](results/main_table.csv), [scenario scores](results/cases.csv), [safety results](results/e6_safety.csv), and [run provenance](results/t4_provenance.json)
 - [T4 retrieval comparison](results/e5_t4_end_to_end.csv), [retrieval case scores](results/e5_t4_cases.csv), and [strict Router results](results/t4_router.csv)
+- [Training-budget comparison](results/data_budget.csv), [budget scenario scores](results/data_budget_cases.csv), and [budget run provenance](results/data_budget_provenance.json)
 - [E5 CPU retrieval comparison](results/e5_cpu_end_to_end.csv), [case-level scores](results/e5_cpu_cases.csv), and [runtime provenance](results/e5_cpu_provenance.json)
 - [All six CPU configurations](results/cpu_scenarios.csv), [per-scenario scores](results/cpu_scenario_cases.csv) and [safety cases](results/cpu_safety_cases.csv)
-- [Research manuscript draft](reports/SahayakLLM.pdf), [editable source](reports/manuscript.md) and [demo walkthrough](docs/DEMO.md)
+- [Updated manuscript](reports/manuscript.md), [initial PDF draft](reports/SahayakLLM.pdf) and [demo walkthrough](docs/DEMO.md)
 
 ## Attribution
 
